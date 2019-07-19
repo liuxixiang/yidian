@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.yidian.newssdk.widget.views.AdLinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ad_40"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/ydsdk_ad_news_list_padding_left"
+    android:paddingRight="@dimen/ydsdk_ad_news_list_padding_right"
+    android:background="@drawable/ydsdk_selector_card"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="11dp">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:includeFontPadding="false"
+            android:lineSpacingExtra="2dp"
+            android:maxLines="2"
+            android:text="news"
+            android:textColor="@color/ydsdk_ad_title"
+            android:textSize="@dimen/ydsdk_ad_news_list_title"
+            android:textStyle="normal"/>
+
+        <include
+            android:id="@+id/imgLine"
+            layout="@layout/ydsdk_ad_image_line"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/title"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal"/>
+    </RelativeLayout>
+
+    <include
+        layout="@layout/ydsdk_ad_panel"
+        android:layout_width="match_parent"
+        android:layout_height="32dp" />
+
+
+    <View
+        android:id="@+id/middleDivider"
+        style="@style/ydsdk_divider_style" />
+
+</com.yidian.newssdk.widget.views.AdLinearLayout>

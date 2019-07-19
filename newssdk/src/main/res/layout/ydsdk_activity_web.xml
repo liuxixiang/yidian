@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/base_toolbar_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    </FrameLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:progressDrawable="@drawable/ydsdk_webpage_progressbar"
+        android:max="100"
+        android:progress="5"
+        android:visibility="gone"/>
+
+
+    <com.yidian.newssdk.core.newweb.LiteWebView
+        android:id="@+id/web_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

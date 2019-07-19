@@ -1,0 +1,84 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/channel_news_normal_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/ydsdk_selector_card"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/ydsdk_news_list_padding_left_ns"
+    android:paddingRight="@dimen/ydsdk_news_list_padding_right_ns">
+
+
+
+    <LinearLayout
+        android:id="@+id/content_panel"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingRight="@dimen/ydsdk_news_list_padding_right_ns">
+
+            <TextView
+                android:id="@+id/news_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:includeFontPadding="false"
+                android:lineSpacingExtra="3dp"
+                android:maxLines="3"
+                android:textColor="@color/ydsdk_title_text"
+                android:textSize="@dimen/ydsdk_news_list_title"
+                android:textStyle="normal"
+                tools:text="djfldsajfj jdfs jf fd杀伐决断撒解放大街上就发大水 打扫房间的设计费收到了范德萨sad" />
+
+            <include
+                layout="@layout/ydsdk_card_button_panel"
+                android:layout_width="match_parent"
+                android:layout_height="30dp" />
+        </LinearLayout>
+
+        <!-- small image -->
+        <FrameLayout
+            android:id="@+id/news_image_frame"
+            android:layout_width="@dimen/ydsdk_news_list_small_img_width_ns"
+            android:layout_height="@dimen/ydsdk_news_list_small_img_height_ns"
+            android:layout_marginBottom="@dimen/ydsdk_news_list_single_pic_padding_vertical_ns"
+            android:layout_marginTop="@dimen/ydsdk_news_list_single_pic_padding_vertical_ns">
+
+            <ImageView
+                android:id="@+id/news_image"
+                android:layout_width="@dimen/ydsdk_news_list_small_img_width_ns"
+                android:layout_height="@dimen/ydsdk_news_list_small_img_height_ns"
+                android:scaleType="centerCrop"
+                android:visibility="visible" />
+
+            <ImageView
+                android:id="@+id/video_tag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|bottom"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
+                android:src="@drawable/ydsdk_list_video_ns"
+                android:visibility="visible" />
+
+            <ImageView
+                android:id="@+id/multi_img_tag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|bottom"
+                android:src="@drawable/ydsdk_list_picture_more"
+                android:visibility="gone" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/middleDivider"
+        style="@style/ydsdk_divider_style" />
+</LinearLayout>

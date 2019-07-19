@@ -1,0 +1,66 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:yidian="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/channel_news_normal_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/ydsdk_selector_card"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/ydsdk_news_list_padding_left_ns"
+    android:paddingRight="@dimen/ydsdk_news_list_padding_right_ns">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="11dp">
+
+        <TextView
+            android:id="@+id/news_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:includeFontPadding="false"
+            android:lineSpacingExtra="2dp"
+            android:maxLines="2"
+            android:paddingRight="7dp"
+            android:text="news"
+            android:textColor="@color/ydsdk_title_text"
+            android:textSize="@dimen/ydsdk_news_list_title"
+            android:textStyle="normal" />
+
+        <!-- big image -->
+        <com.yidian.newssdk.widget.views.YdRatioImageView
+            android:id="@+id/news_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/news_title"
+            android:layout_marginTop="8dp"
+            android:scaleType="fitXY"
+            yidian:length_width_ratio="0.5625" />
+
+        <TextView
+            android:id="@+id/picture_number"
+            android:layout_width="42dp"
+            android:layout_height="20dp"
+            android:layout_alignBottom="@id/news_image"
+            android:layout_alignRight="@id/news_image"
+            android:layout_marginBottom="6dp"
+            android:layout_marginRight="6dp"
+            android:background="@drawable/ydsdk_pic_number_bg"
+            android:gravity="center"
+            android:textColor="#ffffff"
+            android:textSize="10sp"
+            tools:text="12张" />
+    </RelativeLayout>
+
+    <include
+        layout="@layout/ydsdk_card_button_panel"
+        android:layout_width="match_parent"
+        android:layout_height="30dp" />
+
+
+    <View
+        android:id="@+id/middleDivider"
+        style="@style/ydsdk_divider_style" />
+</LinearLayout>

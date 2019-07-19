@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.yidian.newssdk">
+
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+
+    <meta-data
+        android:name="HMT_APPKEY"
+        android:value="UA-yidianzixun-260005" />
+
+    <application android:networkSecurityConfig="@xml/ydsdk_network_security_config">
+        <activity
+            android:name=".core.detail.video.VideosActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".core.detail.article.news.YdNewsActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity android:name=".core.detail.photo.PhotoViewActivity" />
+        <!--<activity android:name="com.yidian.newssdk.core.detail.ad.AdDetailActivity" />-->
+        <!--<activity android:name="com.yidian.newssdk.core.article.NewsActivity" />-->
+        <activity
+            android:name=".core.detail.article.gallery.YdGalleryActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".core.detail.article.video.YdVideoActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".core.detail.article.comment.YdCommentActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".core.detail.ad.LandingPageActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait" />
+    </application>
+
+</manifest>

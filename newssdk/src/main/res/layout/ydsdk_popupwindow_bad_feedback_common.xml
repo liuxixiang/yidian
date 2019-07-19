@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.yidian.newssdk.widget.feedback.normal.PopupLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp">
+
+    <ImageView
+        android:id="@+id/hint_image_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:src="@drawable/ydsdk_feedback_bg_down" />
+
+    <LinearLayout
+        android:id="@+id/win_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/ydsdk_feedback_bg"
+        android:orientation="vertical"
+        android:paddingBottom="0dp"
+        android:paddingTop="12dp">
+
+        <TextView
+            android:id="@+id/feedback_top_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="miui"
+            android:text="@string/ydsdk_dislike_reason_hint"
+            android:textColor="@color/ydsdk_skin_primary_red"
+            android:textSize="12sp" />
+
+        <LinearLayout
+            android:id="@+id/first_line"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="3dp"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <CheckedTextView
+                android:id="@+id/reason1"
+                android:layout_width="0dp"
+                android:layout_height="33dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="2dp"
+                android:layout_weight="1.0"
+                android:background="@drawable/ydsdk_badfeedback_state"
+                android:clickable="true"
+                android:ellipsize="end"
+                android:fontFamily="miui"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text=""
+                android:textAlignment="center"
+                android:textColor="@drawable/ydsdk_badfeedback_textcolor_state"
+                android:textSize="12sp" />
+
+            <CheckedTextView
+                android:id="@+id/reason2"
+                android:layout_width="0dp"
+                android:layout_height="33dp"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1.0"
+                android:background="@drawable/ydsdk_badfeedback_state"
+                android:clickable="true"
+                android:ellipsize="end"
+                android:fontFamily="miui"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text=""
+                android:textAlignment="center"
+                android:textColor="@drawable/ydsdk_badfeedback_textcolor_state_nt"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/second_line"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="3dp"
+            android:layout_marginTop="3dp"
+            android:orientation="horizontal"
+            android:visibility="visible">
+
+            <CheckedTextView
+                android:id="@+id/reason3"
+                android:layout_width="0dp"
+                android:layout_height="33dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="2dp"
+                android:layout_weight="1.0"
+                android:background="@drawable/ydsdk_badfeedback_state"
+                android:clickable="true"
+                android:ellipsize="end"
+                android:fontFamily="miui"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text=""
+                android:textAlignment="center"
+                android:textColor="@drawable/ydsdk_badfeedback_textcolor_state"
+                android:textSize="12sp" />
+
+            <CheckedTextView
+                android:id="@+id/reason4"
+                android:layout_width="0dp"
+                android:layout_height="33dp"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1.0"
+                android:background="@drawable/ydsdk_badfeedback_state"
+                android:clickable="true"
+                android:ellipsize="end"
+                android:fontFamily="miui"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="-"
+                android:textAlignment="center"
+                android:textColor="@drawable/ydsdk_badfeedback_textcolor_state"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/last_line"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="3dp"
+            android:orientation="horizontal">
+
+            <CheckedTextView
+                android:id="@+id/reason5"
+                android:layout_width="0dp"
+                android:layout_height="33dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="2dp"
+                android:layout_weight="1.0"
+                android:background="@drawable/ydsdk_badfeedback_state"
+                android:clickable="true"
+                android:ellipsize="end"
+                android:fontFamily="miui"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="-"
+                android:textAlignment="center"
+                android:textColor="@drawable/ydsdk_badfeedback_textcolor_state"
+                android:textSize="12sp" />
+
+            <CheckedTextView
+                android:id="@+id/reason6"
+                android:layout_width="0dp"
+                android:layout_height="33dp"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1.0"
+                android:background="@drawable/ydsdk_badfeedback_state"
+                android:clickable="true"
+                android:ellipsize="end"
+                android:fontFamily="miui"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="-"
+                android:textAlignment="center"
+                android:textColor="@drawable/ydsdk_badfeedback_textcolor_state"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/feedback_divider"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginTop="5dp"
+            android:background="@color/ydsdk_divider_bg" />
+
+        <TextView
+            android:id="@+id/btnOK"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:fontFamily="miui"
+            android:gravity="center"
+            android:text="@string/ydsdk_dislike"
+            android:textColor="@color/ydsdk_text_grey"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/hint_image_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:src="@drawable/ydsdk_feedback_bg_up" />
+
+</com.yidian.newssdk.widget.feedback.normal.PopupLinearLayout>

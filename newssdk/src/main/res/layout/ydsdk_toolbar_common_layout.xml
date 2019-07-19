@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:toolbar="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/toolbar_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.yidian.newssdk.widget.views.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ydsdk_toolbar_height"
+        android:minHeight="@dimen/ydsdk_toolbar_height"
+        android:background="@color/ydsdk_panel_bg"
+        toolbar:navigationIcon2="@drawable/ydsdk_selector_big_back_black_button">
+
+
+    </com.yidian.newssdk.widget.views.Toolbar>
+
+</FrameLayout>

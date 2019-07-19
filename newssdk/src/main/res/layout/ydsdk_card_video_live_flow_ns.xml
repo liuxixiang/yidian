@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/channel_video_live_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/ydsdk_selector_card"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/ydsdk_news_list_padding_left_ns"
+    android:paddingRight="@dimen/ydsdk_news_list_padding_right_ns">
+
+
+    <TextView
+        android:id="@+id/news_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:lineSpacingExtra="2dp"
+        android:maxLines="2"
+        android:paddingBottom="8dp"
+        android:paddingTop="10dp"
+        android:textColor="@color/ydsdk_title_text"
+        android:textSize="16sp"
+        tools:text="标题" />
+
+    <include
+        layout="@layout/ydsdk_video_live_view_layout_ns"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <include
+        layout="@layout/ydsdk_card_button_panel"
+        android:layout_width="match_parent"
+        android:layout_height="30dp" />
+
+    <View
+        android:id="@+id/middleDivider"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/ydsdk_divider_bg" />
+
+</LinearLayout>

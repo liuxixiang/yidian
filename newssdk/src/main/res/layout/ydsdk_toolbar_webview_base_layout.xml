@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/ydsdk_white">
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/webHeader"
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:background="@null"
+            android:src="@drawable/ydsdk_big_back"/>
+
+        <ImageButton
+            android:id="@+id/closeBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:src="@drawable/ydsdk_selector_topbar_close"
+            android:layout_toRightOf="@+id/btnBack"
+            android:visibility="gone" />
+
+
+        <ImageView
+            android:id="@+id/more_button"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="onMoreClicked"
+            android:paddingLeft="5dp"
+            android:paddingRight="15dp"
+            android:scaleType="center"
+            android:src="@drawable/ydsdk_selector_news_more" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:max="100"
+            android:progress="5"
+            android:progressDrawable="@drawable/ydsdk_webpage_progressbar"/>
+    </RelativeLayout>
+</FrameLayout>

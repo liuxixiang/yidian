@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ydsdk_panel_bg"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/background"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/ydsdk_package_choose_selected"
+        android:paddingTop="30dp"
+        android:paddingBottom="24dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/cancle"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        android:clickable="true"
+        android:gravity="center"
+        android:text="取消"
+        android:textColor="@color/ydsdk_black_222222"
+        android:textSize="15sp" />
+
+</LinearLayout>

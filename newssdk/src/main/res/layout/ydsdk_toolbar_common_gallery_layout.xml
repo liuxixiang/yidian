@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:toolbar="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/toolbar_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.yidian.newssdk.widget.views.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ydsdk_toolbar_height"
+        android:minHeight="@dimen/ydsdk_toolbar_height"
+        android:background="@color/ydsdk_picture_gallery_background"
+        toolbar:navigationIcon2="@drawable/ydsdk_selector_big_back_black_button">
+
+        <FrameLayout
+            android:id="@+id/gallery_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingRight="15dp"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/news_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ydsdk_news_comment" />
+
+            <TextView
+                android:id="@+id/text_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="14dp"
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="right|bottom"
+                android:background="@drawable/ydsdk_comment_count_bg"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:textColor="@color/ydsdk_white"
+                android:textSize="9dp"
+                tools:text="260" />
+        </FrameLayout>
+
+    </com.yidian.newssdk.widget.views.Toolbar>
+
+</FrameLayout>

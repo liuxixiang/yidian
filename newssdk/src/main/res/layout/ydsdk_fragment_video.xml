@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.yidian.newssdk.core.detail.video.TestFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/nnf_related_video_rv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </android.support.v7.widget.RecyclerView>
+
+
+    <LinearLayout
+        android:id="@+id/ll_next_video"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginBottom="100dp"
+        android:background="@drawable/ydsdk_yd_next_video_bg"
+        android:orientation="horizontal"
+        android:visibility="invisible">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="25dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ydsdk_video_next" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="25dp"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="@string/ydsdk_related_video_next_video_toast"
+            android:textColor="@android:color/white"
+            android:textSize="13dp" />
+    </LinearLayout>
+<!--
+    <FrameLayout
+        android:id="@+id/error_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>-->
+
+</com.yidian.newssdk.core.detail.video.TestFrameLayout>

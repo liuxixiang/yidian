@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/channel_news_normal_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/ydsdk_selector_card"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/ydsdk_news_list_padding_left_ns"
+    android:paddingRight="@dimen/ydsdk_news_list_padding_right_ns">
+
+    <View
+        android:id="@+id/middleDivider"
+        style="@style/ydsdk_divider_style" />
+
+    <TextView
+        android:id="@+id/news_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:lineSpacingExtra="@dimen/ydsdk_yidianhao_feed_joke_summary_line_space"
+        android:paddingTop="11dp"
+        android:textColor="@color/ydsdk_title_text"
+        android:textSize="@dimen/ydsdk_news_list_title"
+        android:textStyle="normal"
+        tools:text="news" />
+
+    <FrameLayout
+        android:id="@+id/picture_joke"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp">
+
+        <ImageView
+            android:id="@+id/joke_img_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="fitXY" />
+
+        <TextView
+            android:id="@+id/click_to_show_full"
+            android:layout_width="match_parent"
+            android:layout_height="37dp"
+            android:layout_gravity="bottom"
+            android:background="#4c000000"
+            android:gravity="center"
+            android:text="点击查看大图"
+            android:textColor="#ffffff"
+            android:textSize="12sp" />
+    </FrameLayout>
+
+    <include
+        layout="@layout/ydsdk_card_button_panel"
+        android:layout_width="match_parent"
+        android:layout_height="30dp" />
+</LinearLayout>

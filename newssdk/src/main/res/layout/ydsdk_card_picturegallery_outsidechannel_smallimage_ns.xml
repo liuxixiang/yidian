@@ -1,0 +1,80 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/channel_news_normal_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/ydsdk_selector_card"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/ydsdk_news_list_padding_left_ns"
+    android:paddingRight="@dimen/ydsdk_news_list_padding_right_ns">
+
+
+
+    <LinearLayout
+        android:id="@+id/content_panel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingRight="@dimen/ydsdk_news_list_padding_right_ns">
+
+            <TextView
+                android:id="@+id/news_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:includeFontPadding="false"
+                android:lineSpacingExtra="3dp"
+                android:maxLines="3"
+                android:textColor="@color/ydsdk_title_text"
+                android:textSize="@dimen/ydsdk_news_list_title"
+                android:textStyle="normal"
+                tools:text="news" />
+
+            <include
+                layout="@layout/ydsdk_card_button_panel"
+                android:layout_width="match_parent"
+                android:layout_height="30dp" />
+        </LinearLayout>
+
+        <!-- small image -->
+        <FrameLayout
+            android:id="@+id/news_image_frame"
+            android:layout_width="@dimen/ydsdk_news_list_small_img_width_ns"
+            android:layout_height="@dimen/ydsdk_news_list_small_img_height_ns"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp">
+
+            <ImageView
+                android:id="@+id/news_image"
+                android:layout_width="@dimen/ydsdk_news_list_small_img_width_ns"
+                android:layout_height="@dimen/ydsdk_news_list_small_img_height_ns"
+                android:scaleType="centerCrop"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/picture_number"
+                android:layout_width="42dp"
+                android:layout_height="20dp"
+                android:layout_gravity="right|bottom"
+                android:layout_marginBottom="6dp"
+                android:layout_marginRight="6dp"
+                android:background="@drawable/ydsdk_pic_number_bg"
+                android:gravity="center"
+                android:textColor="#ffffff"
+                android:textSize="10sp"
+                tools:text="12张" />
+        </FrameLayout>
+    </LinearLayout>
+    <View
+        android:id="@+id/middleDivider"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/ydsdk_divider_bg" />
+</LinearLayout>

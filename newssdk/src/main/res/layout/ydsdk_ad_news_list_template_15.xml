@@ -1,0 +1,115 @@
+<com.yidian.newssdk.widget.views.AdLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:yidian="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ad_15"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/ydsdk_ad_news_list_padding_left"
+    android:paddingRight="@dimen/ydsdk_ad_news_list_padding_right"
+    android:background="@drawable/ydsdk_selector_card"
+    android:orientation="vertical">
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="news"
+            android:textColor="@color/ydsdk_ad_116_title"
+            android:textSize="@dimen/ydsdk_ad_template_116_title"
+            tools:text="template = 17, 标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/title"
+            android:layout_marginTop="8dp">
+            <!-- big image -->
+            <com.yidian.newssdk.widget.views.YdRatioImageView
+                android:id="@+id/large_image"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:scaleType="fitXY"
+                yidian:length_width_ratio="0.33" />
+
+            <TextView
+                android:id="@+id/tag"
+                android:layout_width="24dp"
+                android:layout_height="12dp"
+                android:layout_gravity="bottom|right"
+                android:layout_marginBottom="7dp"
+                android:layout_marginRight="8dp"
+                android:background="@drawable/ydsdk_ad_flag_bg"
+                android:gravity="center"
+                android:maxLength="2"
+                android:text="广告"
+                android:textColor="@color/ydsdk_ad_white"
+                android:textSize="8sp" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/form_container"
+            android:layout_width="match_parent"
+            android:layout_height="26dp"
+            android:layout_below="@+id/activity_container"
+            android:layout_marginBottom="@dimen/ydsdk_ad_template_116_form_margin"
+            android:layout_marginTop="@dimen/ydsdk_ad_template_116_form_margin"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
+
+            <EditText
+                android:id="@+id/inputName"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/ydsdk_ad_template_116_input_bg"
+                android:gravity="center_vertical"
+                android:hint="@string/ydsdk_ad_template_116_name_input"
+                android:paddingLeft="@dimen/ydsdk_ad_template_116_form_padding"
+                android:textColor="@color/ydsdk_ad_116_input"
+                android:textColorHint="@color/ydsdk_ad_116_input"
+                android:textSize="@dimen/ydsdk_ad_template_116_input" />
+
+            <EditText
+                android:id="@+id/inputPhone"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="6dp"
+                android:layout_weight="1"
+                android:background="@drawable/ydsdk_ad_template_116_input_bg"
+                android:gravity="center_vertical"
+                android:hint="@string/ydsdk_ad_template_116_phone_input"
+                android:paddingLeft="@dimen/ydsdk_ad_template_116_form_padding"
+                android:textColor="@color/ydsdk_ad_116_input"
+                android:textColorHint="@color/ydsdk_ad_116_input"
+                android:textSize="@dimen/ydsdk_ad_template_116_input" />
+
+            <Button
+                android:id="@+id/signUp"
+                android:layout_width="61dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="6dp"
+                android:background="@drawable/ydsdk_ad_template_116_sign_up_bg"
+                android:gravity="center"
+                android:maxLength="2"
+                android:text="@string/ydsdk_ad_template_116_sign_up_defualt"
+                android:textColor="@color/ydsdk_ad_116_sign_up"
+                android:textSize="@dimen/ydsdk_ad_template_116_input"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/middleDivider"
+        style="@style/ydsdk_divider_style"
+        />
+
+</com.yidian.newssdk.widget.views.AdLinearLayout>

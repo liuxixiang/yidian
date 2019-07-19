@@ -1,0 +1,55 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:yidian="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/channel_news_normal_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/ydsdk_selector_card"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/ydsdk_news_list_padding_left"
+    android:paddingRight="@dimen/ydsdk_news_list_padding_right">
+
+
+
+    <TextView
+        android:id="@+id/news_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="11dp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textColor="@color/ydsdk_title_text"
+        android:textSize="@dimen/ydsdk_news_list_title"
+        android:textStyle="normal"
+        tools:text="news" />
+
+    <TextView
+        android:id="@+id/news_describe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="9dp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textColor="@color/ydsdk_content_other_text"
+        android:textSize="12dp"
+        android:textStyle="normal"
+        android:visibility="gone"
+        tools:text="--" />
+    <!-- big image -->
+    <com.yidian.newssdk.widget.views.YdRatioImageView
+        android:id="@+id/large_news_image"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:scaleType="fitXY"
+        yidian:length_width_ratio="0.5" />
+
+    <include
+        layout="@layout/ydsdk_card_button_panel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <View
+        android:id="@+id/middleDivider"
+        style="@style/ydsdk_divider_style" />
+</LinearLayout>

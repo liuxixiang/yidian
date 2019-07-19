@@ -1,0 +1,64 @@
+<com.yidian.newssdk.widget.views.AdLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ad_3"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/ydsdk_ad_news_list_padding_left"
+    android:paddingRight="@dimen/ydsdk_ad_news_list_padding_right"
+    android:background="@drawable/ydsdk_selector_card"
+    android:orientation="vertical">
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="11dp">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:ellipsize="end"
+            android:includeFontPadding="false"
+            android:lineSpacingExtra="2dp"
+            android:maxLines="2"
+            android:text="news"
+            android:textColor="@color/ydsdk_ad_title"
+            android:textSize="@dimen/ydsdk_ad_news_list_title"
+            android:textStyle="normal" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/title">
+            <!-- big image -->
+            <com.yidian.newssdk.widget.views.YdRatioImageView
+                android:id="@+id/large_image"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="8dp"
+                android:scaleType="fitXY"
+                app:length_width_ratio="0.5" />
+
+            <ImageView
+                android:id="@+id/ad_tencent_logo"
+                android:layout_width="20dp"
+                android:layout_height="16dp"
+                android:layout_gravity="bottom|end"
+                android:scaleType="fitXY"
+                android:src="@drawable/ydsdk_ad_tencent_logo"
+                android:visibility="gone" />
+        </FrameLayout>
+    </RelativeLayout>
+
+    <include
+        layout="@layout/ydsdk_ad_panel"
+        android:layout_width="match_parent"
+        android:layout_height="32dp" />
+
+    <View
+        android:id="@+id/middleDivider"
+        style="@style/ydsdk_divider_style" />
+</com.yidian.newssdk.widget.views.AdLinearLayout>

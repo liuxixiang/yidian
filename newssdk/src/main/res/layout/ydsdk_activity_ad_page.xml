@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!--<ProgressBar-->
+        <!--android:id="@+id/progressBar"-->
+        <!--style="?android:attr/progressBarStyleHorizontal"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="1dp"-->
+        <!--android:progressDrawable="@drawaydsdk_webpage_progressbarsbar"-->
+        <!--android:max="100"-->
+        <!--android:progress="5"-->
+        <!--android:visibility="gone"/>-->
+
+    <include android:id="@+id/landing_toolbar"
+        layout="@layout/ydsdk_toolbar_webview_base_layout"/>
+
+    <com.yidian.newssdk.core.newweb.LiteWebView
+        android:id="@+id/ad_webView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+    </com.yidian.newssdk.core.newweb.LiteWebView>
+
+
+    <!--<include-->
+        <!--android:id="@+id/buttonPanel"-->
+        <!--layout="@layydsdk_web_view_bottom_button_panelanel"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="47dp"-->
+        <!--android:layout_gravity="bottom" />-->
+
+</LinearLayout>

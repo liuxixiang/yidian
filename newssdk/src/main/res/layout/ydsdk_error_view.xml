@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/ydsdk_bg"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/ydsdk_server_error" />
+
+    <TextView
+        android:id="@+id/error_tip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="5dp"
+        tools:text="@string/ydsdk_empty_network_error"
+        android:textColor="@color/ydsdk_empty_tip" />
+</LinearLayout>

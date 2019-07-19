@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="47dp"
+    android:background="@drawable/ydsdk_webview_bg"
+    android:orientation="horizontal"
+    android:paddingLeft="28dp"
+    android:paddingRight="28dp">
+
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <ImageButton
+            android:id="@+id/webview_button_prev"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:background="@null"
+            android:onClick="goBack"
+            android:src="@drawable/ydsdk_selector_webview_prev" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <ImageButton
+            android:id="@+id/webview_button_next"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:background="@null"
+            android:onClick="goForward"
+            android:src="@drawable/ydsdk_selector_webview_next" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <ImageButton
+            android:id="@+id/webview_button_refresh"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:background="@null"
+            android:onClick="onRefresh"
+            android:src="@drawable/ydsdk_selector_webview_refresh" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <ImageButton
+            android:id="@+id/webview_button_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:background="@null"
+            android:onClick="onBack"
+            android:src="@drawable/ydsdk_selector_webview_close" />
+    </FrameLayout>
+
+</LinearLayout>
