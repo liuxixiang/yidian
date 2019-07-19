@@ -2,7 +2,7 @@ package com.yidian.newssdk.utils.install;
 
 import android.content.Context;
 import android.content.Intent;
-//import android.content.pm.IPackageInstallObserver;
+import android.content.pm.IPackageInstallObserver;
 import android.net.Uri;
 import android.os.RemoteException;
 import android.support.annotation.NonNull;
@@ -51,16 +51,16 @@ public class MiuiAdHelper {
                     e.printStackTrace();
                 }
 
-//                if (apkFile.exists()) {
-//                    Log.i(TAG, "File:" + apkFile + " is existed.");
-//                    Uri fileUri = Uri.fromFile(apkFile);
-//                    permissionGranted = (Boolean) installPackageMethod.invoke(null, fileUri,
-//                            new InstallPackageListener(card), flag);    //Permission granted.
-//                    Log.i(TAG, "Start Installing package, permissionGranted: " + permissionGranted + " , install apk:" + apkFile);
-//                    BroadcastBus.getDefault().post(new DownloadEvent(card.getAid(), DownloadEvent.STATUS_INSTALLING, 100));
-//                } else {
-//                    Log.i(TAG, "File:" + apkFile + " is not existed.");
-//                }
+                if (apkFile.exists()) {
+                    Log.i(TAG, "File:" + apkFile + " is existed.");
+                    Uri fileUri = Uri.fromFile(apkFile);
+                    permissionGranted = (Boolean) installPackageMethod.invoke(null, fileUri,
+                            new InstallPackageListener(card), flag);    //Permission granted.
+                    Log.i(TAG, "Start Installing package, permissionGranted: " + permissionGranted + " , install apk:" + apkFile);
+                    BroadcastBus.getDefault().post(new DownloadEvent(card.getAid(), DownloadEvent.STATUS_INSTALLING, 100));
+                } else {
+                    Log.i(TAG, "File:" + apkFile + " is not existed.");
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -106,26 +106,26 @@ public class MiuiAdHelper {
         return builder.toString();
     }
 
-//    public static class InstallPackageListener extends IPackageInstallObserver.Stub {
-//        private AdvertisementCard mAdCard;
-//
-//        public InstallPackageListener(AdvertisementCard adCard) {
-//            mAdCard = adCard;
-//        }
-//
-//        @Override
-//        public void packageInstalled(String packageName, int returnCode) throws RemoteException {
-//            Log.i(TAG, packageName + " installed.");
-//            if (mAdCard != null) {
-//                AdvertisementUtil.reportEvent(mAdCard, AdvertisementUtil.EVENT_APP_INSTALL_SUCCESS, true);
-//                AdMonitorHelper.reportThirdPartyEvents(mAdCard.finishInstallMonitorUrls, String.valueOf(mAdCard.getAid()), false);
-//
-//                //AdDbUtil.removeAdRecord(mAdCard.downloadId);
-//                AdvertisementDbUtil.removeAdRecord(mAdCard.getDownloadId());
-//                BroadcastBus.getDefault().post(new DownloadEvent(mAdCard.getAid(), DownloadEvent.STATUS_OPEN, 100));
-//            }
-//        }
-//    }
+    public static class InstallPackageListener extends IPackageInstallObserver.Stub {
+        private AdvertisementCard mAdCard;
+
+        public InstallPackageListener(AdvertisementCard adCard) {
+            mAdCard = adCard;
+        }
+
+        @Override
+        public void packageInstalled(String packageName, int returnCode) throws RemoteException {
+            Log.i(TAG, packageName + " installed.");
+            if (mAdCard != null) {
+                AdvertisementUtil.reportEvent(mAdCard, AdvertisementUtil.EVENT_APP_INSTALL_SUCCESS, true);
+                AdMonitorHelper.reportThirdPartyEvents(mAdCard.finishInstallMonitorUrls, String.valueOf(mAdCard.getAid()), false);
+
+                //AdDbUtil.removeAdRecord(mAdCard.downloadId);
+                AdvertisementDbUtil.removeAdRecord(mAdCard.getDownloadId());
+                BroadcastBus.getDefault().post(new DownloadEvent(mAdCard.getAid(), DownloadEvent.STATUS_OPEN, 100));
+            }
+        }
+    }
 
     public static boolean launchMIAppStore(@NonNull Context context, @NonNull AdvertisementCard card) {
         return launchMIAppStoreWithInstall(context, card, false);

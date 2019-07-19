@@ -5,14 +5,14 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-//import android.content.pm.IPackageInstallObserver;
+import android.content.pm.IPackageInstallObserver;
 import android.net.Uri;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-//import com.miui.server.IPackageManagerDelegate;
+import com.miui.server.IPackageManagerDelegate;
 import com.yidian.ad.data.AdvertisementCard;
 import com.yidian.newssdk.core.ad.AdMonitorHelper;
 import com.yidian.newssdk.core.ad.AdvertisementUtil;
@@ -46,57 +46,57 @@ public class AdPMDelegateInstaller {
     public void installPackage(final File apkFile, final AdvertisementCard card) {
         Intent intent = new Intent("miui.intent.action.ad.PACKAGE_MANAGER");
         intent.setPackage("com.miui.systemAdSolution");
-//        mAdPMDelegateServiceConnection = new ServiceConnection() {
-//            @Override
-//            public void onServiceConnected(ComponentName name, IBinder service) {
-//                Log.i(ADConstants.AD_LOG, "DInstaller: service connected");
-//                IPackageManagerDelegate pm = IPackageManagerDelegate.Stub.asInterface(service);
-//                try {
-//                    IPackageInstallObserver observer = new IPackageInstallObserver.Stub() {
-//                        @Override
-//                        public void packageInstalled(String packageName, int returnCode) throws RemoteException {
-//                            Log.i(ADConstants.AD_LOG, "DInstaller: package installed : " + packageName + " " + returnCode);
-//
-//                            // 安装完成 unbindService
-//                            unbindService();
-//
-//                            if (card != null) {
-//                                AdvertisementUtil.reportEvent(card, EVENT_APP_INSTALL_SUCCESS, true);
-//                                AdMonitorHelper.reportThirdPartyEvents(card.finishInstallMonitorUrls, String.valueOf(card.getAid()), false);
-//
-//                                //AdDbUtil.removeAdRecord(card.downloadId);
-//                                AdvertisementDbUtil.removeAdRecord(card.getDownloadId());
-//                            }
-//                        }
-//
-//                        @Override
-//                        public IBinder asBinder() {
-//                            return this;
-//                        }
-//                    };
-//
-//                    boolean ret = pm.installPackage(
-//                            Uri.fromFile(apkFile),
-//                            observer,
-//                            0);
-//                    Log.i(ADConstants.AD_LOG, "DInstaller：try delegate install package ret : " + ret);
-//                    if (!ret) {
-//                        unbindService();
-////                        tryAnotherWay();
-//                    }
-//                    if (mListener != null) {
-//                        mListener.grantPermission(ret);
-//                    }
-//                } catch (RemoteException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//
-//            @Override
-//            public void onServiceDisconnected(ComponentName name) {
-//                Log.i(ADConstants.AD_LOG, "DInstaller: service disconnected");
-//            }
-//        };
+        mAdPMDelegateServiceConnection = new ServiceConnection() {
+            @Override
+            public void onServiceConnected(ComponentName name, IBinder service) {
+                Log.i(ADConstants.AD_LOG, "DInstaller: service connected");
+                IPackageManagerDelegate pm = IPackageManagerDelegate.Stub.asInterface(service);
+                try {
+                    IPackageInstallObserver observer = new IPackageInstallObserver.Stub() {
+                        @Override
+                        public void packageInstalled(String packageName, int returnCode) throws RemoteException {
+                            Log.i(ADConstants.AD_LOG, "DInstaller: package installed : " + packageName + " " + returnCode);
+
+                            // 安装完成 unbindService
+                            unbindService();
+
+                            if (card != null) {
+                                AdvertisementUtil.reportEvent(card, EVENT_APP_INSTALL_SUCCESS, true);
+                                AdMonitorHelper.reportThirdPartyEvents(card.finishInstallMonitorUrls, String.valueOf(card.getAid()), false);
+
+                                //AdDbUtil.removeAdRecord(card.downloadId);
+                                AdvertisementDbUtil.removeAdRecord(card.getDownloadId());
+                            }
+                        }
+
+                        @Override
+                        public IBinder asBinder() {
+                            return this;
+                        }
+                    };
+
+                    boolean ret = pm.installPackage(
+                            Uri.fromFile(apkFile),
+                            observer,
+                            0);
+                    Log.i(ADConstants.AD_LOG, "DInstaller：try delegate install package ret : " + ret);
+                    if (!ret) {
+                        unbindService();
+//                        tryAnotherWay();
+                    }
+                    if (mListener != null) {
+                        mListener.grantPermission(ret);
+                    }
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onServiceDisconnected(ComponentName name) {
+                Log.i(ADConstants.AD_LOG, "DInstaller: service disconnected");
+            }
+        };
 
         Context context = mContextReference.get();
         if (context != null) {
