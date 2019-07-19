@@ -18,8 +18,8 @@ android {
         }
         release {
             buildConfigField 'String', 'OPEN_ROOT_PATH', '"http://open.go2yd.com/open-api/open-platform/"'
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 
