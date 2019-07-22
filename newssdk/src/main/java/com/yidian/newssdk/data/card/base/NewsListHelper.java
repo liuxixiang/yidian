@@ -2,6 +2,7 @@ package com.yidian.newssdk.data.card.base;
 
 import android.text.TextUtils;
 
+import com.yidian.newssdk.NewsFeedsSDK;
 import com.yidian.newssdk.utils.JsonUtil;
 
 import org.json.JSONArray;
@@ -10,6 +11,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author zhangzhun
@@ -40,7 +43,10 @@ public class NewsListHelper {
                 }
                 Card item = CardHelper.parseCard(newsJson);
                 if (item != null) {
-                    mResultList.add(item);
+                    //过滤
+                    if (!filterRegex(item.title)) {
+                        mResultList.add(item);
+                    }
                 }
             }
         } catch (JSONException e) {
@@ -51,6 +57,13 @@ public class NewsListHelper {
 
     public List<Card> getResultList() {
         return mResultList;
+    }
+
+    private boolean filterRegex(String title) {
+        //过滤
+        Pattern pattern = Pattern.compile(NewsFeedsSDK.getInstance().getFilterRegex());
+        Matcher matcher = pattern.matcher(title);
+        return matcher.matches();
     }
 
 }

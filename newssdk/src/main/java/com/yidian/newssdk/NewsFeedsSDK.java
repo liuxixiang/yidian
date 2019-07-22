@@ -33,6 +33,7 @@ public class NewsFeedsSDK {
     private String mAppKey;
     private String mAppId;
     private boolean debug;
+    private String mFilterRegex;
     private IShareInterface iShareInterface;
     private IReportInterface iReportInterface = ReportProxy.defaultIReportInterface;
 
@@ -41,6 +42,7 @@ public class NewsFeedsSDK {
         this.mAppKey = builder.mAppKey;
         this.mAppId = builder.mAppId;
         this.debug = builder.debug;
+        this.mFilterRegex = builder.mFilterRegex;
 
         ContextUtils.init(this.mContext);
         HMTAgentUtil.init();
@@ -76,6 +78,10 @@ public class NewsFeedsSDK {
         return mAppKey;
     }
 
+    public String getFilterRegex() {
+        return mFilterRegex;
+    }
+
     public void setShareInterface(IShareInterface iShareInterface) {
         this.iShareInterface = iShareInterface;
     }
@@ -93,11 +99,11 @@ public class NewsFeedsSDK {
         return YdVideoPlayer.getMediaInterface();
     }
 
-    public IShareInterface getShareInterface(){
+    public IShareInterface getShareInterface() {
         return this.iShareInterface;
     }
 
-    public IReportInterface getReportInterface(){
+    public IReportInterface getReportInterface() {
         return this.iReportInterface;
     }
 
@@ -107,6 +113,7 @@ public class NewsFeedsSDK {
         private String mAppKey;
         private String mAppId;
         private boolean debug;
+        private String mFilterRegex;
 
 
         public Builder() {
@@ -118,6 +125,7 @@ public class NewsFeedsSDK {
             this.mAppKey = feedsSDK.mAppKey;
             this.mAppId = feedsSDK.mAppId;
             this.debug = feedsSDK.debug;
+            this.mFilterRegex = feedsSDK.mFilterRegex;
         }
 
         public Builder setContext(Context context) {
@@ -137,6 +145,42 @@ public class NewsFeedsSDK {
 
         public Builder setDebugEnabled(boolean debugEnabled) {
             this.debug = debugEnabled;
+            return this;
+        }
+
+        public Builder setFilterRegex(String filterRegex) {
+            this.mFilterRegex = filterRegex;
+            return this;
+        }
+
+        /**
+         * 设置单个关键字过滤
+         *
+         * @param filter
+         * @return
+         */
+        public Builder setFilter(String filter) {
+            this.mFilterRegex = ".*(" + filter + ").*";
+            return this;
+        }
+
+        /**
+         * 设置多个关键字过滤
+         *
+         * @param filters
+         * @return
+         */
+        public Builder setFilter(String[] filters) {
+            if (filters != null && filters.length > 0) {
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < filters.length; i++) {
+                    sb.append(filters[i]);
+                    if (i < filters.length - 1) {
+                        sb.append("|");
+                    }
+                }
+                setFilter(sb.toString());
+            }
             return this;
         }
 
