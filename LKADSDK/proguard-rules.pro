@@ -50,70 +50,70 @@
 -dontwarn org.greenrobot.greendao.database.**
 # If you do not use Rx:
 -dontwarn rx.**
--keep class com.yidian.newssdk.libraries.bra.** {
+-keep class com.linken.newssdk.libraries.bra.** {
 *;
 }
--keep public class * extends com.yidian.newssdk.libraries.bra.BaseQuickAdapter
--keep public class * extends com.yidian.newssdk.libraries.bra.BaseViewHolder
--keepclassmembers  class **$** extends com.yidian.newssdk.libraries.bra.BaseViewHolder {
+-keep public class * extends com.linken.newssdk.libraries.bra.BaseQuickAdapter
+-keep public class * extends com.linken.newssdk.libraries.bra.BaseViewHolder
+-keepclassmembers  class **$** extends com.linken.newssdk.libraries.bra.BaseViewHolder {
      <init>(...);
 }
 
 #-keep class com.ch
 
--keep class com.yidian.newssdk.export.*{
+-keep class com.linken.newssdk.export.*{
     *;
 }
 
--keep class com.yidian.newssdk.exportui.*{
+-keep class com.linken.newssdk.exportui.*{
     public <methods>;
 }
 
 
--keep class com.yidian.newssdk.NewsFeedsSDK$Builder{
+-keep class com.linken.newssdk.NewsFeedsSDK$Builder{
     public *;
 }
 
--keep class com.yidian.newssdk.NewsFeedsSDK{
+-keep class com.linken.newssdk.NewsFeedsSDK{
     public *;
 }
 
--keep class com.yidian.newssdk.theme.ThemeManager{
+-keep class com.linken.newssdk.theme.ThemeManager{
     public *;
 }
 
--keep class com.yidian.newssdk.YdCustomConfigure{
+-keep class com.linken.newssdk.YdCustomConfigure{
     public *;
 }
 
--keep class com.yidian.newssdk.libraries.ydvd.YdMediaInterface{
+-keep class com.linken.newssdk.libraries.ydvd.YdMediaInterface{
     public *;
 }
 
-#-keep class com.yidian.newssdk.libraries.ydvd.YdMediaManager{
+#-keep class com.linken.newssdk.libraries.ydvd.YdMediaManager{
 #    public *;
 #}
 
--keep class com.yidian.newssdk.libraries.ydvd.YdVideoPlayerManager{
-    public static com.yidian.newssdk.libraries.ydvd.YdVideoPlayer getCurrentJzvd();
+-keep class com.linken.newssdk.libraries.ydvd.YdVideoPlayerManager{
+    public static com.linken.newssdk.libraries.ydvd.YdVideoPlayer getCurrentJzvd();
 }
 
--keep class com.yidian.newssdk.libraries.ydvd.YdMediaManager {
-    public static com.yidian.newssdk.libraries.ydvd.YdMediaManager instance();
+-keep class com.linken.newssdk.libraries.ydvd.YdMediaManager {
+    public static com.linken.newssdk.libraries.ydvd.YdMediaManager instance();
     public int currentVideoWidth;
     public int currentVideoHeight;
 }
 
 
--keep class com.yidian.newssdk.export.IMediaInterface {
+-keep class com.linken.newssdk.export.IMediaInterface {
     *;
 }
 
--keep class com.yidian.newssdk.utils.ThreadUtils {
+-keep class com.linken.newssdk.utils.ThreadUtils {
     *;
 }
 
--keep class com.yidian.newssdk.widget.pullRefresh.TipDrawable{
+-keep class com.linken.newssdk.widget.pullRefresh.TipDrawable{
     *;
 }
 
