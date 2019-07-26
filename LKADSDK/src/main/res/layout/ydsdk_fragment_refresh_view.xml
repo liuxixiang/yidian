@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.yidian.newssdk.widget.WrapperSwipeRefreshLayout
+    <com.linken.newssdk.widget.WrapperSwipeRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -18,9 +18,9 @@
             android:overScrollMode="never"
             android:scrollbars="none" />
 
-    </com.yidian.newssdk.widget.WrapperSwipeRefreshLayout>
+    </com.linken.newssdk.widget.WrapperSwipeRefreshLayout>
 
-    <com.yidian.newssdk.widget.views.ToastTabView
+    <com.linken.newssdk.widget.views.ToastTabView
 
         android:id="@+id/toast_tabview"
         android:layout_width="match_parent"
@@ -28,6 +28,6 @@
         android:layout_gravity="center|top"
         android:visibility="gone">
 
-    </com.yidian.newssdk.widget.views.ToastTabView>
+    </com.linken.newssdk.widget.views.ToastTabView>
 
 </FrameLayout>

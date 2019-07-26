@@ -1,4 +1,4 @@
-<com.yidian.newssdk.widget.views.AdLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.linken.newssdk.widget.views.AdLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/ad_4"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -54,4 +54,4 @@
         android:id="@+id/middleDivider"
         style="@style/ydsdk_divider_style" />
 
-</com.yidian.newssdk.widget.views.AdLinearLayout>
+</com.linken.newssdk.widget.views.AdLinearLayout>

@@ -30,7 +30,7 @@
             android:textStyle="normal" />
 
         <!-- big image -->
-        <com.yidian.newssdk.widget.views.YdRatioImageView
+        <com.linken.newssdk.widget.views.YdRatioImageView
             android:id="@+id/news_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

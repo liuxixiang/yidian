@@ -6,7 +6,7 @@
     android:orientation="horizontal"
     
      >
-    <com.yidian.newssdk.libraries.simpleRefresh.RefreshDrawable
+    <com.linken.newssdk.libraries.simpleRefresh.RefreshDrawable
         android:id="@+id/first_view"
         android:layout_width="45dp"
         android:layout_height="45dp"

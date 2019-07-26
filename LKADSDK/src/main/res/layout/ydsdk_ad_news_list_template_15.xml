@@ -1,4 +1,4 @@
-<com.yidian.newssdk.widget.views.AdLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.linken.newssdk.widget.views.AdLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:yidian="http://schemas.android.com/apk/res-auto"
     android:id="@+id/ad_15"
@@ -34,7 +34,7 @@
             android:layout_below="@id/title"
             android:layout_marginTop="8dp">
             <!-- big image -->
-            <com.yidian.newssdk.widget.views.YdRatioImageView
+            <com.linken.newssdk.widget.views.YdRatioImageView
                 android:id="@+id/large_image"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -112,4 +112,4 @@
         style="@style/ydsdk_divider_style"
         />
 
-</com.yidian.newssdk.widget.views.AdLinearLayout>
+</com.linken.newssdk.widget.views.AdLinearLayout>

@@ -17,13 +17,13 @@
     <include android:id="@+id/landing_toolbar"
         layout="@layout/ydsdk_toolbar_webview_base_layout"/>
 
-    <com.yidian.newssdk.core.newweb.LiteWebView
+    <com.linken.newssdk.core.newweb.LiteWebView
         android:id="@+id/ad_webView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
 
-    </com.yidian.newssdk.core.newweb.LiteWebView>
+    </com.linken.newssdk.core.newweb.LiteWebView>
 
 
     <!--<include-->

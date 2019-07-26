@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal">
 
-    <com.yidian.newssdk.widget.views.YdRatioImageView
+    <com.linken.newssdk.widget.views.YdRatioImageView
         android:id="@+id/news_img1"
         android:layout_width="0dp"
         android:layout_height="@dimen/ydsdk_ad_news_list_small_img_height"
@@ -18,7 +18,7 @@
         android:layout_width="3dp"
         android:layout_height="match_parent" />
 
-    <com.yidian.newssdk.widget.views.YdRatioImageView
+    <com.linken.newssdk.widget.views.YdRatioImageView
         android:id="@+id/news_img2"
         android:layout_width="0dp"
         android:layout_height="@dimen/ydsdk_ad_news_list_small_img_height"
@@ -30,7 +30,7 @@
         android:layout_width="3dp"
         android:layout_height="match_parent" />
 
-    <com.yidian.newssdk.widget.views.YdRatioImageView
+    <com.linken.newssdk.widget.views.YdRatioImageView
         android:id="@+id/news_img3"
         android:layout_width="0dp"
         android:layout_height="@dimen/ydsdk_ad_news_list_small_img_height"

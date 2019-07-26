@@ -13,7 +13,7 @@
         android:background="@android:color/black"
         android:orientation="vertical">
 
-        <com.yidian.newssdk.libraries.ydvd.YdVideoPlayerStandard
+        <com.linken.newssdk.libraries.ydvd.YdVideoPlayerStandard
             android:id="@+id/jcps_video"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

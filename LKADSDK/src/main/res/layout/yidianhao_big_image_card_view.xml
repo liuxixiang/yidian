@@ -37,7 +37,7 @@
         android:visibility="gone"
         tools:text="--" />
     <!-- big image -->
-    <com.yidian.newssdk.widget.views.YdRatioImageView
+    <com.linken.newssdk.widget.views.YdRatioImageView
         android:id="@+id/large_news_image"
         android:layout_width="match_parent"
         android:layout_height="0dp"

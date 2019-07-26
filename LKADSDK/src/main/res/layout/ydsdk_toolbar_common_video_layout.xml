@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     android:background="@color/ydsdk_transparent">
 
-    <com.yidian.newssdk.widget.views.Toolbar
+    <com.linken.newssdk.widget.views.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/ydsdk_toolbar_height"
@@ -15,6 +15,6 @@
         android:background="@color/ydsdk_transparent"
         toolbar:navigationIcon2="@drawable/ydsdk_article_video_back">
 
-    </com.yidian.newssdk.widget.views.Toolbar>
+    </com.linken.newssdk.widget.views.Toolbar>
 
 </FrameLayout>

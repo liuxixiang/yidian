@@ -6,7 +6,7 @@
 
 
 
-    <com.yidian.newssdk.core.newweb.LiteWebView
+    <com.linken.newssdk.core.newweb.LiteWebView
         android:id="@+id/web_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

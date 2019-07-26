@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!-- 这个文件拷贝于card_button_panel ，不同是负反馈的点击区域的 android:paddingRight="15dp" 写在了负反馈处--><!-- 原来是写着整个卡片的布局中，修改时，参考 --><!-- card_news_item_imgline, card_news_text, card_picturegallery_outsidechannel_bigimage 这三个用得最多的文件-->
-<com.yidian.newssdk.widget.feedback.normal.NormalBottomPanel xmlns:android="http://schemas.android.com/apk/res/android"
+<com.linken.newssdk.widget.feedback.normal.NormalBottomPanel xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:yidian="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -93,4 +93,4 @@
         android:paddingLeft="10dp"
         android:scaleType="center"
         android:src="@drawable/ydsdk_list_feedback_trigger" />
-</com.yidian.newssdk.widget.feedback.normal.NormalBottomPanel>
+</com.linken.newssdk.widget.feedback.normal.NormalBottomPanel>

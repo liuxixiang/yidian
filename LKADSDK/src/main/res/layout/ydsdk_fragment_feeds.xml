@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="44dp">
 
-        <com.yidian.newssdk.libraries.flyco.SlidingTabLayout
+        <com.linken.newssdk.libraries.flyco.SlidingTabLayout
             android:id="@+id/sliding_tab"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -30,7 +30,7 @@
 
     </RelativeLayout>
 
-    <com.yidian.newssdk.adapter.NoScrollViewPager
+    <com.linken.newssdk.adapter.NoScrollViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
