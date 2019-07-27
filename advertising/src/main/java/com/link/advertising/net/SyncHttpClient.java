@@ -64,7 +64,9 @@ public class SyncHttpClient {
     }
 
     public void addHeaders(Map<String, String> headers) {
-        headers.putAll(headers);
+        if(headers != null && headers.size() > 0) {
+            headers.putAll(headers);
+        }
     }
 
     public void removeHeader(String name) {

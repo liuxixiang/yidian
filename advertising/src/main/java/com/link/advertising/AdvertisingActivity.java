@@ -7,16 +7,16 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.link.advertising.net.AsyncHttpClient;
 import com.link.advertising.net.JsonObjectResponseHandler;
+import com.link.advertising.net.RequestBase;
 import com.link.advertising.widget.LiteWebView;
 import com.link.advertising.widget.SimpleWebChromeClient;
 
@@ -48,6 +48,7 @@ public class AdvertisingActivity extends FragmentActivity implements SimpleWebCh
                 //跳转到主界面
 //                        goHome();
                 mTimeText.setVisibility(View.GONE);
+                adComplete(mId);
             }
             super.handleMessage(msg);
         }
@@ -57,13 +58,21 @@ public class AdvertisingActivity extends FragmentActivity implements SimpleWebCh
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_advertising);
+        initViews();
+        initWebView();
+        distributead();
+    }
+
+    private void initViews() {
         mPrevBtn = findViewById(R.id.prev_btn);
         mNextBtn = findViewById(R.id.next_btn);
         mWebView = findViewById(R.id.webView);
         mClosePageText = findViewById(R.id.close_page);
         mTimeText = findViewById(R.id.time);
         mProgress = findViewById(R.id.progressBar);
-        initWebView();
+    }
+
+    private void distributead() {
         new AsyncHttpClient().get(SDKContants.URL_DISTRIBUTEAD, new JsonObjectResponseHandler() {
             @Override
             public void onSuccess(JSONObject response) {
@@ -88,15 +97,54 @@ public class AdvertisingActivity extends FragmentActivity implements SimpleWebCh
         });
     }
 
+
+    private void adComplete(final String mId) {
+        if(TextUtils.isEmpty(mId) || mId.trim().equals("")) {
+            return;
+        }
+        RequestBase requestBase = new RequestBase() {
+            @Override
+            protected String getPath() {
+                return SDKContants.URL_COMPLETE_AD;
+            }
+
+            @Override
+            public String getURI() {
+                String baseUrl = super.getURI();
+                StringBuilder builder = new StringBuilder(baseUrl);
+                builder.append("/");
+                builder.append(mId);
+                return builder.toString();
+            }
+        };
+        new AsyncHttpClient().get(requestBase, new JsonObjectResponseHandler() {
+            @Override
+            public void onFailure(Throwable e) {
+
+            }
+
+            @Override
+            public void onSuccess(JSONObject response) {
+
+            }
+        });
+    }
+
     private void onAistributeadSuccess() {
         loadUrl(mUrl);
     }
 
+    /**
+     * 倒计时
+     */
     private void sendMessage() {
         Message message = handler.obtainMessage();
         handler.sendMessageDelayed(message, 1000);
     }
 
+    /**
+     * 初始化webview
+     */
     private void initWebView() {
         mWebView.setBackgroundColor(Color.TRANSPARENT);
         mWebView.init();
@@ -129,8 +177,8 @@ public class AdvertisingActivity extends FragmentActivity implements SimpleWebCh
 
     @Override
     public void onPageLoadFinished() {
-        Log.e("lxh", "onPageLoadFinished");
         if (!isPageLoadFinished) {
+            Log.e("lxh", "onPageLoadFinished");
             isPageLoadFinished = true;
             mTimeText.setVisibility(View.VISIBLE);
             mTimeText.setText(mReadSecond + "s");
