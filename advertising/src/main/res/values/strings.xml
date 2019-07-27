@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">advertising</string>
+    <string name="close_page">关闭网页</string>
+    <string name="count_down">%1$s</string>
+
+    <string name="sdk_server_error">网络开小差了，请稍后重试</string>
+    <string name="sdk_server_failed">连接服务器失败，请稍后重试</string>
+    <string name="sdk_webservice_issue">网络开小差啦，稍等片刻</string>
+    <string name="sdk_network_timeout">网络超时，请稍后重试</string>
+    <string name="sdk_empty_response">抱歉，数据君开小差了</string>
+    <string name="sdk_network_error_retry">网络超时，请稍后重试</string>
+    <string name="sdk_webres_unsupport_download">抱歉，暂不支持此操作</string>
+
+
+</resources>

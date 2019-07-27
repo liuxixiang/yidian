@@ -1,4 +1,4 @@
-package com.yidian.yidian;
+package com.link.advertising;
 
 import org.junit.Test;
 
