@@ -1,4 +1,4 @@
-package com.yidian.yidian;
+package com.linken.yidian;
 
 import android.content.Context;
 

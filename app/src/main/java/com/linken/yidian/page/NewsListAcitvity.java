@@ -1,4 +1,4 @@
-package com.yidian.yidian.page;
+package com.linken.yidian.page;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -7,41 +7,44 @@ import android.view.View;
 import android.widget.Button;
 
 import com.umeng.analytics.MobclickAgent;
-import com.yidian.newssdk.exportui.NewsEmbedFragment;
-import com.yidian.newssdk.theme.ThemeManager;
-import com.yidian.yidian.R;
+import com.linken.newssdk.exportui.NewsListFragment;
+import com.linken.yidian.R;
 
 /**
  * Created by chenyichang on 2018/5/22.
- * <p>
- * 可以自由配置条数的信息流方式接入
+ *
+ * 单列表样式接入
  */
 
-public class NewsViewActivity extends FragmentActivity {
+public class NewsListAcitvity extends FragmentActivity {
 
     private Fragment fragment;
-    private Button btnTheme;
+    private Button btnRefresh;
+    private Button btnScroll2Top;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view);
+        setContentView(R.layout.activity_list);
 
-        fragment = NewsEmbedFragment.newInstance("推荐", 1);
+        fragment = NewsListFragment.newInstance("推荐", false);
 
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.portal_container, fragment)
                 .commitNowAllowingStateLoss();
-
-        btnTheme = findViewById(R.id.btnTheme);
-        btnTheme.setOnClickListener(new View.OnClickListener() {
+        btnRefresh = findViewById(R.id.expose_refresh);
+        btnRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                if (ThemeManager.getThemeId() == ThemeManager.SCENE_THEME_DEFAULT) {
-                    ThemeManager.setThemeId(ThemeManager.SCENE_THEME_NIGHT);
-                } else {
-                    ThemeManager.setThemeId(ThemeManager.SCENE_THEME_DEFAULT);
-                }
+            public void onClick(View v) {
+                ((NewsListFragment)fragment).refreshCurrentChannel();
+            }
+        });
+        btnScroll2Top = findViewById(R.id.expose_scroll2top);
+        btnScroll2Top.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((NewsListFragment)fragment).scrollToTopPosition();
             }
         });
 
@@ -63,4 +66,6 @@ public class NewsViewActivity extends FragmentActivity {
     protected void onDestroy() {
         super.onDestroy();
     }
+
+
 }

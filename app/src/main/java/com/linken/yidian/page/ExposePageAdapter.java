@@ -1,10 +1,10 @@
-package com.yidian.yidian.page;
+package com.linken.yidian.page;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.yidian.newssdk.exportui.NewsListFragment;
+import com.linken.newssdk.exportui.NewsListFragment;
 
 /**
  * @author zhangzhun

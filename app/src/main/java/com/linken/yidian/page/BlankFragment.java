@@ -1,4 +1,4 @@
-package com.yidian.yidian.page;
+package com.linken.yidian.page;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.yidian.yidian.R;
+import com.linken.yidian.R;
 
 
 public class BlankFragment extends Fragment {

@@ -1,11 +1,11 @@
-package com.yidian.yidian.page;
+package com.linken.yidian.page;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 
-import com.yidian.newssdk.exportui.NewsPortalFragment;
-import com.yidian.yidian.R;
+import com.linken.newssdk.exportui.NewsPortalFragment;
+import com.linken.yidian.R;
 
 public class ScrollViewActivity extends AppCompatActivity {
 

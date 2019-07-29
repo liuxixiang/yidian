@@ -1,4 +1,4 @@
-package com.yidian.yidian;
+package com.linken.yidian;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -6,13 +6,13 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.umeng.analytics.MobclickAgent;
-import com.yidian.yidian.page.CustomThemeNewsPortalActivity;
-import com.yidian.yidian.page.CustomThemeNewsPortalActivity2;
-import com.yidian.yidian.page.ExposePagerActivity;
-import com.yidian.yidian.page.NewsListAcitvity;
-import com.yidian.yidian.page.NewsPortalActivity;
-import com.yidian.yidian.page.NewsViewActivity;
-import com.yidian.yidian.page.ScrollViewActivity;
+import com.linken.yidian.page.CustomThemeNewsPortalActivity;
+import com.linken.yidian.page.CustomThemeNewsPortalActivity2;
+import com.linken.yidian.page.ExposePagerActivity;
+import com.linken.yidian.page.NewsListAcitvity;
+import com.linken.yidian.page.NewsPortalActivity;
+import com.linken.yidian.page.NewsViewActivity;
+import com.linken.yidian.page.ScrollViewActivity;
 
 
 public class MainActivity extends Activity implements View.OnClickListener {

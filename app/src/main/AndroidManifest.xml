@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.yidian.yidian">
+    package="com.linken.yidian">
 
 
     <application
-        android:name=".YdApplication"
+        android:name="com.linken.yidian.YdApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name="com.linken.yidian.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,23 +20,23 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".page.NewsListAcitvity"
+            android:name="com.linken.yidian.page.NewsListAcitvity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".page.NewsPortalActivity"
+            android:name="com.linken.yidian.page.NewsPortalActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".page.NewsViewActivity"
+            android:name="com.linken.yidian.page.NewsViewActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".page.ScrollViewActivity"
+            android:name="com.linken.yidian.page.ScrollViewActivity"
             android:theme="@style/Base.Theme.AppCompat.Light" />
-        <activity android:name=".page.CustomThemeNewsPortalActivity" />
-        <activity android:name=".page.CustomThemeNewsPortalActivity2" />
-        <activity android:name=".page.ExposePagerActivity" />
+        <activity android:name="com.linken.yidian.page.CustomThemeNewsPortalActivity" />
+        <activity android:name="com.linken.yidian.page.CustomThemeNewsPortalActivity2" />
+        <activity android:name="com.linken.yidian.page.ExposePagerActivity" />
     </application>
 
 </manifest>

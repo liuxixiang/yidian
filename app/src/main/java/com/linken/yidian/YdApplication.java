@@ -1,12 +1,12 @@
-package com.yidian.yidian;
+package com.linken.yidian;
 
 import android.app.Application;
 import android.content.Context;
 import android.util.Log;
 
+import com.linken.newssdk.NewsFeedsSDK;
+import com.linken.newssdk.export.IReportInterface;
 import com.umeng.analytics.MobclickAgent;
-import com.yidian.newssdk.NewsFeedsSDK;
-import com.yidian.newssdk.export.IReportInterface;
 
 
 /**
@@ -57,6 +57,15 @@ public class YdApplication extends Application {
                 Log.d(TAG, channelPageName);
             }
         });
+
+        NewsFeedsSDK.getInstance().setReportInterface(new IReportInterface() {
+
+            @Override
+            public void onPageSelected(String channelPageName) {
+                Log.d(TAG, channelPageName);
+            }
+        });
+
 
     }
 

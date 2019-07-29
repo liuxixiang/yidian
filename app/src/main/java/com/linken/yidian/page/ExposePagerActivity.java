@@ -1,11 +1,11 @@
-package com.yidian.yidian.page;
+package com.linken.yidian.page;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 
-import com.yidian.newssdk.libraries.flyco.SlidingTabLayout;
-import com.yidian.yidian.R;
+import com.linken.newssdk.libraries.flyco.SlidingTabLayout;
+import com.linken.yidian.R;
 
 public class ExposePagerActivity extends FragmentActivity {
 
