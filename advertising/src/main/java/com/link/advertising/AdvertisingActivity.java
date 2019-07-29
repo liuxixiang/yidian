@@ -70,6 +70,32 @@ public class AdvertisingActivity extends FragmentActivity implements SimpleWebCh
         mClosePageText = findViewById(R.id.close_page);
         mTimeText = findViewById(R.id.time);
         mProgress = findViewById(R.id.progressBar);
+        mPrevBtn.setEnabled(false);
+        mNextBtn.setEnabled(false);
+        mClosePageText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        mPrevBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mWebView.canGoBack()) {
+                    mWebView.goBack();
+                }
+            }
+        });
+
+        mNextBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mWebView.canGoForward()) {
+                    mWebView.goForward();
+                }
+            }
+        });
+
     }
 
     private void distributead() {
@@ -183,6 +209,17 @@ public class AdvertisingActivity extends FragmentActivity implements SimpleWebCh
             mTimeText.setVisibility(View.VISIBLE);
             mTimeText.setText(mReadSecond + "s");
             sendMessage();
+        }
+        //显示上一个控件显示
+        if(mWebView.canGoBack()) {
+            mPrevBtn.setEnabled(true);
+        }else {
+            mPrevBtn.setEnabled(false);
+        }
+        if(mWebView.canGoForward()) {
+            mNextBtn.setEnabled(true);
+        }else {
+            mNextBtn.setEnabled(false);
         }
     }
 
