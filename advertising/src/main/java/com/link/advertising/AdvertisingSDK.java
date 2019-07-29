@@ -15,17 +15,24 @@ public class AdvertisingSDK {
     private String mAppKey;
     private String mAppId;
     private boolean debug;
-    private String mFilterRegex;
+    private IAdvertisingListener mIAdvertisingListener;
 
     private AdvertisingSDK(Builder builder) {
         this.mContext = builder.mContext;
         this.mAppKey = builder.mAppKey;
         this.mAppId = builder.mAppId;
         this.debug = builder.debug;
-        this.mFilterRegex = builder.mFilterRegex;
 
         ContextUtils.init(this.mContext);
         LogUtils.setDebug(this.debug);
+    }
+
+    public void setIAdvertisingListener(IAdvertisingListener iAdvertisingListener) {
+        this.mIAdvertisingListener = iAdvertisingListener;
+    }
+
+    public IAdvertisingListener getIAdvertisingListener() {
+        return this.mIAdvertisingListener;
     }
 
     public static AdvertisingSDK getInstance() {
@@ -53,7 +60,6 @@ public class AdvertisingSDK {
         private String mAppKey;
         private String mAppId;
         private boolean debug;
-        private String mFilterRegex;
 
 
         public Builder() {
@@ -65,7 +71,6 @@ public class AdvertisingSDK {
             this.mAppKey = feedsSDK.mAppKey;
             this.mAppId = feedsSDK.mAppId;
             this.debug = feedsSDK.debug;
-            this.mFilterRegex = feedsSDK.mFilterRegex;
         }
 
         public Builder setContext(Context context) {
@@ -87,12 +92,6 @@ public class AdvertisingSDK {
             this.debug = debugEnabled;
             return this;
         }
-
-        public Builder setFilterRegex(String filterRegex) {
-            this.mFilterRegex = filterRegex;
-            return this;
-        }
-
 
         public AdvertisingSDK build() {
             if (this.mContext == null) {
@@ -125,5 +124,13 @@ public class AdvertisingSDK {
                 return null;
             }
         }
+    }
+
+    public interface IAdvertisingListener {
+        void onAdvertisingSucceed();
+
+        void onAdvertisingUpperLimit();
+
+        void onAdvertisingclosed();
     }
 }

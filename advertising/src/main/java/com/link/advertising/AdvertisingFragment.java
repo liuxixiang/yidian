@@ -5,14 +5,17 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
-import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.link.advertising.net.AsyncHttpClient;
 import com.link.advertising.net.JsonObjectResponseHandler;
@@ -23,7 +26,7 @@ import com.link.advertising.widget.SimpleWebChromeClient;
 import org.json.JSONObject;
 
 
-public class AdvertisingActivity extends FragmentActivity implements SimpleWebChromeClient.OnProgressCallback, LiteWebView.PageLoadListener {
+public class AdvertisingFragment extends Fragment implements SimpleWebChromeClient.OnProgressCallback, LiteWebView.PageLoadListener {
     private LiteWebView mWebView;
     private ImageView mPrevBtn;
     private ImageView mNextBtn;
@@ -36,6 +39,13 @@ public class AdvertisingActivity extends FragmentActivity implements SimpleWebCh
     private ProgressBar mProgress;
     private boolean isPageLoadFinished;
 
+    public static AdvertisingFragment newInstance() {
+        AdvertisingFragment fragment = new AdvertisingFragment();
+        Bundle bundle = new Bundle();
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -43,7 +53,7 @@ public class AdvertisingActivity extends FragmentActivity implements SimpleWebCh
             if (mReadSecond > 0) {
                 mTimeText.setVisibility(View.VISIBLE);
                 mTimeText.setText(mReadSecond + "s");
-                AdvertisingActivity.this.sendMessage();
+                AdvertisingFragment.this.sendMessage();
             } else {
                 //跳转到主界面
 //                        goHome();
@@ -54,22 +64,27 @@ public class AdvertisingActivity extends FragmentActivity implements SimpleWebCh
         }
     };
 
+    @Nullable
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_advertising);
-        initViews();
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_advertising, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        initViews(view);
         initWebView();
         distributead();
     }
 
-    private void initViews() {
-        mPrevBtn = findViewById(R.id.prev_btn);
-        mNextBtn = findViewById(R.id.next_btn);
-        mWebView = findViewById(R.id.webView);
-        mClosePageText = findViewById(R.id.close_page);
-        mTimeText = findViewById(R.id.time);
-        mProgress = findViewById(R.id.progressBar);
+    private void initViews(View view) {
+        mPrevBtn = view.findViewById(R.id.prev_btn);
+        mNextBtn = view.findViewById(R.id.next_btn);
+        mWebView = view.findViewById(R.id.webView);
+        mClosePageText = view.findViewById(R.id.close_page);
+        mTimeText = view.findViewById(R.id.time);
+        mProgress = view.findViewById(R.id.progressBar);
         mPrevBtn.setEnabled(false);
         mNextBtn.setEnabled(false);
         mClosePageText.setOnClickListener(new View.OnClickListener() {
@@ -81,7 +96,7 @@ public class AdvertisingActivity extends FragmentActivity implements SimpleWebCh
         mPrevBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mWebView.canGoBack()) {
+                if (mWebView.canGoBack()) {
                     mWebView.goBack();
                 }
             }
@@ -90,7 +105,7 @@ public class AdvertisingActivity extends FragmentActivity implements SimpleWebCh
         mNextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mWebView.canGoForward()) {
+                if (mWebView.canGoForward()) {
                     mWebView.goForward();
                 }
             }
@@ -125,7 +140,7 @@ public class AdvertisingActivity extends FragmentActivity implements SimpleWebCh
 
 
     private void adComplete(final String mId) {
-        if(TextUtils.isEmpty(mId) || mId.trim().equals("")) {
+        if (TextUtils.isEmpty(mId) || mId.trim().equals("")) {
             return;
         }
         RequestBase requestBase = new RequestBase() {
@@ -204,21 +219,20 @@ public class AdvertisingActivity extends FragmentActivity implements SimpleWebCh
     @Override
     public void onPageLoadFinished() {
         if (!isPageLoadFinished) {
-            Log.e("lxh", "onPageLoadFinished");
             isPageLoadFinished = true;
             mTimeText.setVisibility(View.VISIBLE);
             mTimeText.setText(mReadSecond + "s");
             sendMessage();
         }
         //显示上一个控件显示
-        if(mWebView.canGoBack()) {
+        if (mWebView.canGoBack()) {
             mPrevBtn.setEnabled(true);
-        }else {
+        } else {
             mPrevBtn.setEnabled(false);
         }
-        if(mWebView.canGoForward()) {
+        if (mWebView.canGoForward()) {
             mNextBtn.setEnabled(true);
-        }else {
+        } else {
             mNextBtn.setEnabled(false);
         }
     }
@@ -237,8 +251,10 @@ public class AdvertisingActivity extends FragmentActivity implements SimpleWebCh
     }
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         if (mWebView != null) {
+            mWebView.clearHistory();
+            mWebView.clearCache(true);
             mWebView.destroy();
         }
         super.onDestroy();
