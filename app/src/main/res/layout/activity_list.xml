@@ -48,7 +48,6 @@
             android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
             android:layout_toLeftOf="@+id/expose_refresh"
-            android:layout_toRightOf="@+id/title"
             android:text="滑到顶部"
             android:textColor="@color/ydsdk_red_a400" />
     </RelativeLayout>

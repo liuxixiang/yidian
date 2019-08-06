@@ -44,8 +44,6 @@ public class YdApplication extends Application {
          * 初始化SDK
          */
         new NewsFeedsSDK.Builder()
-                .setAppId(BuildConfig.APP_ID)
-                .setAppKey(BuildConfig.APP_KEY)
                 .setContext(getApplicationContext())
                 .setFilter("趣步")
                 .setDebugEnabled(BuildConfig.DEBUG)
