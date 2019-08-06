@@ -5,6 +5,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.linken.newssdk.NewsFeedsSDK;
+import com.linken.newssdk.export.INewsInfoCallback;
 import com.linken.newssdk.export.IReportInterface;
 import com.umeng.analytics.MobclickAgent;
 
@@ -14,7 +15,7 @@ import com.umeng.analytics.MobclickAgent;
  */
 
 public class YdApplication extends Application {
-    private static  final String TAG  = YdApplication.class.getSimpleName();
+    private static final String TAG = YdApplication.class.getSimpleName();
 
 
     @Override
@@ -55,6 +56,13 @@ public class YdApplication extends Application {
             @Override
             public void onPageSelected(String channelPageName) {
                 Log.d(TAG, channelPageName);
+            }
+        });
+
+        NewsFeedsSDK.getInstance().setNewsInfoCallback(new INewsInfoCallback() {
+            @Override
+            public void callback(String id, String title, String type, long duration) {
+                Log.e("lxh", "id=" + id + "----title=" + title + "---type=" + type + "---duration=" + duration);
             }
         });
 
