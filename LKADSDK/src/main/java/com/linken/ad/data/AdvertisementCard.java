@@ -37,7 +37,7 @@ import java.util.regex.Pattern;
  * Entity mapped to table "ADVERTISEMENT_CARD".
  */
 @Entity
-public class AdvertisementCard extends com.linken.newssdk.data.card.base.Card  implements Serializable {
+public class AdvertisementCard extends Card implements Serializable {
 
     @Id(autoincrement = true)
     private Long colId;
@@ -105,30 +105,30 @@ public class AdvertisementCard extends com.linken.newssdk.data.card.base.Card  i
     //打开应用下载广告的不同方式
     public static final int APP_OPEN_H5 = 0;
     /**
-     *   如果startAppStore==1,
-     *       点击广告和“立即下载”都调起商店详情页；
+     * 如果startAppStore==1,
+     * 点击广告和“立即下载”都调起商店详情页；
      */
     public static final int APP_OPEN_APP_STORE = 1;
 //    public static final int APP_OPEN_POPUP = 2;  新闻资讯3.7.6取消下载系统popup
     /**
      * 如果startAppStore==3，
-     *  点击广告尝试调起miniCard；如果失败，调起商店详情页；
-     *  点击“立即下载”尝试调用miniCard直接下载；如果失败，调起商店详情页；【11月发版实现】
+     * 点击广告尝试调起miniCard；如果失败，调起商店详情页；
+     * 点击“立即下载”尝试调用miniCard直接下载；如果失败，调起商店详情页；【11月发版实现】
      */
     public static final int APP_MINI_CARD_OPEN = 3;
     /**
-     *   Wifi环境自动下载
-         *  如果startAppStore==4, 客户端则做自动下载测试；
-         *  一点服务端开一个新的user bucket做自动开始下载测试；
-         *  广告服务端根据user bucket，将返回广告的startAppStore赋值4；
-         *  客户端判断startAppStore==4，并且是wifi环境，则开始自动下载；
-         *  如果是自动下载，按照如下方式上报log
-            i.    在开始下载时，不上报APP_START_DOWNLOAD；
-            ii.   在下载完成后，同时上报APP_START_DOWNLOAD，APP_DOWNLOAD_SUCCESS；
-            iii.  如果用户中间取消了下载，则上报APP_DOWNLOAD_CANCEL；
-            iv.   如果下载失败，则上报APP_DOWNLOAD_FAIL；
-            v.    将上报log的startAppStore字段赋值4.
-            vi.   如果点击了“立即下载”，则log上报保持现有方式不变，但是将上报log的startAppStore字段赋值0
+     * Wifi环境自动下载
+     * 如果startAppStore==4, 客户端则做自动下载测试；
+     * 一点服务端开一个新的user bucket做自动开始下载测试；
+     * 广告服务端根据user bucket，将返回广告的startAppStore赋值4；
+     * 客户端判断startAppStore==4，并且是wifi环境，则开始自动下载；
+     * 如果是自动下载，按照如下方式上报log
+     * i.    在开始下载时，不上报APP_START_DOWNLOAD；
+     * ii.   在下载完成后，同时上报APP_START_DOWNLOAD，APP_DOWNLOAD_SUCCESS；
+     * iii.  如果用户中间取消了下载，则上报APP_DOWNLOAD_CANCEL；
+     * iv.   如果下载失败，则上报APP_DOWNLOAD_FAIL；
+     * v.    将上报log的startAppStore字段赋值4.
+     * vi.   如果点击了“立即下载”，则log上报保持现有方式不变，但是将上报log的startAppStore字段赋值0
      */
     public static final int APP_MINI_CARD_TITLE_DOWNLOAD = 4;   //点title自动下载
 
@@ -225,7 +225,7 @@ public class AdvertisementCard extends com.linken.newssdk.data.card.base.Card  i
     public String gifUrl;
     public String tencentClickUrl;//腾讯联盟的点击url，用于每次点击后的url重置
 
-//    template26、126 电话号码
+    //    template26、126 电话号码
     public String phoneNumber;
     //template29 四个图片跳转信息
     public ArrayList<MultiClickTypeEntity> multiClickType;
@@ -238,7 +238,7 @@ public class AdvertisementCard extends com.linken.newssdk.data.card.base.Card  i
     public HybridContent mHybridContent;
     public boolean tencentAdHasExpose = false;//腾讯联盟的广告是否已经曝光过，要求只曝光一次
 
-    public static class GalleryAdTagEntity implements Serializable{
+    public static class GalleryAdTagEntity implements Serializable {
         public int x;
         public int y;
         public String direction;
@@ -246,7 +246,7 @@ public class AdvertisementCard extends com.linken.newssdk.data.card.base.Card  i
         public String linkUrl;
     }
 
-    public static class MultiClickTypeEntity implements Serializable{
+    public static class MultiClickTypeEntity implements Serializable {
         public int clickType;
         public String url;
         public String deepLinkUrl;
@@ -827,7 +827,7 @@ public class AdvertisementCard extends com.linken.newssdk.data.card.base.Card  i
 
             card.phoneNumber = json.optString("phonenumber");
 
-            if(json.has("MultiClickType")){
+            if (json.has("MultiClickType")) {
                 card.multiClickType = toMultiClickType(json.optJSONArray("MultiClickType"));
             }
             card.video_type = json.optInt("video_type", 0);
@@ -883,6 +883,7 @@ public class AdvertisementCard extends com.linken.newssdk.data.card.base.Card  i
         String fieldValue = json.optString(fieldName);
         return TextUtils.equals("null", fieldValue) ? null : fieldValue;
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -995,9 +996,9 @@ public class AdvertisementCard extends com.linken.newssdk.data.card.base.Card  i
         return jsonArray == null ? null : jsonArray.toString();
     }
 
-    private static ArrayList<MultiClickTypeEntity> toMultiClickType(JSONArray array){
+    private static ArrayList<MultiClickTypeEntity> toMultiClickType(JSONArray array) {
         ArrayList<MultiClickTypeEntity> list = new ArrayList<>();
-        for (int i = 0; i < array.length(); i++){
+        for (int i = 0; i < array.length(); i++) {
             JSONObject json = array.optJSONObject(i);
             MultiClickTypeEntity multiClickEntity = new MultiClickTypeEntity();
             multiClickEntity.clickType = json.optInt("click_type", TYPE_NO_ACTION);
@@ -1012,27 +1013,27 @@ public class AdvertisementCard extends com.linken.newssdk.data.card.base.Card  i
             multiClickEntity.imageUrl = json.optString("image");
             multiClickEntity.deepLinkUrl = json.optString("deepLinkUrl");
             multiClickEntity.logoImageUrl = json.optString("ads_logo");
-            multiClickEntity.width = json.optInt("width",0);
-            multiClickEntity.height = json.optInt("height",0);
+            multiClickEntity.width = json.optInt("width", 0);
+            multiClickEntity.height = json.optInt("height", 0);
             multiClickEntity.tags = toGalleryTags(json.optJSONArray("tags"));
             list.add(multiClickEntity);
         }
         return list;
     }
-    
-    private static List<GalleryAdTagEntity> toGalleryTags(JSONArray array){
-        if(array == null ){
+
+    private static List<GalleryAdTagEntity> toGalleryTags(JSONArray array) {
+        if (array == null) {
             return null;
         }
         int length = array.length();
         List<GalleryAdTagEntity> entities = new ArrayList<>();
         for (int i = 0; i < length; i++) {
             JSONObject tagObj = array.optJSONObject(i);
-            if(tagObj!=null){
+            if (tagObj != null) {
                 GalleryAdTagEntity entity = new GalleryAdTagEntity();
-                entity.x = tagObj.optInt("x",-1);
-                entity.y = tagObj.optInt("y",-1);
-                entity.direction = tagObj.optString("direction","left");
+                entity.x = tagObj.optInt("x", -1);
+                entity.y = tagObj.optInt("y", -1);
+                entity.direction = tagObj.optString("direction", "left");
                 entity.content = tagObj.optString("price");
                 entity.linkUrl = tagObj.optString("url");
                 entities.add(entity);
@@ -1048,7 +1049,7 @@ public class AdvertisementCard extends com.linken.newssdk.data.card.base.Card  i
 
     public static String[] convertStringArray(String str) {
         String[] result = EMPTY_STRING_ARRAY;
-        if(TextUtils.isEmpty(str)){
+        if (TextUtils.isEmpty(str)) {
             return result;
         }
         try {
@@ -1152,6 +1153,7 @@ public class AdvertisementCard extends com.linken.newssdk.data.card.base.Card  i
         return url.contains(ReplaceMacro.IP) || url.contains(ReplaceMacro.TS)
                 /*|| url.contains(ReplaceMacro.IESID)*/ || hasGeneralMacroToReplace(url);
     }
+
     public static boolean hasGeneralMacroToReplace(@NonNull String url) {
         if (TextUtils.isEmpty(url)) {
             return false;
@@ -1233,7 +1235,6 @@ public class AdvertisementCard extends com.linken.newssdk.data.card.base.Card  i
 //        jsonObject.put("cityCode", LocationUtils.getCityCode());
 //        return jsonObject;
 //    }
-
     @Override
     public void copyContent(Card card, boolean isFullCopy) {
         super.copyContent(card, isFullCopy);

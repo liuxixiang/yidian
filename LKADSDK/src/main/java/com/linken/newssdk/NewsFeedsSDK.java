@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.linken.newssdk.core.ad.AdvertisementModule;
 import com.linken.newssdk.core.feeds.FeedFragment;
+import com.linken.newssdk.export.INewsInfoCallback;
 import com.linken.newssdk.export.IReportInterface;
 import com.linken.newssdk.export.IShareInterface;
 import com.linken.newssdk.libraries.ydvd.YdMediaInterface;
@@ -35,6 +36,7 @@ public class NewsFeedsSDK {
     private boolean debug;
     private String mFilterRegex;
     private IShareInterface iShareInterface;
+    private INewsInfoCallback mNewsInfoCallback;
     private IReportInterface iReportInterface = ReportProxy.defaultIReportInterface;
 
     private NewsFeedsSDK(Builder builder) {
@@ -95,6 +97,10 @@ public class NewsFeedsSDK {
         return this;
     }
 
+    public void setNewsInfoCallback(INewsInfoCallback newsInfoCallback) {
+        this.mNewsInfoCallback = newsInfoCallback;
+    }
+
     public YdMediaInterface getCustomMediaplayer() {
         return YdVideoPlayer.getMediaInterface();
     }
@@ -105,6 +111,10 @@ public class NewsFeedsSDK {
 
     public IReportInterface getReportInterface() {
         return this.iReportInterface;
+    }
+
+    public INewsInfoCallback getNewsInfoCallback() {
+        return mNewsInfoCallback;
     }
 
     public static final class Builder {

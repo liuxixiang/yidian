@@ -5,10 +5,12 @@ import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.text.TextUtils;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 
 import com.linken.ad.data.AdvertisementCard;
 import com.linken.newssdk.IntentConstants;
+import com.linken.newssdk.NewsFeedsSDK;
 import com.linken.newssdk.R;
 import com.linken.newssdk.base.activity.BaseActivity;
 import com.linken.newssdk.core.newweb.LiteWebView;
@@ -16,6 +18,7 @@ import com.linken.newssdk.core.newweb.WebAppInterface;
 import com.linken.newssdk.core.newweb.WebAppManager;
 import com.linken.newssdk.data.card.base.Card;
 import com.linken.newssdk.data.news.INewsType;
+import com.linken.newssdk.export.INewsInfoCallback;
 import com.linken.newssdk.utils.ContextUtils;
 
 import java.io.IOException;
@@ -42,6 +45,9 @@ public abstract class CommonNewsActivity<P extends CommonNewsPresenter> extends 
     protected int articleType = INewsType.STYLE_HBRID_NEWS;
     protected String mNewsPara = INewsType.NORMAL_NEWS_URL;
     protected int mCurrentScreenMode = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+    private long landingPageStartTime = 0L;//记录广告landingPage开始时间
+    private long landingPageEndTime = 0L;//记录广告landingPage结束时间
+    private long duration = 0L;
 
     @Override
     protected void initView() {
@@ -100,7 +106,7 @@ public abstract class CommonNewsActivity<P extends CommonNewsPresenter> extends 
     }
 
     private void handleAdCard() {
-        if (mCard != null && mCard instanceof  AdvertisementCard && !TextUtils.isEmpty(((AdvertisementCard) mCard).getDocId())) {
+        if (mCard != null && mCard instanceof AdvertisementCard && !TextUtils.isEmpty(((AdvertisementCard) mCard).getDocId())) {
             articleType = INewsType.STYLE_HBRID_NEWS;
         }
     }
@@ -146,7 +152,7 @@ public abstract class CommonNewsActivity<P extends CommonNewsPresenter> extends 
     }
 
     private void initWebView(Activity context, LiteWebView webview) {
-        if (context == null || webview == null ) {
+        if (context == null || webview == null) {
             return;
         }
         Map<String, String> jsStringMap = new HashMap<>(2);
@@ -224,6 +230,9 @@ public abstract class CommonNewsActivity<P extends CommonNewsPresenter> extends 
             mWebView.onResume();
             mWebView.notifyJsAtKeyPoint(LiteWebView.WV_RESUME);
         }
+
+        landingPageStartTime = System.currentTimeMillis();//息屏之后重新计时
+
     }
 
     @Override
@@ -242,6 +251,7 @@ public abstract class CommonNewsActivity<P extends CommonNewsPresenter> extends 
             mWebView.destroy();
             mWebView = null;
         }
+        newsInfoCallback();
         super.onDestroy();
     }
 
@@ -253,7 +263,7 @@ public abstract class CommonNewsActivity<P extends CommonNewsPresenter> extends 
             mCurrentScreenMode = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
         }
         setRequestedOrientation(
-                usingPortrait? ActivityInfo.SCREEN_ORIENTATION_PORTRAIT : ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                usingPortrait ? ActivityInfo.SCREEN_ORIENTATION_PORTRAIT : ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
     }
 
     @Override
@@ -286,7 +296,7 @@ public abstract class CommonNewsActivity<P extends CommonNewsPresenter> extends 
 
     @Override
     public void closeMe() {
-       finish();
+        finish();
     }
 
     @Override
@@ -332,5 +342,33 @@ public abstract class CommonNewsActivity<P extends CommonNewsPresenter> extends 
     @Override
     public void onHideEmpty() {
 
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        duration = landingPageEndTime - landingPageStartTime;
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        landingPageEndTime = System.currentTimeMillis();
+    }
+
+    private void newsInfoCallback() {
+        duration = System.currentTimeMillis() - landingPageStartTime + duration;
+        INewsInfoCallback newsInfoCallback = NewsFeedsSDK.getInstance().getNewsInfoCallback();
+        if (newsInfoCallback != null && mCard != null) {
+            String type = "";
+            if (Card.CTYPE_VIDEO_LIVE_CARD.equals(mCard.cType) || Card.CTYPE_VIDEO_CARD.equals(mCard.cType)) {
+                type = INewsInfoCallback.TYPE_VIDEO;
+            } else if (Card.CTYPE_ADVERTISEMENT.equals(mCard.cType)) {
+                type = INewsInfoCallback.TYPE_AD;
+            } else {
+                type = INewsInfoCallback.TYPE_ARTICLE;
+            }
+            newsInfoCallback.callback(mCard.id + "", mCard.title, type, duration);
+        }
     }
 }

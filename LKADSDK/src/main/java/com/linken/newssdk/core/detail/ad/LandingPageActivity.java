@@ -16,9 +16,12 @@ import android.widget.ProgressBar;
 
 import com.linken.ad.data.AdvertisementCard;
 import com.linken.newssdk.IntentConstants;
+import com.linken.newssdk.NewsFeedsSDK;
 import com.linken.newssdk.R;
 import com.linken.newssdk.core.newweb.LiteWebView;
 import com.linken.newssdk.core.newweb.SimpleWebChromeClient;
+import com.linken.newssdk.data.card.base.Card;
+import com.linken.newssdk.export.INewsInfoCallback;
 import com.linken.newssdk.utils.LogUtils;
 import com.linken.newssdk.widget.newshare.OnShareClickListener;
 import com.linken.newssdk.widget.newshare.ShareFragment;
@@ -46,7 +49,10 @@ public class LandingPageActivity extends FragmentActivity implements View.OnClic
     @Nullable
     LiteWebView mWebView;
     private long landingPageStartTime = 0L;//记录广告landingPage开始时间
+    private long landingPageEndTime = 0L;//记录广告landingPage结束时间
+    private long duration = 0L;
     private AdvertisementCard adCard = null;
+
 
     public static void startActivity(Activity activity, Intent intent) {
         try {
@@ -159,13 +165,41 @@ public class LandingPageActivity extends FragmentActivity implements View.OnClic
         landingPageStartTime = System.currentTimeMillis();//息屏之后重新计时
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        duration = landingPageEndTime - landingPageStartTime;
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        landingPageEndTime = System.currentTimeMillis();
+    }
 
     @Override
     protected void onDestroy() {
         if (mWebView != null) {
             mWebView.destroy();
         }
+        newsInfoCallback();
         super.onDestroy();
+    }
+
+    private void newsInfoCallback() {
+        duration = System.currentTimeMillis() - landingPageStartTime + duration;
+        INewsInfoCallback newsInfoCallback = NewsFeedsSDK.getInstance().getNewsInfoCallback();
+        if (newsInfoCallback != null && adCard != null) {
+            String type = "";
+            if (Card.CTYPE_VIDEO_LIVE_CARD.equals(adCard.cType) || Card.CTYPE_VIDEO_CARD.equals(adCard.cType)) {
+                type = INewsInfoCallback.TYPE_VIDEO;
+            } else if (Card.CTYPE_ADVERTISEMENT.equals(adCard.cType)) {
+                type = INewsInfoCallback.TYPE_AD;
+            } else {
+                type = INewsInfoCallback.TYPE_ARTICLE;
+            }
+            newsInfoCallback.callback(adCard.id + "", adCard.title, type, duration);
+        }
     }
 
 

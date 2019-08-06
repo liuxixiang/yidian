@@ -14,7 +14,7 @@ android {
 
     buildTypes {
         debug {
-            buildConfigField 'String', 'OPEN_ROOT_PATH', '"http://open_test.go2yd.com/open-api/open-platform/"'
+            buildConfigField 'String', 'OPEN_ROOT_PATH', '"http://o.go2yd.com/open-api/open-platform/"'
         }
         release {
             buildConfigField 'String', 'OPEN_ROOT_PATH', '"http://o.go2yd.com/open-api/open-platform/"'
