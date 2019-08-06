@@ -109,6 +109,10 @@
     *;
 }
 
+-keep class com.linken.newssdk.export.INewsInfoCallback {
+    *;
+}
+
 -keep class com.linken.newssdk.utils.ThreadUtils {
     *;
 }
