@@ -120,8 +120,8 @@ public class NewsFeedsSDK {
     public static final class Builder {
 
         private Context mContext;
-        private String mAppKey;
-        private String mAppId;
+        private String mAppKey = "U5WdX6hOYtoGiZHCRWSePUrJ08dnLMrd";
+        private String mAppId = "oFWGYxt8shF9zNEuHSx_Cg0s";
         private boolean debug;
         private String mFilterRegex;
 
@@ -144,12 +144,12 @@ public class NewsFeedsSDK {
         }
 
         private Builder setAppKey(String appKey) {
-            this.mAppKey = "U5WdX6hOYtoGiZHCRWSePUrJ08dnLMrd";
+            this.mAppKey = appKey;
             return this;
         }
 
         private Builder setAppId(String id) {
-            this.mAppId = "oFWGYxt8shF9zNEuHSx_Cg0s";
+            this.mAppId = id;
             return this;
         }
 
