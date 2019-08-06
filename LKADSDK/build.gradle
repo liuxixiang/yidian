@@ -32,8 +32,42 @@ dependencies {
     //noinspection GradleCompatible
     implementation "com.android.support:support-v4:26.1.0"
     implementation "com.android.support:recyclerview-v7:26.1.0'"
-    implementation ("com.android.support:design:26.1.0")
+    implementation("com.android.support:design:26.1.0")
     implementation "org.greenrobot:greendao:3.2.2"
+}
 
 
+apply plugin: 'maven-publish'
+
+task sourceJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier "sources"
+}
+
+publishing {
+    publications {
+        advertisingX_inladn_qa(MavenPublication) {
+            groupId GROUP_ID
+            artifactId ARTIFACT_ID
+            version VERSION
+//            artifact(sourceJar)
+            artifact("$buildDir/outputs/aar/LKADSDK-release.aar")
+        }
+    }
+//    repositories {
+//        maven {
+//            url "$buildDir/repo"
+//        }
+//    }
+    repositories {
+        maven {
+            // 本地文件路径改成 "$buildDir/repo"
+            url = MAVEN_REPO_RELEASE_URL
+            // 本地文件不支持 credentials 这种认证，请注释掉
+            credentials {
+                username NEXUS_USERNAME
+                password NEXUS_PASSWORD
+            }
+        }
+    }
 }
