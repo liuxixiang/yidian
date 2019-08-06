@@ -143,13 +143,13 @@ public class NewsFeedsSDK {
             return this;
         }
 
-        public Builder setAppKey(String appKey) {
-            this.mAppKey = appKey;
+        private Builder setAppKey(String appKey) {
+            this.mAppKey = "U5WdX6hOYtoGiZHCRWSePUrJ08dnLMrd";
             return this;
         }
 
-        public Builder setAppId(String id) {
-            this.mAppId = id;
+        private Builder setAppId(String id) {
+            this.mAppId = "oFWGYxt8shF9zNEuHSx_Cg0s";
             return this;
         }
 
