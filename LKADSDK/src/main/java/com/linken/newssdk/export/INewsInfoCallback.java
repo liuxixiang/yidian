@@ -7,7 +7,7 @@ import java.lang.annotation.RetentionPolicy;
 
 public interface INewsInfoCallback {
     //文章
-    String TYPE_ARTICLE = "article";
+    String TYPE_ARTICLE = "Article";
     //广告
     String TYPE_AD = "Ad";
     //视屏
