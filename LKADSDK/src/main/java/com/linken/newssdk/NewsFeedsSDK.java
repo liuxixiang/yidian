@@ -120,8 +120,8 @@ public class NewsFeedsSDK {
     public static final class Builder {
 
         private Context mContext;
-        private String mAppKey = "U5WdX6hOYtoGiZHCRWSePUrJ08dnLMrd";
-        private String mAppId = "oFWGYxt8shF9zNEuHSx_Cg0s";
+        private String mAppKey = "SzDT5xJF8NNJSZVs7izeE7TDTY916yZa";
+        private String mAppId = "mVv7l58rwJlrUUcoOvj_JAtc";
         private boolean debug;
         private String mFilterRegex;
 
