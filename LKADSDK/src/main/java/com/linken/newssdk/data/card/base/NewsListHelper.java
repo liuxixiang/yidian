@@ -35,6 +35,7 @@ public class NewsListHelper {
                 wemediaHeaderBgColor = '#' + wemediaHeaderBgColor;
             }
             JSONArray newsObjList = json.getJSONArray("result");
+            String channel = json.getString("channel");
             mResultList = new ArrayList<>(50);
             for (int i = 0; i < newsObjList.length(); i++) {
                 JSONObject newsJson = newsObjList.optJSONObject(i);
@@ -43,6 +44,7 @@ public class NewsListHelper {
                 }
                 Card item = CardHelper.parseCard(newsJson);
                 if (item != null) {
+                    item.channel = channel;
                     //过滤
                     if (!filterRegex(item.title)) {
                         mResultList.add(item);

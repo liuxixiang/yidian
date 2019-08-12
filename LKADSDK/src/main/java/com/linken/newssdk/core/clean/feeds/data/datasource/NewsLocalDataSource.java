@@ -11,6 +11,7 @@ import com.linken.newssdk.data.card.base.Card;
 import com.linken.newssdk.data.channel.YdChannel;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * @author zhangzhun
@@ -57,7 +58,7 @@ public class NewsLocalDataSource<Request extends UseCaseParams.Request, Response
             if (channel == null) {
                 return null;
             }
-            channel =  ChannelDataManager.restoreChannelCachedNewsList(channel.getChannelName());
+            channel = ChannelDataManager.restoreChannelCachedNewsList(channel.getChannelName());
             return null;
         }
 
@@ -69,8 +70,9 @@ public class NewsLocalDataSource<Request extends UseCaseParams.Request, Response
             if (channel.newsList == null || channel.newsList.isEmpty()) {
                 if (mChannel != null && mChannel.newsList != null && mChannel.newsList.size() > 0) {
                     new SaveChannelNewsListTask().execute(mChannel);
+                    mCardList = cardList(mChannel.newsList, mChannel.getChannelName() + "");
                     if (readCacheCallback != null) {
-                        readCacheCallback.onSuccess((Response) new FeedsResponse(mChannel.newsList));
+                        readCacheCallback.onSuccess((Response) new FeedsResponse(mCardList));
                     }
                     return;
                 }
@@ -83,12 +85,23 @@ public class NewsLocalDataSource<Request extends UseCaseParams.Request, Response
                 return;
             } else {
                 // notify fetch complete, let UI hide the loading animation
-                mCardList = channel.newsList;
+                mCardList = cardList(channel.newsList, mChannel.getChannelName() + "");
                 if (readCacheCallback != null) {
                     readCacheCallback.onSuccess((Response) new FeedsResponse(mCardList));
                 }
             }
         }
+    }
+
+    private ArrayList<Card> cardList(ArrayList<Card> cards, String channel) {
+        if (cards != null && cards.size() > 0) {
+            Iterator iterator = cards.iterator();
+            while (iterator.hasNext()) {
+                Card card = (Card) iterator.next();
+                card.channel = channel;
+            }
+        }
+        return cards;
     }
 
     public void saveNewsListToCache(YdChannel request) {

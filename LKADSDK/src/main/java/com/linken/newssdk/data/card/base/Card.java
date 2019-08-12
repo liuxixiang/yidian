@@ -113,6 +113,7 @@ public class Card implements MultiItemEntity, Serializable, DiffUiDataCallback.U
     public String date = "";// 新闻日期
     public String impId = "";//impression id
     //为了日志
+    public String channel = ""; //频道名称
     public String channelId = ""; //频道ID
     public String channelFromId = "";//频道的FromID
     public String groupId = "";//所属应用的ID
@@ -268,6 +269,7 @@ public class Card implements MultiItemEntity, Serializable, DiffUiDataCallback.U
             this.isLike = card.isLike;
             this.pageId = card.pageId;
             this.channelFromId = card.channelFromId;
+            this.channel = card.channel;
             this.channelId = card.channelId;
             this.groupFromId = card.groupFromId;
             this.groupId = card.groupId;

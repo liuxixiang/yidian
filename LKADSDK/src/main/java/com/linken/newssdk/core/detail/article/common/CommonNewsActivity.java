@@ -368,7 +368,7 @@ public abstract class CommonNewsActivity<P extends CommonNewsPresenter> extends 
             } else {
                 type = INewsInfoCallback.TYPE_ARTICLE;
             }
-            newsInfoCallback.callback(mCard.id + "", mCard.title, type, duration);
+            newsInfoCallback.callback(mCard.id + "", mCard.title, type, mCard.channel, duration);
         }
     }
 }

@@ -198,7 +198,7 @@ public class LandingPageActivity extends FragmentActivity implements View.OnClic
             } else {
                 type = INewsInfoCallback.TYPE_ARTICLE;
             }
-            newsInfoCallback.callback(adCard.id + "", adCard.title, type, duration);
+            newsInfoCallback.callback(adCard.id + "", adCard.title, type, adCard.channel, duration);
         }
     }
 
