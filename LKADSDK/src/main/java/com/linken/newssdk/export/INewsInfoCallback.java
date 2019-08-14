@@ -22,7 +22,7 @@ public interface INewsInfoCallback {
     int TYPE_EVENT_H5_COUNT_DOWN = 2;
 
 
-    List<Info> setInfo(List<Info> infos);
+    List<AfferentInfo> setAfferentInfo(List<AfferentInfo> afferentInfos);
 
     /**
      * @param id             新闻 广告 id
@@ -45,13 +45,13 @@ public interface INewsInfoCallback {
     @interface NewsTypeDef {
     }
 
-    class Info {
+    class AfferentInfo {
         int reward;
         int countDown;
         @NewsTypeDef
         String type;
 
-        public Info( String type,int reward, int countDown) {
+        public AfferentInfo(String type, int reward, int countDown) {
             this.reward = reward;
             this.countDown = countDown;
             this.type = type;

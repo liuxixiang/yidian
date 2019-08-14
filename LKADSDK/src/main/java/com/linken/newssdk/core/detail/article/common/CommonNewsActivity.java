@@ -54,7 +54,7 @@ public abstract class CommonNewsActivity<P extends CommonNewsPresenter> extends 
     private long landingPageStartTime = 0L;//记录广告landingPage开始时间
     private long landingPageEndTime = 0L;//记录广告landingPage结束时间
     private long duration = 0L;
-    private List<INewsInfoCallback.Info> mNewsInfos;
+    private List<INewsInfoCallback.AfferentInfo> mAfferentInfos;
     private CustomCountLayout mCustomCountLayout;
     private String mType = "";
     private int countDown = 15;
@@ -71,7 +71,7 @@ public abstract class CommonNewsActivity<P extends CommonNewsPresenter> extends 
         fetchData();
         INewsInfoCallback newsInfoCallback = NewsFeedsSDK.getInstance().getNewsInfoCallback();
         if (newsInfoCallback != null) {
-            mNewsInfos = newsInfoCallback.setInfo(new ArrayList<INewsInfoCallback.Info>());
+            mAfferentInfos = newsInfoCallback.setAfferentInfo(new ArrayList<INewsInfoCallback.AfferentInfo>());
         }
     }
 
@@ -432,8 +432,8 @@ public abstract class CommonNewsActivity<P extends CommonNewsPresenter> extends 
             layoutParams.setMargins(0, 0, DensityUtil.dip2px(this, 10), DensityUtil.dip2px(this, 80));
             mViewGroup.addView(mCustomCountLayout, layoutParams);
         }
-        if (mNewsInfos != null && mNewsInfos.size() > 0) {
-            for (INewsInfoCallback.Info newsInfo : mNewsInfos) {
+        if (mAfferentInfos != null && mAfferentInfos.size() > 0) {
+            for (INewsInfoCallback.AfferentInfo newsInfo : mAfferentInfos) {
                 if (newsInfo.getType().equals(mType)) {
                     countDown = newsInfo.getCountDown();
                     reward = newsInfo.getReward();
