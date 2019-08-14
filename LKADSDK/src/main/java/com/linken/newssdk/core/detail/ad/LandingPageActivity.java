@@ -18,11 +18,13 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.linken.ad.data.AdvertisementCard;
+import com.linken.ad.data.RewardCard;
 import com.linken.newssdk.IntentConstants;
 import com.linken.newssdk.NewsFeedsSDK;
 import com.linken.newssdk.R;
 import com.linken.newssdk.core.newweb.LiteWebView;
 import com.linken.newssdk.core.newweb.SimpleWebChromeClient;
+import com.linken.newssdk.data.ad.db.AdvertisementDbUtil;
 import com.linken.newssdk.data.card.base.Card;
 import com.linken.newssdk.export.INewsInfoCallback;
 import com.linken.newssdk.utils.DensityUtil;
@@ -291,6 +293,10 @@ public class LandingPageActivity extends FragmentActivity implements View.OnClic
         if (adCard == null) {
             return;
         }
+        String cardId = AdvertisementDbUtil.getRewardRecordId(adCard.id);
+        if (!TextUtils.isEmpty(cardId) && cardId.equals(adCard.id)) {
+            return;
+        }
         int reward = 0;
         String tag = "customCountLayout";
         ViewGroup mViewGroup = (ViewGroup) mWebView.getParent();
@@ -314,10 +320,13 @@ public class LandingPageActivity extends FragmentActivity implements View.OnClic
         }
         mCustomCountLayout.setMaxCount(countDown);
         mCustomCountLayout.setReward(reward);
+        final int finalReward = reward;
         mCustomCountLayout.setOnFinishListener(new CustomCountLayout.OnFinishListener() {
             @Override
             public void onFinish() {
                 newsInfoCallback(INewsInfoCallback.TYPE_EVENT_H5_COUNT_DOWN, countDown, countDown);
+                RewardCard rewardCardBean = new RewardCard(null, adCard.id, finalReward, mType);
+                AdvertisementDbUtil.createRewardRecord(rewardCardBean);
             }
 
         });

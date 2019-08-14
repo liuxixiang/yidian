@@ -7,6 +7,7 @@ import com.linken.ad.data.AdDownloadFileDao;
 import com.linken.ad.data.AdvertisementCardDao;
 import com.linken.ad.data.DaoMaster;
 import com.linken.ad.data.DaoSession;
+import com.linken.ad.data.RewardCardDao;
 import com.linken.newssdk.core.ad.AdvertisementModule;
 import com.linken.newssdk.data.ad.db.sqlite.AbstractDaoWrapper;
 import com.linken.newssdk.utils.LogUtils;
@@ -91,9 +92,20 @@ public class AdDaoDBHelper {
 
     public static AbstractDaoWrapper getAdDownloadFileDao() {
         if (getDaoSession() != null) {
-            AdDownloadFileDao dao =  getDaoSession().getAdDownloadFileDao();
+            AdDownloadFileDao dao = getDaoSession().getAdDownloadFileDao();
             if (dao != null) {
                 AbstractDaoWrapper daoWrapper = new AbstractDaoWrapper(dao, "AdDownloadFileDao");
+                return daoWrapper;
+            }
+        }
+        return null;
+    }
+
+    public static AbstractDaoWrapper getRewardCardDao() {
+        if (getDaoSession() != null) {
+            RewardCardDao dao = getDaoSession().getRewardCardDao();
+            if (dao != null) {
+                AbstractDaoWrapper daoWrapper = new AbstractDaoWrapper(dao, "RewardCard");
                 return daoWrapper;
             }
         }

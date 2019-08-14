@@ -16,12 +16,13 @@ import org.greenrobot.greendao.internal.DaoConfig;
  * @see org.greenrobot.greendao.AbstractDaoSession
  */
 public class DaoSession extends AbstractDaoSession {
-
+    private final DaoConfig rewardCardDaoConfig;
     private final DaoConfig advertisementCardDaoConfig;
     private final DaoConfig adDownloadFileDaoConfig;
 
     private final AdvertisementCardDao advertisementCardDao;
     private final AdDownloadFileDao adDownloadFileDao;
+    private final RewardCardDao rewardCardDao;
 
     public DaoSession(Database db, IdentityScopeType type, Map<Class<? extends AbstractDao<?, ?>>, DaoConfig>
             daoConfigMap) {
@@ -35,6 +36,13 @@ public class DaoSession extends AbstractDaoSession {
 
         advertisementCardDao = new AdvertisementCardDao(advertisementCardDaoConfig, this);
         adDownloadFileDao = new AdDownloadFileDao(adDownloadFileDaoConfig, this);
+
+        rewardCardDaoConfig = daoConfigMap.get(RewardCardDao.class).clone();
+        rewardCardDaoConfig.initIdentityScope(type);
+        rewardCardDao = new RewardCardDao(rewardCardDaoConfig, this);
+
+
+        registerDao(RewardCard.class, rewardCardDao);
 
         registerDao(AdvertisementCard.class, advertisementCardDao);
         registerDao(AdDownloadFile.class, adDownloadFileDao);
@@ -51,6 +59,10 @@ public class DaoSession extends AbstractDaoSession {
 
     public AdDownloadFileDao getAdDownloadFileDao() {
         return adDownloadFileDao;
+    }
+
+    public RewardCardDao getRewardCardDao() {
+        return rewardCardDao;
     }
 
 }

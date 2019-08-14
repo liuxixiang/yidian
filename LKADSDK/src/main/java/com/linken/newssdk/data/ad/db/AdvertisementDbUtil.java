@@ -8,6 +8,8 @@ import com.linken.ad.data.AdDownloadFile;
 import com.linken.ad.data.AdDownloadFileDao;
 import com.linken.ad.data.AdvertisementCard;
 import com.linken.ad.data.AdvertisementCardDao;
+import com.linken.ad.data.RewardCard;
+import com.linken.ad.data.RewardCardDao;
 import com.linken.newssdk.core.ad.AdvertisementUtil;
 import com.linken.newssdk.data.ad.ADConstants;
 import com.linken.newssdk.data.ad.db.sqlite.AbstractDaoWrapper;
@@ -192,6 +194,38 @@ public class AdvertisementDbUtil {
         dao.deleteInTx(list);
 
         return true;
+    }
+
+
+    /**
+     * 创建获取奖励的记录
+     */
+    public static boolean createRewardRecord(RewardCard rewardCardBean) {
+        AbstractDaoWrapper dao = AdDaoDBHelper.getRewardCardDao();
+        if (dao == null) {
+            return false;
+        }
+        dao.insertOrReplace(rewardCardBean);
+        return true;
+    }
+
+    public static String getRewardRecordId(String id) {
+        String cardId = "";
+        AbstractDaoWrapper dao = AdDaoDBHelper.getRewardCardDao();
+        if (dao == null) {
+            return cardId;
+        }
+
+
+        List<RewardCard> list = (List<RewardCard>) dao
+                .queryBuilder()
+                .where(RewardCardDao.Properties.CardId.eq(id))
+                .list();
+
+        if (list != null && list.size() > 0) {
+            cardId = list.get(0).getCardId();
+        }
+        return cardId;
     }
 
 }

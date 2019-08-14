@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.linken.ad.data.AdvertisementCard;
+import com.linken.ad.data.RewardCard;
 import com.linken.newssdk.IntentConstants;
 import com.linken.newssdk.NewsFeedsSDK;
 import com.linken.newssdk.R;
@@ -18,6 +19,7 @@ import com.linken.newssdk.base.activity.BaseActivity;
 import com.linken.newssdk.core.newweb.LiteWebView;
 import com.linken.newssdk.core.newweb.WebAppInterface;
 import com.linken.newssdk.core.newweb.WebAppManager;
+import com.linken.newssdk.data.ad.db.AdvertisementDbUtil;
 import com.linken.newssdk.data.card.base.Card;
 import com.linken.newssdk.data.news.INewsType;
 import com.linken.newssdk.export.INewsInfoCallback;
@@ -287,7 +289,7 @@ public abstract class CommonNewsActivity<P extends CommonNewsPresenter> extends 
             mWebView.destroy();
             mWebView = null;
         }
-        if(landingPageStartTime !=0) {
+        if (landingPageStartTime != 0) {
             duration = System.currentTimeMillis() - landingPageStartTime + duration;
         }
         newsInfoCallback(INewsInfoCallback.TYPE_EVENT_DURATION, countDown, (int) (duration / 1000));
@@ -386,7 +388,7 @@ public abstract class CommonNewsActivity<P extends CommonNewsPresenter> extends 
     @Override
     protected void onRestart() {
         super.onRestart();
-        if(landingPageStartTime !=0) {
+        if (landingPageStartTime != 0) {
             duration = landingPageEndTime - System.currentTimeMillis();
         }
 
@@ -420,6 +422,10 @@ public abstract class CommonNewsActivity<P extends CommonNewsPresenter> extends 
         if (mCard == null) {
             return;
         }
+        String cardId = AdvertisementDbUtil.getRewardRecordId(mCard.id);
+        if (!TextUtils.isEmpty(cardId) && cardId.equals(mCard.id)) {
+            return;
+        }
         int reward = 0;
         String tag = "customCountLayout";
         ViewGroup mViewGroup = (ViewGroup) mWebView.getParent();
@@ -443,10 +449,13 @@ public abstract class CommonNewsActivity<P extends CommonNewsPresenter> extends 
         }
         mCustomCountLayout.setMaxCount(countDown);
         mCustomCountLayout.setReward(reward);
+        final int finalReward = reward;
         mCustomCountLayout.setOnFinishListener(new CustomCountLayout.OnFinishListener() {
             @Override
             public void onFinish() {
                 newsInfoCallback(INewsInfoCallback.TYPE_EVENT_H5_COUNT_DOWN, countDown, countDown);
+                RewardCard rewardCardBean = new RewardCard(null, mCard.id, finalReward, mType);
+                AdvertisementDbUtil.createRewardRecord(rewardCardBean);
             }
 
         });
