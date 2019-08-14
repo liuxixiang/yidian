@@ -233,7 +233,7 @@ public class CustomCountLayout extends FrameLayout {
 
 
         });
-        objectAnimator.setDuration(2000).start();
+        objectAnimator.setDuration(1000).start();
     }
 
 
