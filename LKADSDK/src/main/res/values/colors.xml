@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="ydsdk_">#F0F0F0</color>
+    <color name="ydsdk_ad_116_input">#999999</color>
+    <color name="ydsdk_ad_116_input_bg">#d8d8d8</color>
+    <color name="ydsdk_ad_116_input_error_divider">#fe5252</color>
+    <color name="ydsdk_ad_116_sign_up">#ffffff</color>
+    <color name="ydsdk_ad_116_sign_up_bg">#4eb3f1</color>
+    <color name="ydsdk_ad_116_title">#333333</color>
+    <color name="ydsdk_ad_17_input_suspend_divider">#3aa4e8</color>
+    <color name="ydsdk_ad_download_btn">#129aee</color>
+    <color name="ydsdk_ad_half_alpha_black">#80000000</color>
+    <color name="ydsdk_ad_other_text">#999999</color>
+    <color name="ydsdk_ad_tag_text">#999999</color>
+    <color name="ydsdk_ad_tag_text_ns">#666666</color>
+    <color name="ydsdk_ad_title">#222222</color>
+    <color name="ydsdk_ad_white">#ffffff</color>
+    <color name="ydsdk_black_222222">#222222</color>
+    <color name="ydsdk_blank_error_view_text_color_alpha50">#7f999999</color>
+    <color name="ydsdk_blue_in_news_list_card">#129aee</color>
+    <color name="ydsdk_card_bg_hl">#66CCCCCC</color>
+    <color name="ydsdk_card_img_bg">#e8e8e8</color>
+    <color name="ydsdk_card_img_bg_nt">@color/ydsdk_text_gray</color>
+    <color name="ydsdk_content_other_text">#999999</color>
+    <color name="ydsdk_content_other_text_nt">#777777</color>
+    <color name="ydsdk_content_text_hl_nt">#0f82fe</color>
+    <color name="ydsdk_content_text_readed">#828282</color>
+    <color name="ydsdk_content_text_readed_nt">#7F7F7F</color>
+    <color name="ydsdk_divider_bg">#d8d8d8</color>
+    <color name="ydsdk_empty_tip">@color/ydsdk_gray_999999</color>
+    <color name="ydsdk_gray_999999">#999999</color>
+    <color name="ydsdk_indicator_color">#FFE42112</color>
+    <color name="ydsdk_list_item_other_text">#999999</color>
+    <color name="ydsdk_live_panel_bg">#ffffff</color>
+    <color name="ydsdk_material_blue_500">#5677fc</color>
+    <color name="ydsdk_navi_channel_bg">#fafafa</color>
+    <color name="ydsdk_navi_tab_color">#888888</color>
+    <color name="ydsdk_navi_tab_color_h">#129aee</color>
+    <color name="ydsdk_news_list_line_under_indicator">#b8b8b8</color>
+    <color name="ydsdk_notice_bg">#e32e20</color>
+    <color name="ydsdk_package_choose_selected">#efefef</color>
+    <color name="ydsdk_panel_bg">#fafafa</color>
+    <color name="ydsdk_picture_gallery_background">#000000</color>
+    <color name="ydsdk_red_a400">#FF5B5F</color>
+    <color name="ydsdk_red_da3838">#DA3838</color>
+    <color name="ydsdk_search_box_font">#707070</color>
+    <color name="ydsdk_skin_primary_red">@color/ydsdk_red_da3838</color>
+    <color name="ydsdk_textSelectColor">#FFE42112</color>
+    <color name="ydsdk_textUnselectColor">#FF0B0B0B</color>
+    <color name="ydsdk_text_black">#000000</color>
+    <color name="ydsdk_text_blue">#129aee</color>
+    <color name="ydsdk_text_gray">#505050</color>
+    <color name="ydsdk_text_grey">#999999</color>
+    <color name="ydsdk_text_white">#ffffff</color>
+    <color name="ydsdk_title_text">#222222</color>
+    <color name="ydsdk_title_text_nt">#a9b1be</color>
+    <color name="ydsdk_topbar_bg">#1c88cd</color>
+    <color name="ydsdk_transparent">#00000000</color>
+    <color name="ydsdk_txt_color">#48495F</color>
+    <color name="ydsdk_white">#FFFFFFFF</color>
+
+
+    <color name="ydsdk_ff004e">#ff004e</color>
+    <color name="ydsdk_yellow_color">#f88041</color>
+    <color name="ydsdk_f5">#f5f5f5</color>
+
+</resources>

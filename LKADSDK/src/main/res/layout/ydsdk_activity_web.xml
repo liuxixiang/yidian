@@ -7,23 +7,27 @@
     <FrameLayout
         android:id="@+id/base_toolbar_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.linken.newssdk.core.newweb.LiteWebView
+            android:id="@+id/web_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </FrameLayout>
+
 
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:progressDrawable="@drawable/ydsdk_webpage_progressbar"
         android:max="100"
         android:progress="5"
-        android:visibility="gone"/>
-
-
-    <com.linken.newssdk.core.newweb.LiteWebView
-        android:id="@+id/web_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:progressDrawable="@drawable/ydsdk_webpage_progressbar"
+        android:visibility="gone" />
 
 </LinearLayout>

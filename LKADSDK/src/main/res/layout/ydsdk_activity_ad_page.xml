@@ -17,13 +17,18 @@
     <include android:id="@+id/landing_toolbar"
         layout="@layout/ydsdk_toolbar_webview_base_layout"/>
 
-    <com.linken.newssdk.core.newweb.LiteWebView
-        android:id="@+id/ad_webView"
-        android:layout_width="match_parent"
+    <FrameLayout
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:layout_width="match_parent">
 
-    </com.linken.newssdk.core.newweb.LiteWebView>
+        <com.linken.newssdk.core.newweb.LiteWebView
+            android:id="@+id/ad_webView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+    </FrameLayout>
 
 
     <!--<include-->

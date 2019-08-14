@@ -8,8 +8,11 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.CookieManager;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -22,10 +25,15 @@ import com.linken.newssdk.core.newweb.LiteWebView;
 import com.linken.newssdk.core.newweb.SimpleWebChromeClient;
 import com.linken.newssdk.data.card.base.Card;
 import com.linken.newssdk.export.INewsInfoCallback;
+import com.linken.newssdk.utils.DensityUtil;
 import com.linken.newssdk.utils.LogUtils;
 import com.linken.newssdk.widget.newshare.OnShareClickListener;
 import com.linken.newssdk.widget.newshare.ShareFragment;
 import com.linken.newssdk.widget.newshare.FactoryShareItem;
+import com.linken.newssdk.widget.views.CustomCountLayout;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -52,6 +60,11 @@ public class LandingPageActivity extends FragmentActivity implements View.OnClic
     private long landingPageEndTime = 0L;//记录广告landingPage结束时间
     private long duration = 0L;
     private AdvertisementCard adCard = null;
+    private List<INewsInfoCallback.Info> mNewsInfos;
+    private CustomCountLayout mCustomCountLayout;
+    private String mType = "";
+    private int countDown = 15;
+    private boolean isFristPageFinish;//网页第一次加载完成
 
 
     public static void startActivity(Activity activity, Intent intent) {
@@ -81,6 +94,11 @@ public class LandingPageActivity extends FragmentActivity implements View.OnClic
         handleBundle();
         initWidget();
         startShowContent();
+
+        INewsInfoCallback newsInfoCallback = NewsFeedsSDK.getInstance().getNewsInfoCallback();
+        if (newsInfoCallback != null) {
+            mNewsInfos = newsInfoCallback.setInfo(new ArrayList<INewsInfoCallback.Info>());
+        }
     }
 
     private void handleBundle() {
@@ -88,6 +106,16 @@ public class LandingPageActivity extends FragmentActivity implements View.OnClic
         if (intent != null) {
             adCard = (AdvertisementCard) intent.getSerializableExtra(IntentConstants.AD_CARD);
             mURL = intent.getStringExtra(IntentConstants.URL);
+        }
+
+        if (adCard != null) {
+            if (Card.CTYPE_VIDEO_LIVE_CARD.equals(adCard.cType) || Card.CTYPE_VIDEO_CARD.equals(adCard.cType)) {
+                mType = INewsInfoCallback.TYPE_VIDEO;
+            } else if (Card.CTYPE_ADVERTISEMENT.equals(adCard.cType)) {
+                mType = INewsInfoCallback.TYPE_AD;
+            } else {
+                mType = INewsInfoCallback.TYPE_ARTICLE;
+            }
         }
     }
 
@@ -162,19 +190,27 @@ public class LandingPageActivity extends FragmentActivity implements View.OnClic
                 mWebView.onResume();
             }
         }
-        landingPageStartTime = System.currentTimeMillis();//息屏之后重新计时
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        duration = landingPageEndTime - landingPageStartTime;
+        if (landingPageStartTime != 0) {
+            duration = landingPageEndTime - System.currentTimeMillis();
+        }
+
+        if (mCustomCountLayout != null) {
+            mCustomCountLayout.startCount();
+        }
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         landingPageEndTime = System.currentTimeMillis();
+        if (mCustomCountLayout != null) {
+            mCustomCountLayout.endCount();
+        }
     }
 
     @Override
@@ -182,26 +218,12 @@ public class LandingPageActivity extends FragmentActivity implements View.OnClic
         if (mWebView != null) {
             mWebView.destroy();
         }
-        newsInfoCallback();
+        if (landingPageStartTime != 0) {
+            duration = System.currentTimeMillis() - landingPageStartTime + duration;
+        }
+        newsInfoCallback(INewsInfoCallback.TYPE_EVENT_DURATION, countDown, (int) (duration / 1000));
         super.onDestroy();
     }
-
-    private void newsInfoCallback() {
-        duration = System.currentTimeMillis() - landingPageStartTime + duration;
-        INewsInfoCallback newsInfoCallback = NewsFeedsSDK.getInstance().getNewsInfoCallback();
-        if (newsInfoCallback != null && adCard != null) {
-            String type = "";
-            if (Card.CTYPE_VIDEO_LIVE_CARD.equals(adCard.cType) || Card.CTYPE_VIDEO_CARD.equals(adCard.cType)) {
-                type = INewsInfoCallback.TYPE_VIDEO;
-            } else if (Card.CTYPE_ADVERTISEMENT.equals(adCard.cType)) {
-                type = INewsInfoCallback.TYPE_AD;
-            } else {
-                type = INewsInfoCallback.TYPE_ARTICLE;
-            }
-            newsInfoCallback.callback(adCard.id + "", adCard.title, type, adCard.channel, duration);
-        }
-    }
-
 
     @Override
     public void onClick(View v) {
@@ -247,5 +269,60 @@ public class LandingPageActivity extends FragmentActivity implements View.OnClic
         if (mWebView.canGoBack() && mCloseButton != null) {
             mCloseButton.setVisibility(View.VISIBLE);
         }
+        addCountLayout();
+        if (!isFristPageFinish) {
+            isFristPageFinish = true;
+            landingPageStartTime = System.currentTimeMillis();//息屏之后重新计时
+        }
+    }
+
+    private void newsInfoCallback(int event, int countDown, int realDuration) {
+        INewsInfoCallback newsInfoCallback = NewsFeedsSDK.getInstance().getNewsInfoCallback();
+        if (newsInfoCallback != null && adCard != null) {
+            newsInfoCallback.callback(event, adCard.id + "", adCard.title, mType, adCard.channel,
+                    countDown, realDuration);
+        }
+    }
+
+    /**
+     * 增加倒计时
+     */
+    private void addCountLayout() {
+        if (adCard == null) {
+            return;
+        }
+        int reward = 0;
+        String tag = "customCountLayout";
+        ViewGroup mViewGroup = (ViewGroup) mWebView.getParent();
+        mCustomCountLayout = mViewGroup.findViewWithTag(tag);
+        if (mCustomCountLayout == null && mViewGroup instanceof FrameLayout) {
+            mCustomCountLayout = new CustomCountLayout(this);
+            mCustomCountLayout.setTag(tag);
+            FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+            layoutParams.gravity = Gravity.BOTTOM | Gravity.RIGHT;
+            layoutParams.setMargins(0, 0, DensityUtil.dip2px(this, 10), DensityUtil.dip2px(this, 80));
+            mViewGroup.addView(mCustomCountLayout, layoutParams);
+        }
+        if (mNewsInfos != null && mNewsInfos.size() > 0) {
+            for (INewsInfoCallback.Info newsInfo : mNewsInfos) {
+                if (newsInfo.getType().equals(mType)) {
+                    countDown = newsInfo.getCountDown();
+                    reward = newsInfo.getReward();
+                    break;
+                }
+            }
+        }
+        mCustomCountLayout.setMaxCount(countDown);
+        mCustomCountLayout.setReward(reward);
+        mCustomCountLayout.setOnFinishListener(new CustomCountLayout.OnFinishListener() {
+            @Override
+            public void onFinish() {
+                newsInfoCallback(INewsInfoCallback.TYPE_EVENT_H5_COUNT_DOWN, countDown, countDown);
+            }
+
+        });
+        mCustomCountLayout.startCount();
+
+
     }
 }

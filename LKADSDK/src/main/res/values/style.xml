@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="ydsdk_BottomDialog">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowAnimationStyle">@style/ydsdk_DialogAnimation</item>
+        <item name="android:gravity">bottom</item>
+    </style>
+
+    <style name="ydsdk_DefaultTheme">
+        <!-- 导航栏未选中状态下字体颜色 -->
+        <item name="newssdk_slidingtab_normal_txt_color">#2c2c2c</item>
+        <!-- 导航栏选中状态下字体颜色 -->
+        <item name="newssdk_sliding_tab_checked_txt_color">#DA3838</item>
+        <!-- 导航栏字体大小 -->
+        <item name="newssdk_slidingtab_txt_size">16sp</item>
+        <!-- 信息流整体背景 -->
+        <item name="newssdk_common_bg_color">#fafafa</item>
+        <!-- 信息流卡片字体颜色 -->
+        <item name="newssdk_common_font_color">#2c2c2c</item>
+        <!-- 信息流卡片字体大小 -->
+        <item name="newssdk_common_font_size">17sp</item>
+        <!-- 信息流卡片分割线颜色 -->
+        <item name="newssdk_card_divider_color">#d8d8d8</item>
+        <!-- 信息流卡片分割线粗细 -->
+        <item name="newssdk_card_divider_height">1px</item>
+        <!-- 信息流卡片图片背景颜色 -->
+        <item name="newssdk_card_img_bg_color">@color/ydsdk_card_img_bg</item>
+
+        <item name="newssdk_refresh_tip_color">#DA3838</item>
+
+        <item name="newssdk_feedback_bg_bottom">@drawable/ydsdk_feedback_bg_down</item>
+        <item name="newssdk_feedback_bg_top">@drawable/ydsdk_feedback_bg_up</item>
+        <item name="newssdk_feedback_bg">@drawable/ydsdk_feedback_bg</item>
+        <item name="newssdk_feedback_textcolor">@drawable/ydsdk_badfeedback_textcolor_state</item>
+        <item name="newssdk_feedback_state">@drawable/ydsdk_badfeedback_state</item>
+        <item name="newssdk_feedback_commontxt_color">#DA3838</item>
+        <item name="newssdk_feedback_success_tip_bg">#c75895ED</item>
+    </style>
+
+    <style name="ydsdk_DialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/ydsdk_slide_up</item>
+        <item name="android:windowExitAnimation">@anim/ydsdk_slide_down</item>
+    </style>
+
+    <style name="ydsdk_NightTheme" parent="@style/ydsdk_DefaultTheme">
+
+        <item name="newssdk_common_font_color">#cdcdcd</item>
+        <item name="newssdk_common_bg_color">#333333</item>
+        <item name="newssdk_feedback_bg_bottom">@drawable/ydsdk_feedback_bg_down_nt</item>
+        <item name="newssdk_feedback_bg_top">@drawable/ydsdk_feedback_bg_up_nt</item>
+        <item name="newssdk_feedback_bg">@drawable/ydsdk_feedback_bg_nt</item>
+        <item name="newssdk_feedback_textcolor">@drawable/ydsdk_badfeedback_textcolor_state_nt
+        </item>
+        <item name="newssdk_feedback_state">@drawable/ydsdk_badfeedback_state_nt</item>
+        <item name="newssdk_slidingtab_normal_txt_color">#cdcdcd</item>
+
+        <item name="newssdk_card_divider_color">#54585e</item>
+        <item name="newssdk_card_img_bg_color">@color/ydsdk_card_img_bg_nt</item>
+        <item name="newssdk_feedback_commontxt_color">#DA3838</item>
+
+    </style>
+
+    <style name="ydsdk_SimpleDialog" parent="android:Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowIsTranslucent">false</item>
+    </style>
+
+    <style name="ydsdk_ad_divider_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1px</item>
+        <item name="android:background">@color/ydsdk_divider_bg</item>
+    </style>
+
+    <style name="ydsdk_ad_download_btn">
+        <item name="android:layout_width">73dp</item>
+        <item name="android:layout_height">30dp</item>
+        <item name="android:textColor">@color/ydsdk_ad_download_btn</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:text">@string/ydsdk_ad_download_default</item>
+        <item name="android:background">@drawable/ydsdk_ad_selector_download_btn</item>
+        <item name="android:clickable">true</item>
+        <item name="android:maxLength">4</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="ydsdk_ad_fb_popup_from_right" mce_bogus="1" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/ydsdk_zoom_in_from_right</item>
+        <item name="android:windowExitAnimation">@anim/ydsdk_zoom_out_from_right</item>
+    </style>
+
+    <style name="ydsdk_ad_fb_popup_zoom_in_out_down_left" mce_bogus="1" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/ydsdk_feedback_zoom_in_down_left</item>
+        <item name="android:windowExitAnimation">@anim/ydsdk_feedback_zoom_out_down_left</item>
+    </style>
+
+    <style name="ydsdk_ad_fb_popup_zoom_in_out_down_right" mce_bogus="1" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/ydsdk_feedback_zoom_in_down_right</item>
+        <item name="android:windowExitAnimation">@anim/ydsdk_feedback_zoom_out_down_right</item>
+    </style>
+
+    <style name="ydsdk_ad_fb_popup_zoom_in_out_up_left" mce_bogus="1" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/ydsdk_feedback_zoom_in_up_left</item>
+        <item name="android:windowExitAnimation">@anim/ydsdk_feedback_zoom_out_up_left</item>
+    </style>
+
+    <style name="ydsdk_ad_fb_popup_zoom_in_out_up_right" mce_bogus="1" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/ydsdk_feedback_zoom_in_up_right</item>
+        <item name="android:windowExitAnimation">@anim/ydsdk_feedback_zoom_out_up_right</item>
+    </style>
+
+    <style name="ydsdk_bg">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@color/ydsdk_white</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="ydsdk_divider_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1px</item>
+        <item name="android:background">@color/ydsdk_divider_bg</item>
+    </style>
+
+    <style name="ydsdk_empty_img">
+        <item name="android:layout_width">@dimen/ydsdk_def_height</item>
+        <item name="android:layout_height">@dimen/ydsdk_def_height</item>
+        <item name="android:layout_marginBottom">10dp</item>
+    </style>
+
+    <style name="ydsdk_popup_toast_anim" parent="@android:style/Animation">
+        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
+    </style>
+
+    <style name="ydsdk_popup_zoom_in_out_down_left" mce_bogus="1" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/ydsdk_feedback_zoom_in_down_left</item>
+        <item name="android:windowExitAnimation">@anim/ydsdk_feedback_zoom_out_down_left</item>
+    </style>
+
+    <style name="ydsdk_popup_zoom_in_out_down_right" mce_bogus="1" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/ydsdk_feedback_zoom_in_down_right</item>
+        <item name="android:windowExitAnimation">@anim/ydsdk_feedback_zoom_out_down_right</item>
+    </style>
+
+    <style name="ydsdk_popup_zoom_in_out_up_left" mce_bogus="1" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/ydsdk_feedback_zoom_in_up_left</item>
+        <item name="android:windowExitAnimation">@anim/ydsdk_feedback_zoom_out_up_left</item>
+    </style>
+
+    <style name="ydsdk_popup_zoom_in_out_up_right" mce_bogus="1" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/ydsdk_feedback_zoom_in_up_right</item>
+        <item name="android:windowExitAnimation">@anim/ydsdk_feedback_zoom_out_up_right</item>
+    </style>
+
+    <style name="ydsdk_style_dialog_progress" parent="@android:style/Theme.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowAnimationStyle">@style/ydsdk_popup_toast_anim</item>
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+</resources>

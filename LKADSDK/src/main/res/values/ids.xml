@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="ydsdk_BaseQuickAdapter_databinding_support" type="id" />
+    <item name="ydsdk_BaseQuickAdapter_dragging_support" type="id" />
+    <item name="ydsdk_BaseQuickAdapter_swiping_support" type="id" />
+    <item name="ydsdk_BaseQuickAdapter_viewholder_support" type="id" />
+    <item name="ydsdk_ad_background_card" type="id" />
+    <item name="ydsdk_ad_background_image" type="id" />
+    <item name="ydsdk_ad_background_view" type="id" />
+    <item name="ydsdk_ad_row_mask" type="id" />
+    <item name="ydsdk_ad_view_report" type="id" />
+    <item name="ydsdk_expose_tag" type="id" />
+    <item name="ydsdk_jz_fullscreen_id" type="id" />
+    <item name="ydsdk_jz_tiny_id" type="id" />
+    <item name="ydsdk_tag_recycler_holder" type="id" />
+</resources>
