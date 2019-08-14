@@ -117,7 +117,7 @@ public class LandingPageActivity extends FragmentActivity implements View.OnClic
             if (adCard != null) {
                 if (Card.CTYPE_VIDEO_LIVE_CARD.equals(adCard.cType) || Card.CTYPE_VIDEO_CARD.equals(adCard.cType)) {
                     mType = INewsInfoCallback.TYPE_VIDEO;
-                } else if (Card.CTYPE_ADVERTISEMENT.equals(adCard.cType)) {
+                } else if (Card.CTYPE_ADVERTISEMENT.equals(adCard.cType) || TextUtils.isEmpty(adCard.cType)) {
                     mType = INewsInfoCallback.TYPE_AD;
                 } else {
                     mType = INewsInfoCallback.TYPE_ARTICLE;
