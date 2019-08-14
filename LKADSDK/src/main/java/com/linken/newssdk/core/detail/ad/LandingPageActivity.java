@@ -3,6 +3,7 @@ package com.linken.newssdk.core.detail.ad;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -37,6 +38,8 @@ import com.linken.newssdk.widget.views.CustomCountLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.linken.newssdk.data.news.INewsType.STYLE_HBRID_VIDEO;
+
 
 /**
  * @author zhangzhun
@@ -54,6 +57,8 @@ public class LandingPageActivity extends FragmentActivity implements View.OnClic
     private ImageButton mbackButton;
     private ImageView mMoreView;
     private ImageButton mCloseButton;
+    private String docid;
+    private String channel = "推荐";
 
     private
     @Nullable
@@ -61,12 +66,12 @@ public class LandingPageActivity extends FragmentActivity implements View.OnClic
     private long landingPageStartTime = 0L;//记录广告landingPage开始时间
     private long landingPageEndTime = 0L;//记录广告landingPage结束时间
     private long duration = 0L;
-    private AdvertisementCard adCard = null;
     private List<INewsInfoCallback.AfferentInfo> mAfferentInfos;
     private CustomCountLayout mCustomCountLayout;
-    private String mType = "";
+    private String mType = INewsInfoCallback.TYPE_AD;
     private int countDown = 15;
     private boolean isFristPageFinish;//网页第一次加载完成
+    private String title;
 
 
     public static void startActivity(Activity activity, Intent intent) {
@@ -101,28 +106,33 @@ public class LandingPageActivity extends FragmentActivity implements View.OnClic
         if (newsInfoCallback != null) {
             mAfferentInfos = newsInfoCallback.setAfferentInfo(new ArrayList<INewsInfoCallback.AfferentInfo>());
         }
+        title = mWebView.getTitle() + "";
     }
 
     private void handleBundle() {
         Intent intent = getIntent();
         if (intent != null) {
-            adCard = (AdvertisementCard) intent.getSerializableExtra(IntentConstants.AD_CARD);
+            AdvertisementCard adCard = (AdvertisementCard) intent.getSerializableExtra(IntentConstants.AD_CARD);
             mURL = intent.getStringExtra(IntentConstants.URL);
-        }
+            if (adCard != null) {
+                if (Card.CTYPE_VIDEO_LIVE_CARD.equals(adCard.cType) || Card.CTYPE_VIDEO_CARD.equals(adCard.cType)) {
+                    mType = INewsInfoCallback.TYPE_VIDEO;
+                } else if (Card.CTYPE_ADVERTISEMENT.equals(adCard.cType)) {
+                    mType = INewsInfoCallback.TYPE_AD;
+                } else {
+                    mType = INewsInfoCallback.TYPE_ARTICLE;
+                }
+            }
 
-        if (adCard != null) {
-            if (Card.CTYPE_VIDEO_LIVE_CARD.equals(adCard.cType) || Card.CTYPE_VIDEO_CARD.equals(adCard.cType)) {
-                mType = INewsInfoCallback.TYPE_VIDEO;
-            } else if (Card.CTYPE_ADVERTISEMENT.equals(adCard.cType)) {
-                mType = INewsInfoCallback.TYPE_AD;
-            } else {
-                mType = INewsInfoCallback.TYPE_ARTICLE;
+            if (!TextUtils.isEmpty(mURL)) {
+                Uri uri = Uri.parse(mURL);
+                docid = uri.getQueryParameter("aid");
             }
         }
     }
 
     protected void initWidget() {
-        mCloseButton = (ImageButton) findViewById(R.id.closeBtn);
+        mCloseButton = findViewById(R.id.closeBtn);
         mCloseButton.setOnClickListener(this);
         mbackButton = findViewById(R.id.btnBack);
         mbackButton.setOnClickListener(this);
@@ -280,8 +290,8 @@ public class LandingPageActivity extends FragmentActivity implements View.OnClic
 
     private void newsInfoCallback(int event, int countDown, int realDuration) {
         INewsInfoCallback newsInfoCallback = NewsFeedsSDK.getInstance().getNewsInfoCallback();
-        if (newsInfoCallback != null && adCard != null) {
-            newsInfoCallback.callback(event, adCard.id + "", adCard.title, mType, adCard.channel,
+        if (newsInfoCallback != null) {
+            newsInfoCallback.callback(event, docid + "", title, mType, channel,
                     countDown, realDuration);
         }
     }
@@ -290,11 +300,12 @@ public class LandingPageActivity extends FragmentActivity implements View.OnClic
      * 增加倒计时
      */
     private void addCountLayout() {
-        if (adCard == null) {
+        if (TextUtils.isEmpty(docid)) {
             return;
         }
-        String cardId = AdvertisementDbUtil.getRewardRecordId(adCard.id);
-        if (!TextUtils.isEmpty(cardId) && cardId.equals(adCard.id)) {
+        String cardId = AdvertisementDbUtil.getRewardRecordId(docid);
+
+        if (cardId.equals(docid)) {
             return;
         }
         int reward = 0;
@@ -325,13 +336,11 @@ public class LandingPageActivity extends FragmentActivity implements View.OnClic
             @Override
             public void onFinish() {
                 newsInfoCallback(INewsInfoCallback.TYPE_EVENT_H5_COUNT_DOWN, countDown, countDown);
-                RewardCard rewardCardBean = new RewardCard(null, adCard.id, finalReward, mType);
+                RewardCard rewardCardBean = new RewardCard(null, docid, finalReward, mType);
                 AdvertisementDbUtil.createRewardRecord(rewardCardBean);
             }
 
         });
         mCustomCountLayout.startCount();
-
-
     }
 }

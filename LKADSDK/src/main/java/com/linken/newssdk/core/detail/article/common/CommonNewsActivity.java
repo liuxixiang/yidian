@@ -2,6 +2,7 @@ package com.linken.newssdk.core.detail.article.common;
 
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
+import android.net.Uri;
 import android.os.Build;
 import android.text.TextUtils;
 import android.util.Base64;
@@ -37,6 +38,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.linken.newssdk.data.news.INewsType.NORMAL_NEWS_URL;
+import static com.linken.newssdk.data.news.INewsType.STYLE_HBRID_VIDEO;
 
 /**
  * @author zhangzhun
@@ -61,6 +63,9 @@ public abstract class CommonNewsActivity<P extends CommonNewsPresenter> extends 
     private String mType = "";
     private int countDown = 15;
     private boolean isFristPageFinish;//网页第一次加载完成
+    private String docid;
+    private String channel = "推荐";
+    private String title;
 
     @Override
     protected void initView() {
@@ -75,6 +80,7 @@ public abstract class CommonNewsActivity<P extends CommonNewsPresenter> extends 
         if (newsInfoCallback != null) {
             mAfferentInfos = newsInfoCallback.setAfferentInfo(new ArrayList<INewsInfoCallback.AfferentInfo>());
         }
+        title = mWebView.getTitle() + "";
     }
 
     @Override
@@ -91,6 +97,7 @@ public abstract class CommonNewsActivity<P extends CommonNewsPresenter> extends 
         mUri = generateUri();
 
         if (mCard != null) {
+            channel = mCard.channel;
             if (Card.CTYPE_VIDEO_LIVE_CARD.equals(mCard.cType) || Card.CTYPE_VIDEO_CARD.equals(mCard.cType)) {
                 mType = INewsInfoCallback.TYPE_VIDEO;
             } else if (Card.CTYPE_ADVERTISEMENT.equals(mCard.cType)) {
@@ -99,6 +106,16 @@ public abstract class CommonNewsActivity<P extends CommonNewsPresenter> extends 
                 mType = INewsInfoCallback.TYPE_ARTICLE;
             }
         }
+        if (!TextUtils.isEmpty(mUri)) {
+            Uri uri = Uri.parse(mUri);
+            docid = uri.getQueryParameter("docid");
+            if (STYLE_HBRID_VIDEO == articleType) {
+                mType = INewsInfoCallback.TYPE_VIDEO;
+            } else {
+                mType = INewsInfoCallback.TYPE_ARTICLE;
+            }
+        }
+
     }
 
     private void handleStyleAndUrl() {
@@ -409,8 +426,8 @@ public abstract class CommonNewsActivity<P extends CommonNewsPresenter> extends 
 
     private void newsInfoCallback(int event, int countDown, int realDuration) {
         INewsInfoCallback newsInfoCallback = NewsFeedsSDK.getInstance().getNewsInfoCallback();
-        if (newsInfoCallback != null && mCard != null) {
-            newsInfoCallback.callback(event, mCard.id + "", mCard.title, mType, mCard.channel,
+        if (newsInfoCallback != null) {
+            newsInfoCallback.callback(event, docid + "", title, mType, channel,
                     countDown, realDuration);
         }
     }
@@ -419,11 +436,12 @@ public abstract class CommonNewsActivity<P extends CommonNewsPresenter> extends 
      * 增加倒计时
      */
     private void addCountLayout() {
-        if (mCard == null) {
+        if (TextUtils.isEmpty(docid)) {
             return;
         }
-        String cardId = AdvertisementDbUtil.getRewardRecordId(mCard.id);
-        if (!TextUtils.isEmpty(cardId) && cardId.equals(mCard.id)) {
+        String cardId = AdvertisementDbUtil.getRewardRecordId(docid);
+
+        if (cardId.equals(docid)) {
             return;
         }
         int reward = 0;
@@ -454,7 +472,7 @@ public abstract class CommonNewsActivity<P extends CommonNewsPresenter> extends 
             @Override
             public void onFinish() {
                 newsInfoCallback(INewsInfoCallback.TYPE_EVENT_H5_COUNT_DOWN, countDown, countDown);
-                RewardCard rewardCardBean = new RewardCard(null, mCard.id, finalReward, mType);
+                RewardCard rewardCardBean = new RewardCard(null, docid, finalReward, mType);
                 AdvertisementDbUtil.createRewardRecord(rewardCardBean);
             }
 

@@ -221,7 +221,6 @@ public class AdvertisementDbUtil {
                 .queryBuilder()
                 .where(RewardCardDao.Properties.CardId.eq(id))
                 .list();
-
         if (list != null && list.size() > 0) {
             cardId = list.get(0).getCardId();
         }
