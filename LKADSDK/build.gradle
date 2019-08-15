@@ -1,6 +1,6 @@
 apply plugin: 'com.android.library'
 //添加greendao相关的plugin
-//apply plugin: 'org.greenrobot.greendao' //
+apply plugin: 'org.greenrobot.greendao' //
 
 android {
     compileSdkVersion 26
@@ -27,15 +27,15 @@ android {
         }
     }
 
-//    greendao{
-//
-//        //指定数据库schema版本号，迁移等操作会用到;
-//        schemaVersion 1
-//        //dao的包名，包名默认是entity所在的包；
-//        daoPackage 'com.linken.ad.data'
-//        //生成数据库文件的目录;
-//        targetGenDir 'src/main/java'
-//    }
+    greendao{
+
+        //指定数据库schema版本号，迁移等操作会用到;
+        schemaVersion 1
+        //dao的包名，包名默认是entity所在的包；
+        daoPackage 'com.linken.ad.data'
+        //生成数据库文件的目录;
+        targetGenDir 'src/main/java'
+    }
 
 }
 

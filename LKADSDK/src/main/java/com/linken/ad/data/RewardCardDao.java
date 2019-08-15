@@ -24,7 +24,7 @@ public class RewardCardDao extends AbstractDao<RewardCard, Long> {
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property CardId = new Property(1, String.class, "cardId", false, "CARD_ID");
-        public final static Property Type = new Property(3, String.class, "type", false, "TYPE");
+        public final static Property Type = new Property(2, String.class, "type", false, "TYPE");
     }
 
 
@@ -42,7 +42,7 @@ public class RewardCardDao extends AbstractDao<RewardCard, Long> {
         db.execSQL("CREATE TABLE " + constraint + "\"REWARD_CARD\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
                 "\"CARD_ID\" TEXT," + // 1: cardId
-                "\"TYPE\" TEXT);"); // 3: type
+                "\"TYPE\" TEXT);"); // 2: type
     }
 
     /** Drops the underlying database table. */
@@ -64,10 +64,10 @@ public class RewardCardDao extends AbstractDao<RewardCard, Long> {
         if (cardId != null) {
             stmt.bindString(2, cardId);
         }
-
+ 
         String type = entity.getType();
         if (type != null) {
-            stmt.bindString(4, type);
+            stmt.bindString(3, type);
         }
     }
 
@@ -84,10 +84,10 @@ public class RewardCardDao extends AbstractDao<RewardCard, Long> {
         if (cardId != null) {
             stmt.bindString(2, cardId);
         }
-
+ 
         String type = entity.getType();
         if (type != null) {
-            stmt.bindString(4, type);
+            stmt.bindString(3, type);
         }
     }
 
@@ -101,7 +101,7 @@ public class RewardCardDao extends AbstractDao<RewardCard, Long> {
         RewardCard entity = new RewardCard( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // cardId
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3) // type
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2) // type
         );
         return entity;
     }
@@ -110,7 +110,7 @@ public class RewardCardDao extends AbstractDao<RewardCard, Long> {
     public void readEntity(Cursor cursor, RewardCard entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setCardId(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
-        entity.setType(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setType(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
      }
     
     @Override

@@ -21,7 +21,7 @@ public class AdDownloadFile {
     // KEEP FIELDS - put your custom fields here
     // KEEP FIELDS END
 
-    @Generated
+    @Generated(hash = 677540028)
     public AdDownloadFile() {
     }
 
@@ -29,7 +29,7 @@ public class AdDownloadFile {
         this.id = id;
     }
 
-    @Generated
+    @Generated(hash = 152538431)
     public AdDownloadFile(Long id, String packageName, String localFile) {
         this.id = id;
         this.packageName = packageName;
