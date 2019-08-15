@@ -24,6 +24,7 @@ import com.linken.newssdk.core.newweb.WebAppManager;
 import com.linken.newssdk.data.ad.db.AdvertisementDbUtil;
 import com.linken.newssdk.data.card.base.Card;
 import com.linken.newssdk.data.news.INewsType;
+import com.linken.newssdk.export.INewRewardCallback;
 import com.linken.newssdk.export.INewsInfoCallback;
 import com.linken.newssdk.utils.ContextUtils;
 import com.linken.newssdk.utils.DensityUtil;
@@ -46,7 +47,7 @@ import static com.linken.newssdk.data.news.INewsType.STYLE_HBRID_VIDEO;
  * @date 2018/5/19
  */
 
-public abstract class CommonNewsActivity<P extends CommonNewsPresenter> extends BaseActivity<P> implements CommonNewsContractView, WebAppInterface.WebViewHost {
+public abstract class CommonNewsActivity<P extends CommonNewsPresenter> extends BaseActivity<P> implements CommonNewsContractView, WebAppInterface.WebViewHost, INewRewardCallback {
 
     protected LiteWebView mWebView;
     private String mUri;
@@ -78,7 +79,7 @@ public abstract class CommonNewsActivity<P extends CommonNewsPresenter> extends 
         fetchData();
         INewsInfoCallback newsInfoCallback = NewsFeedsSDK.getInstance().getNewsInfoCallback();
         if (newsInfoCallback != null) {
-            mAfferentInfos = newsInfoCallback.setAfferentInfo(new ArrayList<INewsInfoCallback.AfferentInfo>());
+            mAfferentInfos = newsInfoCallback.setAfferentInfo(new ArrayList<INewsInfoCallback.AfferentInfo>(), this);
         }
         title = mWebView.getTitle() + "";
     }
@@ -428,7 +429,7 @@ public abstract class CommonNewsActivity<P extends CommonNewsPresenter> extends 
         INewsInfoCallback newsInfoCallback = NewsFeedsSDK.getInstance().getNewsInfoCallback();
         if (newsInfoCallback != null) {
             newsInfoCallback.callback(event, docid + "", title, mType, SDKContants.channel,
-                    countDown, realDuration);
+                    countDown, realDuration, this);
         }
     }
 
@@ -444,7 +445,6 @@ public abstract class CommonNewsActivity<P extends CommonNewsPresenter> extends 
         if (cardId.equals(docid)) {
             return;
         }
-        int reward = 0;
         String tag = "customCountLayout";
         ViewGroup mViewGroup = (ViewGroup) mWebView.getParent();
         mCustomCountLayout = mViewGroup.findViewWithTag(tag);
@@ -453,33 +453,43 @@ public abstract class CommonNewsActivity<P extends CommonNewsPresenter> extends 
             mCustomCountLayout.setTag(tag);
             FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
             layoutParams.gravity = Gravity.BOTTOM | Gravity.RIGHT;
-            layoutParams.setMargins(0, 0, DensityUtil.dip2px(this, 10), DensityUtil.dip2px(this, 80));
+            layoutParams.setMargins(0, 0, DensityUtil.dip2px(this, 10), DensityUtil.dip2px(this, 7));
             mViewGroup.addView(mCustomCountLayout, layoutParams);
         }
         if (mAfferentInfos != null && mAfferentInfos.size() > 0) {
             for (INewsInfoCallback.AfferentInfo newsInfo : mAfferentInfos) {
                 if (newsInfo.getType().equals(mType)) {
                     countDown = newsInfo.getCountDown();
-                    reward = newsInfo.getReward();
                     break;
                 }
             }
         }
         mCustomCountLayout.setMaxCount(countDown);
-        mCustomCountLayout.setReward(reward);
-        final int finalReward = reward;
         mCustomCountLayout.setOnFinishListener(new CustomCountLayout.OnFinishListener() {
             @Override
             public void onFinish() {
                 newsInfoCallback(INewsInfoCallback.TYPE_EVENT_H5_COUNT_DOWN, countDown, countDown);
-                RewardCard rewardCardBean = new RewardCard(null, docid, finalReward, mType);
+                RewardCard rewardCardBean = new RewardCard(null, docid, mType);
                 AdvertisementDbUtil.createRewardRecord(rewardCardBean);
             }
 
         });
         mCustomCountLayout.startCount();
 
-
     }
 
+    @Override
+    public void showRewardView(boolean isShow) {
+        if (mCustomCountLayout != null) {
+            mCustomCountLayout.setVisibility(isShow ? View.VISIBLE : View.GONE);
+        }
+    }
+
+    @Override
+    public void doReward(String msg) {
+        if (mCustomCountLayout != null) {
+            mCustomCountLayout.setReward(msg);
+            mCustomCountLayout.startRewardAnimator();
+        }
+    }
 }

@@ -28,18 +28,17 @@ import com.linken.newssdk.core.newweb.LiteWebView;
 import com.linken.newssdk.core.newweb.SimpleWebChromeClient;
 import com.linken.newssdk.data.ad.db.AdvertisementDbUtil;
 import com.linken.newssdk.data.card.base.Card;
+import com.linken.newssdk.export.INewRewardCallback;
 import com.linken.newssdk.export.INewsInfoCallback;
 import com.linken.newssdk.utils.DensityUtil;
 import com.linken.newssdk.utils.LogUtils;
+import com.linken.newssdk.widget.newshare.FactoryShareItem;
 import com.linken.newssdk.widget.newshare.OnShareClickListener;
 import com.linken.newssdk.widget.newshare.ShareFragment;
-import com.linken.newssdk.widget.newshare.FactoryShareItem;
 import com.linken.newssdk.widget.views.CustomCountLayout;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.linken.newssdk.data.news.INewsType.STYLE_HBRID_VIDEO;
 
 
 /**
@@ -47,7 +46,7 @@ import static com.linken.newssdk.data.news.INewsType.STYLE_HBRID_VIDEO;
  * @date 2018/5/10
  */
 
-public class LandingPageActivity extends FragmentActivity implements View.OnClickListener, SimpleWebChromeClient.OnProgressCallback, LiteWebView.PageLoadListener {
+public class LandingPageActivity extends FragmentActivity implements View.OnClickListener, SimpleWebChromeClient.OnProgressCallback, LiteWebView.PageLoadListener, INewRewardCallback {
 
     private static final String TAG = LandingPageActivity.class.getSimpleName();
     String mURL;
@@ -102,7 +101,7 @@ public class LandingPageActivity extends FragmentActivity implements View.OnClic
 
         INewsInfoCallback newsInfoCallback = NewsFeedsSDK.getInstance().getNewsInfoCallback();
         if (newsInfoCallback != null) {
-            mAfferentInfos = newsInfoCallback.setAfferentInfo(new ArrayList<INewsInfoCallback.AfferentInfo>());
+            mAfferentInfos = newsInfoCallback.setAfferentInfo(new ArrayList<INewsInfoCallback.AfferentInfo>(), this);
         }
         title = mWebView.getTitle() + "";
     }
@@ -293,7 +292,7 @@ public class LandingPageActivity extends FragmentActivity implements View.OnClic
         INewsInfoCallback newsInfoCallback = NewsFeedsSDK.getInstance().getNewsInfoCallback();
         if (newsInfoCallback != null) {
             newsInfoCallback.callback(event, docid + "", title, mType, SDKContants.channel,
-                    countDown, realDuration);
+                    countDown, realDuration, this);
         }
     }
 
@@ -309,7 +308,6 @@ public class LandingPageActivity extends FragmentActivity implements View.OnClic
         if (cardId.equals(docid)) {
             return;
         }
-        int reward = 0;
         String tag = "customCountLayout";
         ViewGroup mViewGroup = (ViewGroup) mWebView.getParent();
         mCustomCountLayout = mViewGroup.findViewWithTag(tag);
@@ -318,30 +316,41 @@ public class LandingPageActivity extends FragmentActivity implements View.OnClic
             mCustomCountLayout.setTag(tag);
             FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
             layoutParams.gravity = Gravity.BOTTOM | Gravity.RIGHT;
-            layoutParams.setMargins(0, 0, DensityUtil.dip2px(this, 10), DensityUtil.dip2px(this, 80));
+            layoutParams.setMargins(0, 0, DensityUtil.dip2px(this, 10), DensityUtil.dip2px(this, 7));
             mViewGroup.addView(mCustomCountLayout, layoutParams);
         }
         if (mAfferentInfos != null && mAfferentInfos.size() > 0) {
             for (INewsInfoCallback.AfferentInfo newsInfo : mAfferentInfos) {
                 if (newsInfo.getType().equals(mType)) {
                     countDown = newsInfo.getCountDown();
-                    reward = newsInfo.getReward();
                     break;
                 }
             }
         }
         mCustomCountLayout.setMaxCount(countDown);
-        mCustomCountLayout.setReward(reward);
-        final int finalReward = reward;
         mCustomCountLayout.setOnFinishListener(new CustomCountLayout.OnFinishListener() {
             @Override
             public void onFinish() {
                 newsInfoCallback(INewsInfoCallback.TYPE_EVENT_H5_COUNT_DOWN, countDown, countDown);
-                RewardCard rewardCardBean = new RewardCard(null, docid, finalReward, mType);
+                RewardCard rewardCardBean = new RewardCard(null, docid, mType);
                 AdvertisementDbUtil.createRewardRecord(rewardCardBean);
             }
 
         });
         mCustomCountLayout.startCount();
+    }
+
+    @Override
+    public void showRewardView(boolean isShow) {
+        if (mCustomCountLayout != null) {
+            mCustomCountLayout.setVisibility(isShow ? View.VISIBLE : View.GONE);
+        }
+    }
+
+    @Override
+    public void doReward(String msg) {
+        if (mCustomCountLayout != null) {
+            mCustomCountLayout.setReward(msg);
+        }
     }
 }

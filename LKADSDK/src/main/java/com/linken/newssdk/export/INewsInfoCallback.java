@@ -22,7 +22,7 @@ public interface INewsInfoCallback {
     int TYPE_EVENT_H5_COUNT_DOWN = 2;
 
 
-    List<AfferentInfo> setAfferentInfo(List<AfferentInfo> afferentInfos);
+    List<AfferentInfo> setAfferentInfo(List<AfferentInfo> afferentInfos, final INewRewardCallback rewardCallback);
 
     /**
      * @param id             新闻 广告 id
@@ -31,7 +31,7 @@ public interface INewsInfoCallback {
      * @param expectDuration 期望时间 秒
      * @param realDuration   真实的观看的时间 秒
      */
-    void callback(int event, String id, String title, String type, String channel, int expectDuration, int realDuration);
+    void callback(int event, String id, String title, String type, String channel, int expectDuration, int realDuration, final INewRewardCallback rewardCallback);
 
     //Retention 是元注解，简单地讲就是系统提供的，用于定义注解的“注解”
     @Retention(RetentionPolicy.SOURCE)
@@ -46,24 +46,15 @@ public interface INewsInfoCallback {
     }
 
     class AfferentInfo {
-        int reward;
         int countDown;
         @NewsTypeDef
         String type;
 
-        public AfferentInfo(String type, int reward, int countDown) {
-            this.reward = reward;
+        public AfferentInfo(String type, int countDown) {
             this.countDown = countDown;
             this.type = type;
         }
 
-        public int getReward() {
-            return reward;
-        }
-
-        public void setReward(int reward) {
-            this.reward = reward;
-        }
 
         public int getCountDown() {
             return countDown;

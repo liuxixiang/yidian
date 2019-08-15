@@ -2,6 +2,7 @@ package com.linken.newssdk.widget.views;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.animation.Keyframe;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.animation.ValueAnimator;
@@ -11,8 +12,10 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.linken.newssdk.R;
@@ -22,7 +25,7 @@ public class CustomCountLayout extends FrameLayout {
     public static final String TAG = CustomCountLayout.class.getSimpleName();
 
     DonutProgress mDonutProgress;
-    TextView mTvSecond;
+    ImageView mRedPacket;
     TextView mTvReward;
 
     private Handler mHandler = new Handler();
@@ -55,9 +58,9 @@ public class CustomCountLayout extends FrameLayout {
         super(context, attrs, defStyleAttr);
         View view = View.inflate(context, R.layout.ydsdk_layout_custom_count, this);
         mDonutProgress = view.findViewById(R.id.donut_progress);
-        mTvSecond = view.findViewById(R.id.tv_second);
+        mRedPacket = view.findViewById(R.id.red_packet);
         mTvReward = view.findViewById(R.id.reward);
-        mTvSecond.setText(getContext().getString(R.string.ydsdk_count_second, 0));
+//        mTvSecond.setText(getContext().getString(R.string.ydsdk_count_second, 0));
         mDonutProgress.setProgress(0);
     }
 
@@ -74,8 +77,8 @@ public class CustomCountLayout extends FrameLayout {
     /**
      * 设置奖励
      */
-    public void setReward(int reward) {
-        mTvReward.setText("+" + reward);
+    public void setReward(String reward) {
+        mTvReward.setText(reward);
     }
 
     private Runnable mRunnable = new Runnable() {
@@ -116,7 +119,7 @@ public class CustomCountLayout extends FrameLayout {
 
         isVisible = true;
         isRunning = true;
-        mTvSecond.setVisibility(View.VISIBLE);
+//        mTvSecond.setVisibility(View.VISIBLE);
         mHandler.removeCallbacksAndMessages(null);
         mHandler.postDelayed(mRunnable, 1000);
     }
@@ -153,7 +156,7 @@ public class CustomCountLayout extends FrameLayout {
             @Override
             public void onAnimationEnd(Animator animation) {
                 mSecond++;
-                mTvSecond.setText(getContext().getString(R.string.ydsdk_count_second, mSecond));
+//                mTvSecond.setText(getContext().getString(R.string.ydsdk_count_second, mSecond));
 
                 // 判断是否结束
                 if (checkFinish()) {
@@ -162,7 +165,7 @@ public class CustomCountLayout extends FrameLayout {
                         mOnFinishListener.onFinish();
                     }
                     isRunning = false;
-                    startRewardAnimator();
+                    startRedPacketAnimator();
                     return;
                 }
 
@@ -211,8 +214,11 @@ public class CustomCountLayout extends FrameLayout {
         }
     }
 
-    private void startRewardAnimator() {
-        PropertyValuesHolder valuesHolder = PropertyValuesHolder.ofFloat("translationY", 0.0f, -30f);
+    /**
+     * 奖励动画
+     */
+    public void startRewardAnimator() {
+        PropertyValuesHolder valuesHolder = PropertyValuesHolder.ofFloat("translationY", 0.0f, -20f);
         PropertyValuesHolder valuesHolder1 = PropertyValuesHolder.ofFloat("alpha", 0.3f, 1.0F);
         PropertyValuesHolder valuesHolder2 = PropertyValuesHolder.ofFloat("textSize", 10f, 30f);
 
@@ -222,7 +228,7 @@ public class CustomCountLayout extends FrameLayout {
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
-                CustomCountLayout.this.setVisibility(GONE);
+//                CustomCountLayout.this.setVisibility(GONE);
             }
 
             @Override
@@ -234,6 +240,72 @@ public class CustomCountLayout extends FrameLayout {
 
         });
         objectAnimator.setDuration(1000).start();
+    }
+
+    /**
+     * 红包抖动动画
+     */
+    public void startRedPacketAnimator() {
+        float rotation = 20f;
+        float scaleX = 0.9f;
+        /**
+         * 左右震动效果
+         */
+        Keyframe frame0 = Keyframe.ofFloat(0f, 0);
+        Keyframe frame1 = Keyframe.ofFloat(0.1f, -rotation);
+        Keyframe frame2 = Keyframe.ofFloat(0.2f, rotation);
+        Keyframe frame3 = Keyframe.ofFloat(0.3f, -rotation);
+        Keyframe frame4 = Keyframe.ofFloat(0.4f, rotation);
+        Keyframe frame5 = Keyframe.ofFloat(0.5f, -rotation);
+        Keyframe frame6 = Keyframe.ofFloat(0.6f, rotation);
+        Keyframe frame7 = Keyframe.ofFloat(0.7f, -rotation);
+        Keyframe frame8 = Keyframe.ofFloat(0.8f, rotation);
+        Keyframe frame9 = Keyframe.ofFloat(0.9f, -rotation);
+        Keyframe frame10 = Keyframe.ofFloat(1, 0);
+        PropertyValuesHolder frameHolder1 = PropertyValuesHolder.ofKeyframe("rotation", frame0, frame1, frame2, frame3, frame4, frame5, frame6, frame7, frame8, frame9, frame10);
+
+
+        /**
+         * scaleX放大1.1倍
+         */
+        Keyframe scaleXframe0 = Keyframe.ofFloat(0f, 1);
+        Keyframe scaleXframe1 = Keyframe.ofFloat(0.1f, scaleX);
+        Keyframe scaleXframe2 = Keyframe.ofFloat(0.2f, scaleX);
+        Keyframe scaleXframe3 = Keyframe.ofFloat(0.3f, scaleX);
+        Keyframe scaleXframe4 = Keyframe.ofFloat(0.4f, scaleX);
+        Keyframe scaleXframe5 = Keyframe.ofFloat(0.5f, scaleX);
+        Keyframe scaleXframe6 = Keyframe.ofFloat(0.6f, scaleX);
+        Keyframe scaleXframe7 = Keyframe.ofFloat(0.7f, scaleX);
+        Keyframe scaleXframe8 = Keyframe.ofFloat(0.8f, scaleX);
+        Keyframe scaleXframe9 = Keyframe.ofFloat(0.9f, scaleX);
+        Keyframe scaleXframe10 = Keyframe.ofFloat(1, 1);
+        PropertyValuesHolder frameHolder2 = PropertyValuesHolder.ofKeyframe("ScaleX", scaleXframe0, scaleXframe1, scaleXframe2, scaleXframe3, scaleXframe4, scaleXframe5, scaleXframe6, scaleXframe7, scaleXframe8, scaleXframe9, scaleXframe10);
+
+
+        /**
+         * scaleY放大1.1倍
+         */
+        Keyframe scaleYframe0 = Keyframe.ofFloat(0f, 1);
+        Keyframe scaleYframe1 = Keyframe.ofFloat(0.1f, scaleX);
+        Keyframe scaleYframe2 = Keyframe.ofFloat(0.2f, scaleX);
+        Keyframe scaleYframe3 = Keyframe.ofFloat(0.3f, scaleX);
+        Keyframe scaleYframe4 = Keyframe.ofFloat(0.4f, scaleX);
+        Keyframe scaleYframe5 = Keyframe.ofFloat(0.5f, scaleX);
+        Keyframe scaleYframe6 = Keyframe.ofFloat(0.6f, scaleX);
+        Keyframe scaleYframe7 = Keyframe.ofFloat(0.7f, scaleX);
+        Keyframe scaleYframe8 = Keyframe.ofFloat(0.8f, scaleX);
+        Keyframe scaleYframe9 = Keyframe.ofFloat(0.9f, scaleX);
+        Keyframe scaleYframe10 = Keyframe.ofFloat(1, 1);
+        PropertyValuesHolder frameHolder3 = PropertyValuesHolder.ofKeyframe("ScaleY", scaleYframe0, scaleYframe1, scaleYframe2, scaleYframe3, scaleYframe4, scaleYframe5, scaleYframe6, scaleYframe7, scaleYframe8, scaleYframe9, scaleYframe10);
+
+        /**
+         * 构建动画
+         */
+        ObjectAnimator animator = ObjectAnimator.ofPropertyValuesHolder(mRedPacket, frameHolder1, frameHolder2, frameHolder3);
+        animator.setDuration(1000);
+        //setRepeatCount如何设置为无数次呢
+        animator.setRepeatCount(Animation.INFINITE);
+        animator.start();
     }
 
 
