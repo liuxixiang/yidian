@@ -17,6 +17,8 @@ android {
     buildTypes {
         debug {
             buildConfigField 'String', 'OPEN_ROOT_PATH', '"http://o.go2yd.com/open-api/open-platform/"'
+//            minifyEnabled true
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         release {
             buildConfigField 'String', 'OPEN_ROOT_PATH', '"http://o.go2yd.com/open-api/open-platform/"'

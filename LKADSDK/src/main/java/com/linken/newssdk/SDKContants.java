@@ -22,5 +22,6 @@ public class SDKContants {
     public static final String URL_3RD_INFO = "http://api-small-3rd.go2yd.com/Website/user/get3rd-info";
 
     public static final String USER_AGENT = " YidianZixun";
+    public static String channel;
 
 }

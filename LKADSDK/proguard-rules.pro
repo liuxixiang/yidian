@@ -61,6 +61,27 @@
 
 #-keep class com.ch
 
+-keep class com.linken.newssdk.ad.data.**{
+    <init>(...);
+    *;
+}
+
+-keep class com.linken.newssdk.data.ad.db.** {
+*;
+}
+-keep class com.linken.newssdk.data.** {
+*;
+}
+
+-keep public class com.linken.newssdk.data.ad.db.*{
+    *;
+}
+
+
+-keep class com.linken.newssdk.utils.** {
+    *;
+}
+
 -keep class com.linken.newssdk.export.*{
     *;
 }
@@ -120,6 +141,23 @@
 -keep class com.linken.newssdk.widget.pullRefresh.TipDrawable{
     *;
 }
+
+### greenDAO 3
+-keepclassmembers class * extends org.greenrobot.greendao.AbstractDao {
+public static java.lang.String TABLENAME;
+}
+-keep class **$Properties {*;}
+
+# If you do not use SQLCipher:
+-dontwarn net.sqlcipher.database.**
+# If you do not use RxJava:
+-dontwarn rx.**
+
+### greenDAO 2
+-keepclassmembers class * extends de.greenrobot.dao.AbstractDao {
+public static java.lang.String TABLENAME;
+}
+-keep class **$Properties
 
 
 

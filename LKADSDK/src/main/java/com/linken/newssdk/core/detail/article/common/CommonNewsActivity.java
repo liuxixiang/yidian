@@ -16,6 +16,7 @@ import com.linken.ad.data.RewardCard;
 import com.linken.newssdk.IntentConstants;
 import com.linken.newssdk.NewsFeedsSDK;
 import com.linken.newssdk.R;
+import com.linken.newssdk.SDKContants;
 import com.linken.newssdk.base.activity.BaseActivity;
 import com.linken.newssdk.core.newweb.LiteWebView;
 import com.linken.newssdk.core.newweb.WebAppInterface;
@@ -64,7 +65,6 @@ public abstract class CommonNewsActivity<P extends CommonNewsPresenter> extends 
     private int countDown = 15;
     private boolean isFristPageFinish;//网页第一次加载完成
     private String docid;
-    private String channel = "推荐";
     private String title;
 
     @Override
@@ -97,7 +97,7 @@ public abstract class CommonNewsActivity<P extends CommonNewsPresenter> extends 
         mUri = generateUri();
 
         if (mCard != null) {
-            channel = mCard.channel;
+            SDKContants.channel = mCard.channel;
             if (Card.CTYPE_VIDEO_LIVE_CARD.equals(mCard.cType) || Card.CTYPE_VIDEO_CARD.equals(mCard.cType)) {
                 mType = INewsInfoCallback.TYPE_VIDEO;
             } else if (Card.CTYPE_ADVERTISEMENT.equals(mCard.cType)) {
@@ -427,7 +427,7 @@ public abstract class CommonNewsActivity<P extends CommonNewsPresenter> extends 
     private void newsInfoCallback(int event, int countDown, int realDuration) {
         INewsInfoCallback newsInfoCallback = NewsFeedsSDK.getInstance().getNewsInfoCallback();
         if (newsInfoCallback != null) {
-            newsInfoCallback.callback(event, docid + "", title, mType, channel,
+            newsInfoCallback.callback(event, docid + "", title, mType, SDKContants.channel,
                     countDown, realDuration);
         }
     }
