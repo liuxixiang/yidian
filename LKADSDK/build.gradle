@@ -30,7 +30,7 @@ android {
     greendao{
 
         //指定数据库schema版本号，迁移等操作会用到;
-        schemaVersion 1
+        schemaVersion 2
         //dao的包名，包名默认是entity所在的包；
         daoPackage 'com.linken.ad.data'
         //生成数据库文件的目录;
