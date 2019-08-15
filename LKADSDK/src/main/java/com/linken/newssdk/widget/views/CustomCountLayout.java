@@ -219,7 +219,7 @@ public class CustomCountLayout extends FrameLayout {
      */
     public void startRewardAnimator() {
         PropertyValuesHolder valuesHolder = PropertyValuesHolder.ofFloat("translationY", 0.0f, -20f);
-        PropertyValuesHolder valuesHolder1 = PropertyValuesHolder.ofFloat("alpha", 0.3f, 1.0F);
+        PropertyValuesHolder valuesHolder1 = PropertyValuesHolder.ofFloat("alpha", 0.1f, 1f);
         PropertyValuesHolder valuesHolder2 = PropertyValuesHolder.ofFloat("textSize", 10f, 30f);
 
         ObjectAnimator objectAnimator = ObjectAnimator.ofPropertyValuesHolder(mTvReward, valuesHolder, valuesHolder1, valuesHolder2);
