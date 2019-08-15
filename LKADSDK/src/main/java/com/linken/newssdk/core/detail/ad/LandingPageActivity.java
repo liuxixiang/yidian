@@ -351,6 +351,7 @@ public class LandingPageActivity extends FragmentActivity implements View.OnClic
     public void doReward(String msg) {
         if (mCustomCountLayout != null) {
             mCustomCountLayout.setReward(msg);
+            mCustomCountLayout.startRewardAnimator();
         }
     }
 }

@@ -228,7 +228,7 @@ public class CustomCountLayout extends FrameLayout {
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
-//                CustomCountLayout.this.setVisibility(GONE);
+                CustomCountLayout.this.setVisibility(GONE);
             }
 
             @Override
