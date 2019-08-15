@@ -69,6 +69,7 @@ public class LandingPageActivity extends FragmentActivity implements View.OnClic
     private boolean isFristPageFinish;//网页第一次加载完成
     private String title;
     private String docid;
+    private boolean isShowRewardView = true;
 
 
     public static void startActivity(Activity activity, Intent intent) {
@@ -317,6 +318,7 @@ public class LandingPageActivity extends FragmentActivity implements View.OnClic
             FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
             layoutParams.gravity = Gravity.BOTTOM | Gravity.RIGHT;
             layoutParams.setMargins(0, 0, DensityUtil.dip2px(this, 10), DensityUtil.dip2px(this, 7));
+            mCustomCountLayout.setVisibility(isShowRewardView ? View.VISIBLE : View.GONE);
             mViewGroup.addView(mCustomCountLayout, layoutParams);
         }
         if (mAfferentInfos != null && mAfferentInfos.size() > 0) {
@@ -342,6 +344,7 @@ public class LandingPageActivity extends FragmentActivity implements View.OnClic
 
     @Override
     public void showRewardView(boolean isShow) {
+        this.isShowRewardView = isShow;
         if (mCustomCountLayout != null) {
             mCustomCountLayout.setVisibility(isShow ? View.VISIBLE : View.GONE);
         }
