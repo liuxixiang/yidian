@@ -16,9 +16,9 @@ public interface INewsInfoCallback {
     String TYPE_VIDEO = "Video";
 
     int TYPE_EVENT_CLICK = 0;
-    //倒计时结束回调
+    //关闭
     int TYPE_EVENT_DURATION = 1;
-    //h5 关闭
+    //h5 倒计时
     int TYPE_EVENT_H5_COUNT_DOWN = 2;
 
 
