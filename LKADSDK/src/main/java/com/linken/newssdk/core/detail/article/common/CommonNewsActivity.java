@@ -82,7 +82,7 @@ public abstract class CommonNewsActivity<P extends CommonNewsPresenter> extends 
         if (newsInfoCallback != null) {
             mAfferentInfos = newsInfoCallback.setAfferentInfo(new ArrayList<INewsInfoCallback.AfferentInfo>(), this);
         }
-        title = mWebView.getTitle() + "";
+
     }
 
     @Override
@@ -266,8 +266,11 @@ public abstract class CommonNewsActivity<P extends CommonNewsPresenter> extends 
                     isFristPageFinish = true;
                     landingPageStartTime = System.currentTimeMillis();//息屏之后重新计时
                 }
-
-
+                String url = mWebView.getUrl();
+                if (!TextUtils.isEmpty(url)) {
+                    Uri uri = Uri.parse(url);
+                    title = uri.getFragment();
+                }
             }
         });
 

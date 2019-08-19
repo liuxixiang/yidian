@@ -142,7 +142,6 @@ public class LiteWebView extends WebView {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-
                 if (mPageLoadedListener != null) {
                     mPageLoadedListener.onPageLoadFinished();
                 }
