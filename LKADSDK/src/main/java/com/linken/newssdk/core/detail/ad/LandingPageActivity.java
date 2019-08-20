@@ -104,7 +104,6 @@ public class LandingPageActivity extends FragmentActivity implements View.OnClic
         if (newsInfoCallback != null) {
             mAfferentInfos = newsInfoCallback.setAfferentInfo(new ArrayList<INewsInfoCallback.AfferentInfo>(), this);
         }
-        title = mWebView.getTitle() + "";
     }
 
     private void handleBundle() {
@@ -287,6 +286,8 @@ public class LandingPageActivity extends FragmentActivity implements View.OnClic
             isFristPageFinish = true;
             landingPageStartTime = System.currentTimeMillis();//息屏之后重新计时
         }
+
+        title = mWebView.getTitle();
     }
 
     private void newsInfoCallback(int event, int countDown, int realDuration) {
