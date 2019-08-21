@@ -24,6 +24,7 @@ import com.linken.newssdk.R;
 import com.linken.newssdk.SDKContants;
 import com.linken.newssdk.YdCustomConfigure;
 import com.linken.newssdk.adapter.MultipleItemQuickAdapter;
+import com.linken.newssdk.utils.XClickUtil;
 import com.linken.newssdk.utils.support.ImageDownloaderConfig;
 import com.linken.newssdk.core.detail.article.gallery.YdGalleryActivity;
 import com.linken.newssdk.core.detail.article.news.YdNewsActivity;
@@ -445,6 +446,9 @@ public abstract class WeMediaFeedCardBaseViewHolder extends WeMediaBaseRecylerHo
 
     @Override
     public void onClick(View v) {
+        if(XClickUtil.isFastDoubleClick(v,500)) {
+            return;
+        }
         if (TextUtils.equals(Card.CTYPE_NORMAL_NEWS, mCard.cType)) {
             YdNewsActivity.startNewsActivity(mContext, mCard);
         } else if (TextUtils.equals(Card.CTYPE_VIDEO_CARD, mCard.cType)) {

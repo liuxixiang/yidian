@@ -20,6 +20,7 @@ import com.linken.newssdk.libraries.bra.BaseViewHolder;
 import com.linken.newssdk.theme.ThemeChangeInterface;
 import com.linken.newssdk.theme.ThemeManager;
 import com.linken.newssdk.utils.DensityUtil;
+import com.linken.newssdk.utils.XClickUtil;
 import com.linken.newssdk.utils.action.AdActionHelper;
 import com.linken.newssdk.utils.support.ImageDownloaderConfig;
 import com.linken.newssdk.widget.feedback.ad.AdBadFeedBackWindow;
@@ -208,6 +209,9 @@ public abstract class AdBaseCard extends BaseViewHolder implements View.OnClickL
 
     @Override
     public void onClick(View v) {
+        if(XClickUtil.isFastDoubleClick(v,500)) {
+            return;
+        }
         doViewNSReport();
         if (v.getId() == R.id.btnToggle) {
             handleShowFeedbackView(itemView, mFeedback);
