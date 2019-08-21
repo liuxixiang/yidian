@@ -320,6 +320,7 @@ public class LandingPageActivity extends FragmentActivity implements View.OnClic
             layoutParams.gravity = Gravity.BOTTOM | Gravity.RIGHT;
             layoutParams.setMargins(0, 0, DensityUtil.dip2px(this, 10), DensityUtil.dip2px(this, 7));
             mCustomCountLayout.setVisibility(isShowRewardView ? View.VISIBLE : View.GONE);
+            mCustomCountLayout.setClickable(true);
             mViewGroup.addView(mCustomCountLayout, layoutParams);
         }
         if (mAfferentInfos != null && mAfferentInfos.size() > 0) {
