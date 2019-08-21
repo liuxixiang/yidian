@@ -231,7 +231,7 @@ public class NormalBottomPanel extends LinearLayout implements CardBottomPanelWr
                 boolean haveEnoughRoomForComment = (mTitleWidth - contentLength) > commentLength;
                 if (haveEnoughRoomForComment) {
                     tvCommentCount.setText(String.valueOf(card.commentCount) + "评");
-                    tvCommentCount.setVisibility(View.VISIBLE);
+                    tvCommentCount.setVisibility(View.GONE);
                     contentLength += commentLength;
                 } else {
                     tvCommentCount.setVisibility(View.GONE);
