@@ -20,11 +20,11 @@ import java.util.TimeZone;
 public final class TimeUtil {
     public static final long SECOND = 1000L;
     public static final long MINUTE = 60 * SECOND;
-    public static final long HOUR   = 60 * MINUTE;
-    public static final long DAY    = 24 * HOUR;
-    public static final long WEEK   = 7 * DAY;
-    public static final long MONTH  = 30 * DAY;
-    public static final long YEAR   = 365 * DAY;
+    public static final long HOUR = 60 * MINUTE;
+    public static final long DAY = 24 * HOUR;
+    public static final long WEEK = 7 * DAY;
+    public static final long MONTH = 30 * DAY;
+    public static final long YEAR = 365 * DAY;
 
     private static final String TAG = "TimeUtil";
 
@@ -391,6 +391,7 @@ public final class TimeUtil {
      * 存在静态变量中，防止频繁sp操作
      */
     private static long sServerDiffTime = 0;
+
     public static long getServerDiffTime() {
         if (sServerDiffTime == 0) {
             sServerDiffTime = GlobalConfig.getServerDiffTime();
@@ -613,7 +614,7 @@ public final class TimeUtil {
      * .com/2012/05/how-to-use-threadlocal-in-java-benefits.html#ixzz42ImQh3lY
      */
     private static class ThreadLocalDateFormat extends ThreadLocal<SimpleDateFormat> {
-        private final String   mDateFormat;
+        private final String mDateFormat;
         private final TimeZone mTimeZone;
 
         ThreadLocalDateFormat(
@@ -696,16 +697,38 @@ public final class TimeUtil {
 
     /**
      * 日期转时间戳（秒）
+     *
      * @param _data
      * @return
      */
-    public static long Date2s(String _data){
-        SimpleDateFormat format =   new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    public static long Date2s(String _data) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
             Date date = format.parse(_data);
             return date.getTime() / 1000;
-        }catch(Exception e){
+        } catch (Exception e) {
             return 0;
         }
+    }
+
+    //判断选择的日期是否是今天
+    public static boolean isToday(long time) {
+        return isThisTime(time, "yyyy-MM-dd");
+    }
+
+    //判断选择的日期是否是本月
+    public static boolean isThisMonth(long time) {
+        return isThisTime(time, "yyyy-MM");
+    }
+
+    private static boolean isThisTime(long time, String pattern) {
+        Date date = new Date(time);
+        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+        String param = sdf.format(date);//参数时间
+        String now = sdf.format(new Date());//当前时间
+        if (param.equals(now)) {
+            return true;
+        }
+        return false;
     }
 }

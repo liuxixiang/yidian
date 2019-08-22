@@ -24,10 +24,11 @@ import com.linken.newssdk.core.newweb.WebAppManager;
 import com.linken.newssdk.data.ad.db.AdvertisementDbUtil;
 import com.linken.newssdk.data.card.base.Card;
 import com.linken.newssdk.data.news.INewsType;
-import com.linken.newssdk.export.INewRewardCallback;
 import com.linken.newssdk.export.INewsInfoCallback;
 import com.linken.newssdk.utils.ContextUtils;
 import com.linken.newssdk.utils.DensityUtil;
+import com.linken.newssdk.utils.SPUtils;
+import com.linken.newssdk.utils.TimeUtil;
 import com.linken.newssdk.widget.views.CustomCountLayout;
 
 import java.io.IOException;
@@ -47,7 +48,7 @@ import static com.linken.newssdk.data.news.INewsType.STYLE_HBRID_VIDEO;
  * @date 2018/5/19
  */
 
-public abstract class CommonNewsActivity<P extends CommonNewsPresenter> extends BaseActivity<P> implements CommonNewsContractView, WebAppInterface.WebViewHost, INewRewardCallback {
+public abstract class CommonNewsActivity<P extends CommonNewsPresenter> extends BaseActivity<P> implements CommonNewsContractView, WebAppInterface.WebViewHost {
 
     protected LiteWebView mWebView;
     private String mUri;
@@ -63,11 +64,11 @@ public abstract class CommonNewsActivity<P extends CommonNewsPresenter> extends 
     private List<INewsInfoCallback.AfferentInfo> mAfferentInfos;
     private CustomCountLayout mCustomCountLayout;
     private String mType = "";
-    private int countDown = 15;
+    private int countDown = 15;//倒计时时间
+    private int rewardNum;//奖励个数
     private boolean isFristPageFinish;//网页第一次加载完成
     private String docid;
     private String title;
-    private boolean isShowRewardView = true;
 
     @Override
     protected void initView() {
@@ -80,7 +81,7 @@ public abstract class CommonNewsActivity<P extends CommonNewsPresenter> extends 
         fetchData();
         INewsInfoCallback newsInfoCallback = NewsFeedsSDK.getInstance().getNewsInfoCallback();
         if (newsInfoCallback != null) {
-            mAfferentInfos = newsInfoCallback.setAfferentInfo(new ArrayList<INewsInfoCallback.AfferentInfo>(), this);
+            mAfferentInfos = newsInfoCallback.setAfferentInfo(new ArrayList<INewsInfoCallback.AfferentInfo>());
         }
 
     }
@@ -314,7 +315,7 @@ public abstract class CommonNewsActivity<P extends CommonNewsPresenter> extends 
         if (landingPageStartTime != 0) {
             duration = System.currentTimeMillis() - landingPageStartTime + duration;
         }
-        newsInfoCallback(INewsInfoCallback.TYPE_EVENT_DURATION, countDown, (int) (duration / 1000));
+        newsInfoCallback(INewsInfoCallback.TYPE_EVENT_DURATION, rewardNum, countDown, (int) (duration / 1000));
         super.onDestroy();
     }
 
@@ -429,11 +430,11 @@ public abstract class CommonNewsActivity<P extends CommonNewsPresenter> extends 
 
     }
 
-    private void newsInfoCallback(int event, int countDown, int realDuration) {
+    private void newsInfoCallback(int event, int rewardNum, int countDown, int realDuration) {
         INewsInfoCallback newsInfoCallback = NewsFeedsSDK.getInstance().getNewsInfoCallback();
         if (newsInfoCallback != null) {
             newsInfoCallback.callback(event, docid + "", title, mType, SDKContants.channel,
-                    countDown, realDuration, this);
+                    rewardNum, countDown, realDuration);
         }
     }
 
@@ -449,6 +450,20 @@ public abstract class CommonNewsActivity<P extends CommonNewsPresenter> extends 
         if (cardId.equals(docid)) {
             return;
         }
+
+        if (SPUtils.contains(INewsInfoCallback.REWARD_TIME_KEY)) {
+            long rewardTime = SPUtils.getLong(getApplication(), INewsInfoCallback.REWARD_TIME_KEY, 0L);
+            if (!TimeUtil.isToday(rewardTime)) {
+                putRewardCache(0, System.currentTimeMillis());
+            }
+        }
+        if (SPUtils.contains(INewsInfoCallback.REWARD_KEY)) {
+            int reward = SPUtils.getInt(getApplication(), INewsInfoCallback.REWARD_KEY, 0);
+            //今天得到的奖励大于
+            if (reward >= NewsFeedsSDK.getInstance().getTotalRewardNum()) {
+                return;
+            }
+        }
         String tag = "customCountLayout";
         ViewGroup mViewGroup = (ViewGroup) mWebView.getParent();
         mCustomCountLayout = mViewGroup.findViewWithTag(tag);
@@ -458,7 +473,7 @@ public abstract class CommonNewsActivity<P extends CommonNewsPresenter> extends 
             FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
             layoutParams.gravity = Gravity.BOTTOM | Gravity.RIGHT;
             layoutParams.setMargins(0, 0, DensityUtil.dip2px(this, 10), DensityUtil.dip2px(this, 7));
-            mCustomCountLayout.setVisibility(isShowRewardView ? View.VISIBLE : View.GONE);
+            mCustomCountLayout.setVisibility(View.VISIBLE);
             mCustomCountLayout.setClickable(true);
             mViewGroup.addView(mCustomCountLayout, layoutParams);
         }
@@ -466,6 +481,7 @@ public abstract class CommonNewsActivity<P extends CommonNewsPresenter> extends 
             for (INewsInfoCallback.AfferentInfo newsInfo : mAfferentInfos) {
                 if (newsInfo.getType().equals(mType)) {
                     countDown = newsInfo.getCountDown();
+                    rewardNum = newsInfo.getRewardNum();
                     break;
                 }
             }
@@ -474,9 +490,17 @@ public abstract class CommonNewsActivity<P extends CommonNewsPresenter> extends 
         mCustomCountLayout.setOnFinishListener(new CustomCountLayout.OnFinishListener() {
             @Override
             public void onFinish() {
-                newsInfoCallback(INewsInfoCallback.TYPE_EVENT_H5_COUNT_DOWN, countDown, countDown);
+                mCustomCountLayout.setReward(rewardNum);
+                int reward = 0;
+                if (SPUtils.contains(INewsInfoCallback.REWARD_KEY)) {
+                    reward = SPUtils.getInt(getApplication(), INewsInfoCallback.REWARD_KEY, 0);
+                }
+                putRewardCache(rewardNum + reward, System.currentTimeMillis());
+
+                newsInfoCallback(INewsInfoCallback.TYPE_EVENT_H5_COUNT_DOWN, rewardNum, countDown, countDown);
                 RewardCard rewardCardBean = new RewardCard(null, docid, mType);
                 AdvertisementDbUtil.createRewardRecord(rewardCardBean);
+
             }
 
         });
@@ -484,19 +508,9 @@ public abstract class CommonNewsActivity<P extends CommonNewsPresenter> extends 
 
     }
 
-    @Override
-    public void showRewardView(boolean isShow) {
-        this.isShowRewardView = isShow;
-        if (mCustomCountLayout != null) {
-            mCustomCountLayout.setVisibility(isShow ? View.VISIBLE : View.GONE);
-        }
+    private void putRewardCache(int rewardNum, long rewardTime) {
+        SPUtils.put(INewsInfoCallback.REWARD_KEY, rewardNum);
+        SPUtils.put(INewsInfoCallback.REWARD_TIME_KEY, rewardTime);
     }
 
-    @Override
-    public void doReward(String msg) {
-        if (mCustomCountLayout != null) {
-            mCustomCountLayout.setReward(msg);
-            mCustomCountLayout.startRewardAnimator();
-        }
-    }
 }

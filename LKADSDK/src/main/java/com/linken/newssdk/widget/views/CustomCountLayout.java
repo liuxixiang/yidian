@@ -77,8 +77,10 @@ public class CustomCountLayout extends FrameLayout {
     /**
      * 设置奖励
      */
-    public void setReward(String reward) {
-        mTvReward.setText(reward);
+    public void setReward(long reward) {
+        if(reward > 0) {
+            mTvReward.setText("+" + reward);
+        }
     }
 
     private Runnable mRunnable = new Runnable() {
@@ -166,6 +168,7 @@ public class CustomCountLayout extends FrameLayout {
                     }
                     isRunning = false;
                     startRedPacketAnimator();
+                    startRewardAnimator();
                     return;
                 }
 

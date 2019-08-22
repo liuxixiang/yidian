@@ -101,6 +101,10 @@ public class SPUtils {
         setInt("share_data", context, key, value);
     }
 
+    public static long getLong(Context context, String key, long defaultValue) {
+        return getLong("share_data", context, key, defaultValue);
+    }
+
     public static long getLong(String spName, Context context, String key, long value) {
         Object result = get(spName, context, key, Long.valueOf(value));
         long var6 = 0L;

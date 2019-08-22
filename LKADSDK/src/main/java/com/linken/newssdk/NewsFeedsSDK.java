@@ -35,6 +35,8 @@ public class NewsFeedsSDK {
     private String mAppId;
     private boolean debug;
     private String mFilterRegex;
+    private int mTotalRewardNum;
+
     private IShareInterface iShareInterface;
     private INewsInfoCallback mNewsInfoCallback;
     private IReportInterface iReportInterface = ReportProxy.defaultIReportInterface;
@@ -45,6 +47,7 @@ public class NewsFeedsSDK {
         this.mAppId = builder.mAppId;
         this.debug = builder.debug;
         this.mFilterRegex = builder.mFilterRegex;
+        this.mTotalRewardNum = builder.mTotalRewardNum;
 
         ContextUtils.init(this.mContext);
         HMTAgentUtil.init();
@@ -82,6 +85,10 @@ public class NewsFeedsSDK {
 
     public String getFilterRegex() {
         return mFilterRegex;
+    }
+
+    public int getTotalRewardNum() {
+        return mTotalRewardNum;
     }
 
     public void setShareInterface(IShareInterface iShareInterface) {
@@ -124,6 +131,7 @@ public class NewsFeedsSDK {
         private String mAppId = "mVv7l58rwJlrUUcoOvj_JAtc";
         private boolean debug;
         private String mFilterRegex;
+        private int mTotalRewardNum;
 
 
         public Builder() {
@@ -136,6 +144,7 @@ public class NewsFeedsSDK {
             this.mAppId = feedsSDK.mAppId;
             this.debug = feedsSDK.debug;
             this.mFilterRegex = feedsSDK.mFilterRegex;
+            this.mTotalRewardNum = feedsSDK.mTotalRewardNum;
         }
 
         public Builder setContext(Context context) {
@@ -171,6 +180,16 @@ public class NewsFeedsSDK {
          */
         public Builder setFilter(String filter) {
             this.mFilterRegex = ".*(" + filter + ").*";
+            return this;
+        }
+
+        /**
+         * 设置单个关键字过滤
+         *
+         * @return
+         */
+        public Builder setTotalRewardNum(int totalRewardNum) {
+            this.mTotalRewardNum = totalRewardNum;
             return this;
         }
 
