@@ -35,11 +35,11 @@ public class NewsFeedsSDK {
     private String mAppId;
     private boolean debug;
     private String mFilterRegex;
-    private int mTotalRewardNum;
 
     private IShareInterface iShareInterface;
     private INewsInfoCallback mNewsInfoCallback;
     private IReportInterface iReportInterface = ReportProxy.defaultIReportInterface;
+    private INewsInfoCallback.Config mConfig;
 
     private NewsFeedsSDK(Builder builder) {
         this.mContext = builder.mContext;
@@ -47,7 +47,7 @@ public class NewsFeedsSDK {
         this.mAppId = builder.mAppId;
         this.debug = builder.debug;
         this.mFilterRegex = builder.mFilterRegex;
-        this.mTotalRewardNum = builder.mTotalRewardNum;
+        mConfig = new INewsInfoCallback.Config();
 
         ContextUtils.init(this.mContext);
         HMTAgentUtil.init();
@@ -87,9 +87,10 @@ public class NewsFeedsSDK {
         return mFilterRegex;
     }
 
-    public int getTotalRewardNum() {
-        return mTotalRewardNum;
+    public INewsInfoCallback.Config getConfig() {
+        return mConfig;
     }
+
 
     public void setShareInterface(IShareInterface iShareInterface) {
         this.iShareInterface = iShareInterface;
@@ -106,6 +107,7 @@ public class NewsFeedsSDK {
 
     public void setNewsInfoCallback(INewsInfoCallback newsInfoCallback) {
         this.mNewsInfoCallback = newsInfoCallback;
+        mNewsInfoCallback.getConfig(mConfig);
     }
 
     public YdMediaInterface getCustomMediaplayer() {
@@ -131,7 +133,6 @@ public class NewsFeedsSDK {
         private String mAppId = "mVv7l58rwJlrUUcoOvj_JAtc";
         private boolean debug;
         private String mFilterRegex;
-        private int mTotalRewardNum;
 
 
         public Builder() {
@@ -144,7 +145,6 @@ public class NewsFeedsSDK {
             this.mAppId = feedsSDK.mAppId;
             this.debug = feedsSDK.debug;
             this.mFilterRegex = feedsSDK.mFilterRegex;
-            this.mTotalRewardNum = feedsSDK.mTotalRewardNum;
         }
 
         public Builder setContext(Context context) {
@@ -183,15 +183,6 @@ public class NewsFeedsSDK {
             return this;
         }
 
-        /**
-         * 设置单个关键字过滤
-         *
-         * @return
-         */
-        public Builder setTotalRewardNum(int totalRewardNum) {
-            this.mTotalRewardNum = totalRewardNum;
-            return this;
-        }
 
         /**
          * 设置多个关键字过滤

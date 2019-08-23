@@ -2,12 +2,15 @@ package com.linken.yidian;
 
 import android.app.Application;
 import android.content.Context;
+import android.os.Handler;
 import android.util.Log;
 
 import com.linken.newssdk.NewsFeedsSDK;
 import com.linken.newssdk.export.INewsInfoCallback;
 import com.linken.newssdk.export.IReportInterface;
 import com.umeng.analytics.MobclickAgent;
+
+import java.util.List;
 
 
 /**
@@ -58,10 +61,33 @@ public class YdApplication extends Application {
         });
 
         NewsFeedsSDK.getInstance().setNewsInfoCallback(new INewsInfoCallback() {
+
             @Override
-            public void callback(String id, String title, String type, long duration) {
-                Log.e("lxh", "id=" + id + "----title=" + title + "---type=" + type + "---duration=" + duration);
+            public void getConfig(final Config config) {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        AfferentInfo afferentinfo_article = new AfferentInfo(INewsInfoCallback.TYPE_ARTICLE, 10, 8);
+                        AfferentInfo afferentinfo_video = new AfferentInfo(INewsInfoCallback.TYPE_VIDEO, 5, 4);
+                        AfferentInfo afferentinfo_ad = new AfferentInfo(INewsInfoCallback.TYPE_AD, 3, 3);
+
+                        config.setTotalRewardNum(50);
+                        config.setAfferentInfos(afferentinfo_article, afferentinfo_video, afferentinfo_ad);
+                    }
+                },5000);
+
             }
+
+
+            @Override
+            public void callback(int event, String id, String title, String type, String channel, int rewardNum, int expectDuration, int realDuration) {
+                Log.e("lxh", "id=" + id + "----title=" + title
+                        + "----channel=" + channel + "---type=" + type
+                        + "---rewardNum=" + rewardNum
+                        + "---expectDuration=" + expectDuration
+                        + "---realDuration=" + realDuration);
+            }
+
         });
 
         NewsFeedsSDK.getInstance().setReportInterface(new IReportInterface() {

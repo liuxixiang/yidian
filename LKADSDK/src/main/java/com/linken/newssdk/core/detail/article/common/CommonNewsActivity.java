@@ -35,9 +35,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static com.linken.newssdk.data.news.INewsType.NORMAL_NEWS_URL;
@@ -61,7 +59,6 @@ public abstract class CommonNewsActivity<P extends CommonNewsPresenter> extends 
     private long landingPageStartTime = 0L;//记录广告landingPage开始时间
     private long landingPageEndTime = 0L;//记录广告landingPage结束时间
     private long duration = 0L;
-    private List<INewsInfoCallback.AfferentInfo> mAfferentInfos;
     private CustomCountLayout mCustomCountLayout;
     private String mType = "";
     private int countDown = 15;//倒计时时间
@@ -79,11 +76,6 @@ public abstract class CommonNewsActivity<P extends CommonNewsPresenter> extends 
     protected void initData() {
         initWebView(this, mWebView);
         fetchData();
-        INewsInfoCallback newsInfoCallback = NewsFeedsSDK.getInstance().getNewsInfoCallback();
-        if (newsInfoCallback != null) {
-            mAfferentInfos = newsInfoCallback.setAfferentInfo(new ArrayList<INewsInfoCallback.AfferentInfo>());
-        }
-
     }
 
     @Override
@@ -460,7 +452,7 @@ public abstract class CommonNewsActivity<P extends CommonNewsPresenter> extends 
         if (SPUtils.contains(INewsInfoCallback.REWARD_KEY)) {
             int reward = SPUtils.getInt(getApplication(), INewsInfoCallback.REWARD_KEY, 0);
             //今天得到的奖励大于
-            if (reward >= NewsFeedsSDK.getInstance().getTotalRewardNum()) {
+            if (reward >= NewsFeedsSDK.getInstance().getConfig().getTotalRewardNum()) {
                 return;
             }
         }
@@ -477,7 +469,9 @@ public abstract class CommonNewsActivity<P extends CommonNewsPresenter> extends 
             mCustomCountLayout.setClickable(true);
             mViewGroup.addView(mCustomCountLayout, layoutParams);
         }
-        if (mAfferentInfos != null && mAfferentInfos.size() > 0) {
+        INewsInfoCallback.AfferentInfo[] mAfferentInfos = NewsFeedsSDK.getInstance().getConfig().getAfferentInfos();
+
+        if (mAfferentInfos != null && mAfferentInfos.length > 0) {
             for (INewsInfoCallback.AfferentInfo newsInfo : mAfferentInfos) {
                 if (newsInfo.getType().equals(mType)) {
                     countDown = newsInfo.getCountDown();

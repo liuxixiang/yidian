@@ -63,7 +63,6 @@ public class LandingPageActivity extends FragmentActivity implements View.OnClic
     private long landingPageStartTime = 0L;//记录广告landingPage开始时间
     private long landingPageEndTime = 0L;//记录广告landingPage结束时间
     private long duration = 0L;
-    private List<INewsInfoCallback.AfferentInfo> mAfferentInfos;
     private CustomCountLayout mCustomCountLayout;
     private String mType = INewsInfoCallback.TYPE_AD;
     private int countDown = 15;//倒计时时间
@@ -100,11 +99,6 @@ public class LandingPageActivity extends FragmentActivity implements View.OnClic
         handleBundle();
         initWidget();
         startShowContent();
-
-        INewsInfoCallback newsInfoCallback = NewsFeedsSDK.getInstance().getNewsInfoCallback();
-        if (newsInfoCallback != null) {
-            mAfferentInfos = newsInfoCallback.setAfferentInfo(new ArrayList<INewsInfoCallback.AfferentInfo>());
-        }
     }
 
     private void handleBundle() {
@@ -322,7 +316,7 @@ public class LandingPageActivity extends FragmentActivity implements View.OnClic
         if (SPUtils.contains(INewsInfoCallback.REWARD_KEY)) {
             int reward = SPUtils.getInt(getApplication(), INewsInfoCallback.REWARD_KEY, 0);
             //今天得到的奖励大于
-            if (reward >= NewsFeedsSDK.getInstance().getTotalRewardNum()) {
+            if (reward >= NewsFeedsSDK.getInstance().getConfig().getTotalRewardNum()) {
                 return;
             }
         }
@@ -339,7 +333,8 @@ public class LandingPageActivity extends FragmentActivity implements View.OnClic
             mCustomCountLayout.setClickable(true);
             mViewGroup.addView(mCustomCountLayout, layoutParams);
         }
-        if (mAfferentInfos != null && mAfferentInfos.size() > 0) {
+        INewsInfoCallback.AfferentInfo[] mAfferentInfos = NewsFeedsSDK.getInstance().getConfig().getAfferentInfos();
+        if (mAfferentInfos != null && mAfferentInfos.length > 0) {
             for (INewsInfoCallback.AfferentInfo newsInfo : mAfferentInfos) {
                 if (newsInfo.getType().equals(mType)) {
                     countDown = newsInfo.getCountDown();

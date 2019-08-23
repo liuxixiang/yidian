@@ -5,7 +5,6 @@ import android.support.annotation.StringDef;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-import java.util.List;
 
 public interface INewsInfoCallback {
     //文章
@@ -24,7 +23,7 @@ public interface INewsInfoCallback {
     String REWARD_TIME_KEY = "rewardTime";
 
 
-    List<AfferentInfo> setAfferentInfo(List<AfferentInfo> afferentInfos);
+    void getConfig(final Config config);
 
     /**
      * @param id             新闻 广告 id
@@ -54,7 +53,7 @@ public interface INewsInfoCallback {
         String type;
         int rewardNum;
 
-        public AfferentInfo(String type, int countDown,int rewardNum) {
+        public AfferentInfo(String type, int countDown, int rewardNum) {
             this.countDown = countDown;
             this.type = type;
             this.rewardNum = rewardNum;
@@ -83,6 +82,27 @@ public interface INewsInfoCallback {
 
         public void setRewardNum(int rewardNum) {
             this.rewardNum = rewardNum;
+        }
+    }
+
+    class Config {
+        private int totalRewardNum;
+        private AfferentInfo[] afferentInfos;
+
+        public int getTotalRewardNum() {
+            return totalRewardNum;
+        }
+
+        public void setTotalRewardNum(int totalRewardNum) {
+            this.totalRewardNum = totalRewardNum;
+        }
+
+        public AfferentInfo[] getAfferentInfos() {
+            return afferentInfos;
+        }
+
+        public void setAfferentInfos(AfferentInfo... afferentInfos) {
+            this.afferentInfos = afferentInfos;
         }
     }
 }
