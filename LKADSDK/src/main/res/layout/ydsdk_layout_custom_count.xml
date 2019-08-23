@@ -35,7 +35,7 @@
             custom:donut_unfinished_stroke_width="5dp" />
 
         <ImageView
-            android:padding="2dp"
+            android:padding="7dp"
             android:src="@drawable/ydsdk_red_packet"
             android:id="@+id/red_packet"
             android:layout_width="match_parent"
