@@ -72,6 +72,7 @@ public class YdApplication extends Application {
                         AfferentInfo afferentinfo_ad = new AfferentInfo(INewsInfoCallback.TYPE_AD, 3, 3);
 
                         config.setTotalRewardNum(50);
+                        config.setShowCountDown(true);
                         config.setAfferentInfos(afferentinfo_article, afferentinfo_video, afferentinfo_ad);
                     }
                 },5000);

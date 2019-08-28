@@ -443,12 +443,17 @@ public abstract class CommonNewsActivity<P extends CommonNewsPresenter> extends 
             return;
         }
 
+        if(!NewsFeedsSDK.getInstance().getConfig().isShowCountDown()) {
+            return;
+        }
+
         if (SPUtils.contains(INewsInfoCallback.REWARD_TIME_KEY)) {
             long rewardTime = SPUtils.getLong(getApplication(), INewsInfoCallback.REWARD_TIME_KEY, 0L);
             if (!TimeUtil.isToday(rewardTime)) {
                 putRewardCache(0, System.currentTimeMillis());
             }
         }
+
         if (SPUtils.contains(INewsInfoCallback.REWARD_KEY)) {
             int reward = SPUtils.getInt(getApplication(), INewsInfoCallback.REWARD_KEY, 0);
             //今天得到的奖励大于

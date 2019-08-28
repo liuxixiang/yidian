@@ -38,6 +38,11 @@ android {
             signingConfig signingConfigs.release
 
         }
+//        debug {
+//            minifyEnabled true
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//            signingConfig signingConfigs.release
+//        }
     }
 
 }
@@ -53,13 +58,13 @@ dependencies {
 
 
     //必选项
-    implementation ("com.android.support:support-fragment:26.1.0")
-    implementation ("com.android.support:recyclerview-v7:26.1.0")
+    implementation("com.android.support:support-fragment:26.1.0")
+    implementation("com.android.support:recyclerview-v7:26.1.0")
     implementation "org.greenrobot:greendao:3.2.2"
 
     //非必选项
     implementation 'com.umeng.analytics:analytics:6.1.2'
-    implementation ("com.android.support:design:26.1.0")
+    implementation("com.android.support:design:26.1.0")
 //    implementation project(':LKADSDK')
     implementation project(':LKADSDK')
 //    compile(name:'LKADSDK', ext:'aar')

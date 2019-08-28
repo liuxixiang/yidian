@@ -87,6 +87,7 @@ public interface INewsInfoCallback {
 
     class Config {
         private int totalRewardNum;
+        private boolean isShowCountDown = true;
         private AfferentInfo[] afferentInfos;
 
         public int getTotalRewardNum() {
@@ -103,6 +104,14 @@ public interface INewsInfoCallback {
 
         public void setAfferentInfos(AfferentInfo... afferentInfos) {
             this.afferentInfos = afferentInfos;
+        }
+
+        public boolean isShowCountDown() {
+            return isShowCountDown;
+        }
+
+        public void setShowCountDown(boolean showCountDown) {
+            isShowCountDown = showCountDown;
         }
     }
 }
