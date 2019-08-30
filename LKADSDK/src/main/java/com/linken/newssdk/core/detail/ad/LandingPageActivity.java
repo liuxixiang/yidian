@@ -106,6 +106,10 @@ public class LandingPageActivity extends FragmentActivity implements View.OnClic
         if (intent != null) {
             AdvertisementCard adCard = (AdvertisementCard) intent.getSerializableExtra(IntentConstants.AD_CARD);
             mURL = intent.getStringExtra(IntentConstants.URL);
+            if (!TextUtils.isEmpty(mURL)) {
+                Uri uri = Uri.parse(mURL);
+                docid = uri.getQueryParameter("aid");
+            }
             if (adCard != null) {
                 if (!TextUtils.isEmpty(adCard.channel)) {
                     SDKContants.channel = adCard.channel;
@@ -117,11 +121,7 @@ public class LandingPageActivity extends FragmentActivity implements View.OnClic
                 } else {
                     mType = INewsInfoCallback.TYPE_ARTICLE;
                 }
-            }
-
-            if (!TextUtils.isEmpty(mURL)) {
-                Uri uri = Uri.parse(mURL);
-                docid = uri.getQueryParameter("aid");
+                docid = adCard.getAid() +"";
             }
         }
     }
