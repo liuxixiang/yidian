@@ -9,6 +9,7 @@ import android.util.Base64;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.FrameLayout;
 
 import com.linken.ad.data.AdvertisementCard;
@@ -18,6 +19,7 @@ import com.linken.newssdk.NewsFeedsSDK;
 import com.linken.newssdk.R;
 import com.linken.newssdk.SDKContants;
 import com.linken.newssdk.base.activity.BaseActivity;
+import com.linken.newssdk.core.detail.article.video.YdVideoActivity;
 import com.linken.newssdk.core.newweb.LiteWebView;
 import com.linken.newssdk.core.newweb.WebAppInterface;
 import com.linken.newssdk.core.newweb.WebAppManager;
@@ -27,6 +29,7 @@ import com.linken.newssdk.data.news.INewsType;
 import com.linken.newssdk.export.INewsInfoCallback;
 import com.linken.newssdk.utils.ContextUtils;
 import com.linken.newssdk.utils.DensityUtil;
+import com.linken.newssdk.utils.EncryptUtil;
 import com.linken.newssdk.utils.SPUtils;
 import com.linken.newssdk.utils.TimeUtil;
 import com.linken.newssdk.widget.views.CustomCountLayout;
@@ -265,6 +268,17 @@ public abstract class CommonNewsActivity<P extends CommonNewsPresenter> extends 
                     title = uri.getFragment();
                 }
             }
+
+            @Override
+            public void shouldInterceptRequest(WebView view, String url) {
+                if (CommonNewsActivity.this instanceof YdVideoActivity) {
+                    if (url.contains("/video/") && (url.contains(".mp4") || url.contains(".3gp")
+                            || url.contains(".avi") || url.contains(".wma"))) {
+                        docid = EncryptUtil.getMD5_32(url);
+                        addCountLayout();
+                    }
+                }
+            }
         });
 
     }
@@ -434,82 +448,90 @@ public abstract class CommonNewsActivity<P extends CommonNewsPresenter> extends 
      * 增加倒计时
      */
     private void addCountLayout() {
-        if (TextUtils.isEmpty(docid)) {
-            return;
-        }
-        String cardId = AdvertisementDbUtil.getRewardRecordId(docid);
-
-        if (cardId.equals(docid)) {
-            return;
-        }
-
-        if(!NewsFeedsSDK.getInstance().getConfig().isShowCountDown()) {
-            return;
-        }
-
-        if (SPUtils.contains(INewsInfoCallback.REWARD_TIME_KEY)) {
-            long rewardTime = SPUtils.getLong(getApplication(), INewsInfoCallback.REWARD_TIME_KEY, 0L);
-            if (!TimeUtil.isToday(rewardTime)) {
-                putRewardCache(0, System.currentTimeMillis());
-            }
-        }
-
-        if (SPUtils.contains(INewsInfoCallback.REWARD_KEY)) {
-            int reward = SPUtils.getInt(getApplication(), INewsInfoCallback.REWARD_KEY, 0);
-            //今天得到的奖励大于
-            if (reward >= NewsFeedsSDK.getInstance().getConfig().getTotalRewardNum()) {
-                return;
-            }
-        }
-        String tag = "customCountLayout";
-        ViewGroup mViewGroup = (ViewGroup) mWebView.getParent();
-        mCustomCountLayout = mViewGroup.findViewWithTag(tag);
-        if (mCustomCountLayout == null && mViewGroup instanceof FrameLayout) {
-            mCustomCountLayout = new CustomCountLayout(this);
-            mCustomCountLayout.setTag(tag);
-            FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
-            layoutParams.gravity = Gravity.BOTTOM | Gravity.RIGHT;
-            layoutParams.setMargins(0, 0, DensityUtil.dip2px(this, 10), DensityUtil.dip2px(this, 7));
-            mCustomCountLayout.setVisibility(View.VISIBLE);
-            mCustomCountLayout.setClickable(true);
-            mViewGroup.addView(mCustomCountLayout, layoutParams);
-        }
-        INewsInfoCallback.AfferentInfo[] mAfferentInfos = NewsFeedsSDK.getInstance().getConfig().getAfferentInfos();
-
-        if (mAfferentInfos != null && mAfferentInfos.length > 0) {
-            for (INewsInfoCallback.AfferentInfo newsInfo : mAfferentInfos) {
-                if (newsInfo.getType().equals(mType)) {
-                    countDown = newsInfo.getCountDown();
-                    rewardNum = newsInfo.getRewardNum();
-                    break;
-                }
-            }
-        }
-        mCustomCountLayout.setMaxCount(countDown);
-        mCustomCountLayout.setOnFinishListener(new CustomCountLayout.OnFinishListener() {
+        runOnUiThread(new Runnable() {
             @Override
-            public void onFinish() {
-                mCustomCountLayout.setReward(rewardNum);
-                int reward = 0;
-                if (SPUtils.contains(INewsInfoCallback.REWARD_KEY)) {
-                    reward = SPUtils.getInt(getApplication(), INewsInfoCallback.REWARD_KEY, 0);
+            public void run() {
+                if (TextUtils.isEmpty(docid)) {
+                    return;
                 }
-                putRewardCache(rewardNum + reward, System.currentTimeMillis());
+                String cardId = AdvertisementDbUtil.getRewardRecordId(docid);
 
-                newsInfoCallback(INewsInfoCallback.TYPE_EVENT_H5_COUNT_DOWN, rewardNum, countDown, countDown);
-                RewardCard rewardCardBean = new RewardCard(null, docid, mType);
-                AdvertisementDbUtil.createRewardRecord(rewardCardBean);
+                if (cardId.equals(docid)) {
+                    return;
+                }
 
+                if (!NewsFeedsSDK.getInstance().getConfig().isShowCountDown()) {
+                    return;
+                }
+
+                if (SPUtils.contains(INewsInfoCallback.REWARD_TIME_KEY)) {
+                    long rewardTime = SPUtils.getLong(getApplication(), INewsInfoCallback.REWARD_TIME_KEY, 0L);
+                    if (!TimeUtil.isToday(rewardTime)) {
+                        putRewardCache(0, System.currentTimeMillis());
+                    }
+                }
+
+                if (SPUtils.contains(INewsInfoCallback.REWARD_KEY)) {
+                    int reward = SPUtils.getInt(getApplication(), INewsInfoCallback.REWARD_KEY, 0);
+                    //今天得到的奖励大于
+                    if (reward >= NewsFeedsSDK.getInstance().getConfig().getTotalRewardNum()) {
+                        return;
+                    }
+                }
+                String tag = "customCountLayout";
+                ViewGroup mViewGroup = (ViewGroup) mWebView.getParent();
+                mCustomCountLayout = mViewGroup.findViewWithTag(tag);
+                if(mCustomCountLayout != null) {
+                    mCustomCountLayout.endCount();
+                    mViewGroup.removeView(mCustomCountLayout);
+                    mCustomCountLayout = null;
+                }
+                if (mCustomCountLayout == null && mViewGroup instanceof FrameLayout) {
+                    mCustomCountLayout = new CustomCountLayout(CommonNewsActivity.this);
+                    mCustomCountLayout.setTag(tag);
+                    FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+                    layoutParams.gravity = Gravity.BOTTOM | Gravity.RIGHT;
+                    layoutParams.setMargins(0, 0, DensityUtil.dip2px(CommonNewsActivity.this, 10), DensityUtil.dip2px(CommonNewsActivity.this, 7));
+                    mCustomCountLayout.setVisibility(View.VISIBLE);
+                    mCustomCountLayout.setClickable(true);
+                    mViewGroup.addView(mCustomCountLayout, layoutParams);
+                }
+                INewsInfoCallback.AfferentInfo[] mAfferentInfos = NewsFeedsSDK.getInstance().getConfig().getAfferentInfos();
+
+                if (mAfferentInfos != null && mAfferentInfos.length > 0) {
+                    for (INewsInfoCallback.AfferentInfo newsInfo : mAfferentInfos) {
+                        if (newsInfo.getType().equals(mType)) {
+                            countDown = newsInfo.getCountDown();
+                            rewardNum = newsInfo.getRewardNum();
+                            break;
+                        }
+                    }
+                }
+                mCustomCountLayout.setMaxCount(countDown);
+                mCustomCountLayout.setOnFinishListener(new CustomCountLayout.OnFinishListener() {
+                    @Override
+                    public void onFinish() {
+                        mCustomCountLayout.setReward(rewardNum);
+                        int reward = 0;
+                        if (SPUtils.contains(INewsInfoCallback.REWARD_KEY)) {
+                            reward = SPUtils.getInt(getApplication(), INewsInfoCallback.REWARD_KEY, 0);
+                        }
+                        putRewardCache(rewardNum + reward, System.currentTimeMillis());
+
+                        newsInfoCallback(INewsInfoCallback.TYPE_EVENT_H5_COUNT_DOWN, rewardNum, countDown, countDown);
+                        RewardCard rewardCardBean = new RewardCard(null, docid, mType);
+                        AdvertisementDbUtil.createRewardRecord(rewardCardBean);
+
+                    }
+
+                });
+                mCustomCountLayout.startCount();
             }
-
         });
-        mCustomCountLayout.startCount();
-
     }
 
     private void putRewardCache(int rewardNum, long rewardTime) {
         SPUtils.put(INewsInfoCallback.REWARD_KEY, rewardNum);
         SPUtils.put(INewsInfoCallback.REWARD_TIME_KEY, rewardTime);
     }
-
 }

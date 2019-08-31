@@ -5,12 +5,14 @@ import android.graphics.Bitmap;
 import android.net.http.SslError;
 import android.os.Build;
 import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.webkit.DownloadListener;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebResourceRequest;
+import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -129,6 +131,15 @@ public class LiteWebView extends WebView {
                 //super.onReceivedSslError(view, handler, error);
             }
 
+            @Nullable
+            @Override
+            public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
+                if (mPageLoadedListener != null) {
+                    mPageLoadedListener.shouldInterceptRequest(view, url);
+                }
+                return super.shouldInterceptRequest(view, url);
+            }
+
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
                 return super.shouldOverrideUrlLoading(view, request);
@@ -210,6 +221,8 @@ public class LiteWebView extends WebView {
 
     public interface PageLoadListener {
         void onPageLoadFinished();
+
+        void shouldInterceptRequest(WebView view, String url);
     }
 
     /*"window.container.showToast('hello');" +*/

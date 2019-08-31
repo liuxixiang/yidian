@@ -13,6 +13,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.CookieManager;
+import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -284,6 +285,11 @@ public class LandingPageActivity extends FragmentActivity implements View.OnClic
         }
 
         title = mWebView.getTitle();
+    }
+
+    @Override
+    public void shouldInterceptRequest(WebView view, String url) {
+
     }
 
     private void newsInfoCallback(int event, int rewardNum, int countDown, int realDuration) {
