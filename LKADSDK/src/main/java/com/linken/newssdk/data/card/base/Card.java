@@ -62,6 +62,15 @@ public class Card implements MultiItemEntity, Serializable, DiffUiDataCallback.U
     public final static int AD_TEMPLATE_4 = 104;
     public final static int AD_TEMPLATE_40 = 140;
     public final static int AD_TEMPLATE_116 = 116;
+
+    //头条
+    public static final int AD_TOUTIAO_TYPE_GROUP_PIC_200 = 200;
+    public static final int AD_TOUTIAO_TYPE_SMALL_PIC_201 = 201;
+    public static final int AD_TOUTIAO_TYPE_LARGE_PIC_202 = 202;
+    public static final int AD_TOUTIAO_TYPE_VIDEO_203 = 203;
+    public static final int AD_TOUTIAO_TYPE_VERTICAL_PIC_204 = 204;//竖版图片
+    public static final int AD_TOUTIAO_TYPE_FULL_VIDEO_205 = 205;//全屏视屏
+
     public final static int DISPLAY_TYPE_PICTURE_GALLERY_OUTSIDE_CHANNEL_BIG_IMAGE = 49;//图集频道外,单张大图(带留白）
     public final static int DISPLAY_TYPE_PICTURE_GALLERY_OUTSIDE_CHANNEL_SMALL_IMAGE = 50;//图集频道外,单张大图(带留白）
     //文章TAG定义

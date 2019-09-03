@@ -26,14 +26,21 @@ import com.linken.newssdk.widget.cardview.newscard.BigImageCardViewHolder;
 import com.linken.newssdk.widget.cardview.newscard.MultiImageCardViewHolder;
 import com.linken.newssdk.widget.cardview.PictureGalleryCardViewHolder;
 import com.linken.newssdk.widget.cardview.newscard.SmallImageCardViewHolder;
+import com.linken.newssdk.widget.cardview.toutiao.ToutiaoAdFullVideoViewHolder;
+import com.linken.newssdk.widget.cardview.toutiao.ToutiaoAdGroupViewHolder;
+import com.linken.newssdk.widget.cardview.toutiao.ToutiaoAdLargeViewHolder;
+import com.linken.newssdk.widget.cardview.toutiao.ToutiaoAdSmallViewHolder;
+import com.linken.newssdk.widget.cardview.toutiao.ToutiaoAdVerticalViewHolder;
+import com.linken.newssdk.widget.cardview.toutiao.ToutiaoAdVideoViewHolder;
 import com.linken.newssdk.widget.cardview.videocard.VideoLiveForFlowCardViewHolder;
 
 import java.util.List;
 import java.util.TreeMap;
 
-public class MultipleItemQuickAdapter<T extends MultiItemEntity> extends BaseMultiItemQuickAdapter<T, BaseViewHolder> implements IRecyclerView{
+public class MultipleItemQuickAdapter<T extends MultiItemEntity> extends BaseMultiItemQuickAdapter<T, BaseViewHolder> implements IRecyclerView {
 
     private Context mContext;
+
     public MultipleItemQuickAdapter(Context context, List data) {
         super(data);
         this.mContext = context;
@@ -48,6 +55,22 @@ public class MultipleItemQuickAdapter<T extends MultiItemEntity> extends BaseMul
         addItemType(Card.AD_TEMPLATE_4, R.layout.ydsdk_ad_news_list_template_4);
         addItemType(Card.AD_TEMPLATE_40, R.layout.ydsdk_ad_news_list_template_40);
         addItemType(Card.AD_TEMPLATE_116, R.layout.ydsdk_ad_news_list_template_15);
+
+        addItemType(Card.AD_TEMPLATE_116, R.layout.ydsdk_ad_news_list_template_15);
+        addItemType(Card.AD_TEMPLATE_116, R.layout.ydsdk_ad_news_list_template_15);
+        addItemType(Card.AD_TEMPLATE_116, R.layout.ydsdk_ad_news_list_template_15);
+        addItemType(Card.AD_TEMPLATE_116, R.layout.ydsdk_ad_news_list_template_15);
+        addItemType(Card.AD_TEMPLATE_116, R.layout.ydsdk_ad_news_list_template_15);
+
+
+        addItemType(Card.AD_TOUTIAO_TYPE_GROUP_PIC_200, R.layout.listitem_ad_group_pic);
+        addItemType(Card.AD_TOUTIAO_TYPE_SMALL_PIC_201, R.layout.listitem_ad_small_pic);
+        addItemType(Card.AD_TOUTIAO_TYPE_LARGE_PIC_202, R.layout.listitem_ad_large_pic);
+        addItemType(Card.AD_TOUTIAO_TYPE_VIDEO_203, R.layout.listitem_ad_large_video);
+        addItemType(Card.AD_TOUTIAO_TYPE_VERTICAL_PIC_204, R.layout.listitem_ad_vertical_pic);
+        addItemType(Card.AD_TOUTIAO_TYPE_FULL_VIDEO_205, R.layout.listitem_ad_full_video);
+
+
 //        addItemType(-1, R.layout.ydsdk_cardview_empty);
     }
 
@@ -56,7 +79,7 @@ public class MultipleItemQuickAdapter<T extends MultiItemEntity> extends BaseMul
         BaseViewHolder viewHolder = null;
         if (layoutResId == R.layout.ydsdk_card_news_item_ns) {
             viewHolder = new SmallImageCardViewHolder(mContext, this, getItemView(layoutResId, parent));
-        } else if(layoutResId == R.layout.ydsdk_card_video_live_flow_ns) {
+        } else if (layoutResId == R.layout.ydsdk_card_video_live_flow_ns) {
             viewHolder = new VideoLiveForFlowCardViewHolder(mContext, this, getItemView(layoutResId, parent));
         } else if (layoutResId == R.layout.ydsdk_card_news_item_imgline_ns) {
             viewHolder = new MultiImageCardViewHolder(this, getItemView(layoutResId, parent));
@@ -70,11 +93,26 @@ public class MultipleItemQuickAdapter<T extends MultiItemEntity> extends BaseMul
             viewHolder = new AdCard03(this, getItemView(layoutResId, parent));
         } else if (layoutResId == R.layout.ydsdk_ad_news_list_template_4) {
             viewHolder = new AdCard04(this, getItemView(layoutResId, parent));
-        }  else if (layoutResId == R.layout.ydsdk_ad_news_list_template_40) {
+        } else if (layoutResId == R.layout.ydsdk_ad_news_list_template_40) {
             viewHolder = new AdCard40(this, getItemView(layoutResId, parent));
         } else if (layoutResId == R.layout.ydsdk_ad_news_list_template_15) {
             viewHolder = new AdCard15(this, getItemView(layoutResId, parent));
         }
+        //头条
+        else if (layoutResId == R.layout.listitem_ad_group_pic) {
+            viewHolder = new ToutiaoAdGroupViewHolder(getItemView(layoutResId, parent));
+        } else if (layoutResId == R.layout.listitem_ad_small_pic) {
+            viewHolder = new ToutiaoAdSmallViewHolder(getItemView(layoutResId, parent));
+        } else if (layoutResId == R.layout.listitem_ad_large_pic) {
+            viewHolder = new ToutiaoAdLargeViewHolder(getItemView(layoutResId, parent));
+        } else if (layoutResId == R.layout.listitem_ad_large_video) {
+            viewHolder = new ToutiaoAdVideoViewHolder(getItemView(layoutResId, parent));
+        } else if (layoutResId == R.layout.listitem_ad_vertical_pic) {
+            viewHolder = new ToutiaoAdVerticalViewHolder(getItemView(layoutResId, parent));
+        } else if (layoutResId == R.layout.listitem_ad_full_video) {
+            viewHolder = new ToutiaoAdFullVideoViewHolder(getItemView(layoutResId, parent));
+        }
+
         else {
             viewHolder = new NoMoreViewHolder(getItemView(R.layout.ydsdk_cardview_empty, parent));
         }
@@ -104,8 +142,25 @@ public class MultipleItemQuickAdapter<T extends MultiItemEntity> extends BaseMul
             ((AdCard40) helper).onBind((AdvertisementCard) item, ((AdvertisementCard) item).id);
         } else if (helper instanceof AdCard15) {
             ((AdCard15) helper).onBind((AdvertisementCard) item, ((AdvertisementCard) item).id);
-        } else {
-            ((NoMoreViewHolder)helper).onBind();
+        }
+        //头条
+        else if (helper instanceof ToutiaoAdGroupViewHolder) {
+            ((ToutiaoAdGroupViewHolder) helper).onBind((AdvertisementCard) item, ((AdvertisementCard) item).id);
+        } else if (helper instanceof ToutiaoAdSmallViewHolder) {
+            ((ToutiaoAdSmallViewHolder) helper).onBind((AdvertisementCard) item, ((AdvertisementCard) item).id);
+        } else if (helper instanceof ToutiaoAdLargeViewHolder) {
+            ((ToutiaoAdLargeViewHolder) helper).onBind((AdvertisementCard) item, ((AdvertisementCard) item).id);
+        } else if (helper instanceof ToutiaoAdVideoViewHolder) {
+            ((ToutiaoAdVideoViewHolder) helper).onBind((AdvertisementCard) item, ((AdvertisementCard) item).id);
+        } else if (helper instanceof ToutiaoAdVerticalViewHolder) {
+            ((ToutiaoAdVerticalViewHolder) helper).onBind((AdvertisementCard) item, ((AdvertisementCard) item).id);
+        } else if (helper instanceof ToutiaoAdFullVideoViewHolder) {
+            ((ToutiaoAdFullVideoViewHolder) helper).onBind((AdvertisementCard) item, ((AdvertisementCard) item).id);
+        }
+
+
+        else {
+            ((NoMoreViewHolder) helper).onBind();
         }
     }
 
@@ -201,6 +256,7 @@ public class MultipleItemQuickAdapter<T extends MultiItemEntity> extends BaseMul
     }
 
     private OnToastCallbaclk mOnToastCallbaclk;
+
     public void setOnToastCallback(OnToastCallbaclk onToastCallback) {
         this.mOnToastCallbaclk = onToastCallback;
     }

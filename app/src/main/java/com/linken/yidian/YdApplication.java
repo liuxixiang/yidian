@@ -7,10 +7,7 @@ import android.util.Log;
 
 import com.linken.newssdk.NewsFeedsSDK;
 import com.linken.newssdk.export.INewsInfoCallback;
-import com.linken.newssdk.export.IReportInterface;
 import com.umeng.analytics.MobclickAgent;
-
-import java.util.List;
 
 
 /**
@@ -52,13 +49,6 @@ public class YdApplication extends Application {
                 .setDebugEnabled(BuildConfig.DEBUG)
                 .build();
 
-        NewsFeedsSDK.getInstance().setReportInterface(new IReportInterface() {
-
-            @Override
-            public void onPageSelected(String channelPageName) {
-                Log.d(TAG, channelPageName);
-            }
-        });
 
         NewsFeedsSDK.getInstance().setNewsInfoCallback(new INewsInfoCallback() {
 
@@ -90,16 +80,6 @@ public class YdApplication extends Application {
             }
 
         });
-
-        NewsFeedsSDK.getInstance().setReportInterface(new IReportInterface() {
-
-            @Override
-            public void onPageSelected(String channelPageName) {
-                Log.d(TAG, channelPageName);
-            }
-        });
-
-
     }
 
     private void initLeakCanary() {

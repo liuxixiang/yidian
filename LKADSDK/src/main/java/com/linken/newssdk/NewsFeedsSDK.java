@@ -13,6 +13,7 @@ import com.linken.newssdk.libraries.ydvd.YdVideoPlayer;
 import com.linken.newssdk.protocol.newNetwork.business.helper.Get3rdInfoHelper;
 import com.linken.newssdk.protocol.newNetwork.business.helper.OpenPlatformHelper;
 import com.linken.newssdk.protocol.newNetwork.business.report.ReportProxy;
+import com.linken.newssdk.toutiao.TTAdManagerHolder;
 import com.linken.newssdk.utils.ContextUtils;
 import com.linken.newssdk.utils.CustomizedToastUtil;
 import com.linken.newssdk.utils.DensityUtil;
@@ -60,6 +61,14 @@ public class NewsFeedsSDK {
         NetworkHelper.getInstance().init(this.mContext);
         OpenPlatformHelper.getOp(mAppId);
         Get3rdInfoHelper.request3rdInfo(mAppId);
+        initToutiao();
+    }
+
+    /**
+     * 初始化头条SDK
+     */
+    private void initToutiao() {
+        TTAdManagerHolder.init(mContext);
     }
 
     public static NewsFeedsSDK getInstance() {

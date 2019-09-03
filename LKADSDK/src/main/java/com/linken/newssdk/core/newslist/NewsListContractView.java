@@ -1,6 +1,8 @@
 package com.linken.newssdk.core.newslist;
 
+
 import com.linken.newssdk.base.constract.BaseContractView;
+import com.linken.newssdk.data.card.base.Card;
 
 import java.util.List;
 
@@ -25,7 +27,7 @@ public interface NewsListContractView extends BaseContractView {
 
     void handleNewsLoadMore(List newsResult);
 
-    void handleAllNews(boolean isLoadMore, List newsResult);
+    void handleAllNews(boolean isLoadMore, List allResult);
 
     void showRefreshTip(String refreshErrorTip);
 
@@ -33,4 +35,5 @@ public interface NewsListContractView extends BaseContractView {
 
     void onShowError(String errorTip);
 
+    void handleNewsAdResult(int adTypeTt, List<Card> cards);
 }

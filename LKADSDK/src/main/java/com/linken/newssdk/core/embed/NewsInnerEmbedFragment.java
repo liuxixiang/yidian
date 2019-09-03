@@ -71,8 +71,7 @@ public class NewsInnerEmbedFragment extends BaseFragment<NewsListPresenter> impl
 
     @Override
     protected void initPresenter() {
-        this.mPresenter = new NewsListPresenter(this);
-        this.mPresenter.setContext(getContext());
+        this.mPresenter = new NewsListPresenter(getContext(),this);
         this.mPresenter.setRefreshCount(count);
     }
 
@@ -83,9 +82,10 @@ public class NewsInnerEmbedFragment extends BaseFragment<NewsListPresenter> impl
 
 
     @Override
-    public void handleAllNews(boolean isLoadMore, List newsResult) {
-        handleFetchComplete(newsResult);
+    public void handleAllNews(boolean isLoadMore, List allResult) {
+        handleFetchComplete(allResult);
     }
+
 
     @Override
     public void showRefreshTip(String refreshErrorTip) {
@@ -99,6 +99,12 @@ public class NewsInnerEmbedFragment extends BaseFragment<NewsListPresenter> impl
 
     @Override
     public void onShowError(String errorTip) {
+
+    }
+
+
+    @Override
+    public void handleNewsAdResult(int adTypeTt, List<Card> cards) {
 
     }
 

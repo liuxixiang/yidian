@@ -9,6 +9,7 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
+import com.bytedance.sdk.openadsdk.TTFeedAd;
 import com.linken.newssdk.data.card.base.Card;
 import com.linken.newssdk.data.card.base.CardDisplayInfo;
 import com.linken.newssdk.data.card.base.ListViewItemData;
@@ -79,6 +80,8 @@ public class AdvertisementCard extends Card implements Serializable {
     public int position;
     public int downloadStatus;
     public int downloadProgress;
+    @Transient
+    public TTFeedAd ttFeedAd;
 
     // KEEP FIELDS - put your custom fields here
 
@@ -138,7 +141,6 @@ public class AdvertisementCard extends Card implements Serializable {
 
     @Transient
     public String[] image_urls = EMPTY_STRING_ARRAY;
-    ;
 
     @Transient
     public String[] multipleTitles = EMPTY_STRING_ARRAY;
@@ -1398,7 +1400,16 @@ public class AdvertisementCard extends Card implements Serializable {
     public void setTags(List<GalleryAdTagEntity> tags) {
         this.tags = tags;
     }
-//
+
+    public TTFeedAd getTtFeedAd() {
+        return ttFeedAd;
+    }
+
+    public void setTtFeedAd(TTFeedAd ttFeedAd) {
+        this.ttFeedAd = ttFeedAd;
+    }
+
+    //
 //    public Long getAid(long defaultAid) {
 //        return aid == null ? defaultAid : aid;
 //    }

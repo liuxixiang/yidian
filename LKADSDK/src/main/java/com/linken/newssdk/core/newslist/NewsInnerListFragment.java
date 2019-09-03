@@ -17,8 +17,9 @@ import android.view.ViewGroup;
 import com.linken.newssdk.R;
 import com.linken.newssdk.YdCustomConfigure;
 import com.linken.newssdk.adapter.MultipleItemQuickAdapter;
-import com.linken.newssdk.base.fragment.LazyLoadPresenterFragment;
 import com.linken.newssdk.adapter.WrapContentLinearLayoutManager;
+import com.linken.newssdk.base.fragment.LazyLoadPresenterFragment;
+import com.linken.newssdk.data.card.base.Card;
 import com.linken.newssdk.data.channel.YdChannel;
 import com.linken.newssdk.libraries.bra.BaseQuickAdapter;
 import com.linken.newssdk.libraries.imageloader.core.ImageLoader;
@@ -48,6 +49,9 @@ public class NewsInnerListFragment extends LazyLoadPresenterFragment<NewsListPre
     private boolean hasLoadinged = false;
     private BroadcastReceiver mFontChangeReceiver;
     private ToastTabView mToastTabView;
+    private int insertAdPosition = 0;
+    private boolean isLoadNews;
+    private List<Card> mAdCard;
 
     public static NewsInnerListFragment newInstance(int position, YdChannel channelInfo) {
         NewsInnerListFragment fragment = new NewsInnerListFragment();
@@ -97,7 +101,7 @@ public class NewsInnerListFragment extends LazyLoadPresenterFragment<NewsListPre
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                switch (newState){
+                switch (newState) {
                     case RecyclerView.SCROLL_STATE_DRAGGING:
                         //正在滑动
                         ImageLoader.getInstance().pause();
@@ -113,8 +117,7 @@ public class NewsInnerListFragment extends LazyLoadPresenterFragment<NewsListPre
 
     @Override
     protected void initPresenter() {
-        this.mPresenter = new NewsListPresenter(this);
-        this.mPresenter.setContext(getContext());
+        this.mPresenter = new NewsListPresenter(getContext(), this);
     }
 
     @Override
@@ -253,19 +256,6 @@ public class NewsInnerListFragment extends LazyLoadPresenterFragment<NewsListPre
         }
     }
 
-    @Override
-    public void handleAllNews(boolean isLoadMore, List newsResult) {
-//        mSwipeRefreshLayout.setRefreshing(false);
-        if (isLoadMore) {
-            handleNewsLoadMore(newsResult);
-        } else {
-            handleNewsResultRefresh(newsResult);
-        }
-        if (multipleItemAdapter.getData().size() == 0) {
-            onShowEmpty();
-        }
-    }
-
     private void setTipResultRunOnUI(final String tipString, long delayTime) {
         ThreadUtils.postDelayed2UI(new Runnable() {
             @Override
@@ -323,6 +313,7 @@ public class NewsInnerListFragment extends LazyLoadPresenterFragment<NewsListPre
         }
         onShowError();
     }
+
 
     @Override
     public void onShowError() {
@@ -430,4 +421,50 @@ public class NewsInnerListFragment extends LazyLoadPresenterFragment<NewsListPre
     public String getCurrentChannelName() {
         return getPageReportId();
     }
+
+
+    @Override
+    public void handleAllNews(boolean isLoadMore, List newsResult) {
+//        mSwipeRefreshLayout.setRefreshing(false);
+        if (isLoadMore) {
+            handleNewsLoadMore(newsResult);
+        } else {
+            insertAdPosition = 0;
+            handleNewsResultRefresh(newsResult);
+        }
+        if (multipleItemAdapter.getData().size() == 0) {
+            onShowEmpty();
+            return;
+        }
+        if (mAdCard == null) {
+            isLoadNews = true;
+        }
+        insertADCard(mAdCard);
+    }
+
+
+    @Override
+    public void handleNewsAdResult(int adTypeTt, List<Card> cards) {
+        mAdCard = cards;
+        if (isLoadNews) {
+            insertADCard(mAdCard);
+            mAdCard = null;
+            isLoadNews = false;
+        }
+    }
+
+    private void insertADCard(List<Card> adCards) {
+        //隔三插一条
+        if (multipleItemAdapter.getItemCount() - insertAdPosition > 3) {
+            if (adCards != null && adCards.size() > 0) {
+                for (Card card : adCards) {
+                    insertAdPosition = insertAdPosition + 4;
+                    multipleItemAdapter.getData().add(insertAdPosition -1, card);
+                }
+                multipleItemAdapter.notifyDataSetChanged();
+            }
+        }
+    }
+
+
 }
