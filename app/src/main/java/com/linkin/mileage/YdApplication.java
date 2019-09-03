@@ -1,4 +1,4 @@
-package com.linken.yidian;
+package com.linkin.mileage;
 
 import android.app.Application;
 import android.content.Context;

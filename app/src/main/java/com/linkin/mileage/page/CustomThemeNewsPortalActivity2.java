@@ -1,4 +1,4 @@
-package com.linken.yidian.page;
+package com.linkin.mileage.page;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -6,10 +6,10 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.Button;
 
+import com.umeng.analytics.MobclickAgent;
 import com.linken.newssdk.YdCustomConfigure;
 import com.linken.newssdk.exportui.NewsPortalFragment;
-import com.linken.yidian.R;
-import com.umeng.analytics.MobclickAgent;
+import com.linkin.mileage.R;
 
 /**
  * Created by chenyichang on 2018/5/22.
@@ -17,7 +17,7 @@ import com.umeng.analytics.MobclickAgent;
  * 多tab接入
  */
 
-public class CustomThemeNewsPortalActivity extends FragmentActivity {
+public class CustomThemeNewsPortalActivity2 extends FragmentActivity {
 
     private Fragment fragmentNavi;
     private Button btnRefresh;
@@ -31,7 +31,7 @@ public class CustomThemeNewsPortalActivity extends FragmentActivity {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.portal_container, fragmentNavi)
                 .commitNowAllowingStateLoss();
-        YdCustomConfigure.getInstance().setCustomThemeStyle(R.style.CustomTheme);
+        YdCustomConfigure.getInstance().setCustomThemeStyle(R.style.CustomTheme2);
 
         btnRefresh = findViewById(R.id.expose_refresh);
         btnRefresh.setOnClickListener(new View.OnClickListener() {

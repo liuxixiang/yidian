@@ -1,4 +1,4 @@
-package com.linken.yidian.page;
+package com.linkin.mileage.page;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.linken.yidian.R;
+import com.linkin.mileage.R;
 
 
 public class BlankFragment extends Fragment {

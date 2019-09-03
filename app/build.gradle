@@ -5,7 +5,7 @@ android {
     compileSdkVersion 26
 
     defaultConfig {
-        applicationId "com.yidian.yidian"
+        applicationId "com.linkin.mileage"
         minSdkVersion 19
         targetSdkVersion 26
         versionCode 1

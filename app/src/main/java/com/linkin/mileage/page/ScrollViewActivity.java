@@ -1,11 +1,11 @@
-package com.linken.yidian.page;
+package com.linkin.mileage.page;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 
 import com.linken.newssdk.exportui.NewsPortalFragment;
-import com.linken.yidian.R;
+import com.linkin.mileage.R;
 
 public class ScrollViewActivity extends AppCompatActivity {
 

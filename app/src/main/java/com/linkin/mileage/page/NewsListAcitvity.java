@@ -1,4 +1,4 @@
-package com.linken.yidian.page;
+package com.linkin.mileage.page;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -7,44 +7,47 @@ import android.view.View;
 import android.widget.Button;
 
 import com.umeng.analytics.MobclickAgent;
-import com.linken.newssdk.exportui.NewsPortalFragment;
-import com.linken.yidian.R;
+import com.linken.newssdk.exportui.NewsListFragment;
+import com.linkin.mileage.R;
 
 /**
  * Created by chenyichang on 2018/5/22.
  *
- * 多tab接入
+ * 单列表样式接入
  */
 
-public class NewsPortalActivity extends FragmentActivity {
+public class NewsListAcitvity extends FragmentActivity {
 
-    private Fragment fragmentNavi;
+    private Fragment fragment;
     private Button btnRefresh;
     private Button btnScroll2Top;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_portal);
-        fragmentNavi = new NewsPortalFragment();
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.portal_container, fragmentNavi)
-                .commitNowAllowingStateLoss();
+        setContentView(R.layout.activity_list);
 
+        fragment = NewsListFragment.newInstance("推荐", false);
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.portal_container, fragment)
+                .commitNowAllowingStateLoss();
         btnRefresh = findViewById(R.id.expose_refresh);
         btnRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((NewsPortalFragment)fragmentNavi).refreshCurrentChannel();
+                ((NewsListFragment)fragment).refreshCurrentChannel();
             }
         });
         btnScroll2Top = findViewById(R.id.expose_scroll2top);
         btnScroll2Top.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((NewsPortalFragment)fragmentNavi).scrollToTopPosition();
+                ((NewsListFragment)fragment).scrollToTopPosition();
             }
         });
+
     }
 
     @Override
@@ -59,9 +62,10 @@ public class NewsPortalActivity extends FragmentActivity {
         MobclickAgent.onPause(this);
     }
 
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
     }
+
+
 }

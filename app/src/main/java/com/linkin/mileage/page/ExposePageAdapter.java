@@ -1,4 +1,4 @@
-package com.linken.yidian.page;
+package com.linkin.mileage.page;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

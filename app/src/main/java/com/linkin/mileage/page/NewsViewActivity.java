@@ -1,4 +1,4 @@
-package com.linken.yidian.page;
+package com.linkin.mileage.page;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -6,45 +6,42 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.Button;
 
+import com.linken.newssdk.exportui.NewsEmbedFragment;
+import com.linken.newssdk.theme.ThemeManager;
+import com.linkin.mileage.R;
 import com.umeng.analytics.MobclickAgent;
-import com.linken.newssdk.exportui.NewsListFragment;
-import com.linken.yidian.R;
 
 /**
  * Created by chenyichang on 2018/5/22.
- *
- * 单列表样式接入
+ * <p>
+ * 可以自由配置条数的信息流方式接入
  */
 
-public class NewsListAcitvity extends FragmentActivity {
+public class NewsViewActivity extends FragmentActivity {
 
     private Fragment fragment;
-    private Button btnRefresh;
-    private Button btnScroll2Top;
-
+    private Button btnTheme;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list);
+        setContentView(R.layout.activity_view);
 
-        fragment = NewsListFragment.newInstance("推荐", false);
+        fragment = NewsEmbedFragment.newInstance("推荐", 1);
 
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.portal_container, fragment)
                 .commitNowAllowingStateLoss();
-        btnRefresh = findViewById(R.id.expose_refresh);
-        btnRefresh.setOnClickListener(new View.OnClickListener() {
+
+        btnTheme = findViewById(R.id.btnTheme);
+        btnTheme.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                ((NewsListFragment)fragment).refreshCurrentChannel();
-            }
-        });
-        btnScroll2Top = findViewById(R.id.expose_scroll2top);
-        btnScroll2Top.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((NewsListFragment)fragment).scrollToTopPosition();
+            public void onClick(View view) {
+                if (ThemeManager.getThemeId() == ThemeManager.SCENE_THEME_DEFAULT) {
+                    ThemeManager.setThemeId(ThemeManager.SCENE_THEME_NIGHT);
+                } else {
+                    ThemeManager.setThemeId(ThemeManager.SCENE_THEME_DEFAULT);
+                }
             }
         });
 
@@ -66,6 +63,4 @@ public class NewsListAcitvity extends FragmentActivity {
     protected void onDestroy() {
         super.onDestroy();
     }
-
-
 }
