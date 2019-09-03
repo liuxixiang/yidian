@@ -9,7 +9,7 @@ buildscript {
         maven { url "https://dl.bintray.com/yidian-android/open_android_sdk/" }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.4.2'
+        classpath 'com.android.tools.build:gradle:3.5.0-rc02'
         classpath 'org.greenrobot:greendao-gradle-plugin:3.2.2' // add plugin
     }
 }

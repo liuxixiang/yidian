@@ -24,10 +24,10 @@ android {
 
     signingConfigs {
         release {
-            keyAlias 'beenews'
-            keyPassword '6&BvZ#@h1v#LyEHy'
-            storeFile file('beenews.keystore')
-            storePassword 'EI^D#i0o7j1NB40r'
+            keyAlias 'mileage'
+            keyPassword '&rZIF#ngh7%NZK7i'
+            storeFile file('mileage.jks')
+            storePassword 'phcUZty1CZ3MX$N0'
         }
     }
 
@@ -38,11 +38,11 @@ android {
             signingConfig signingConfigs.release
 
         }
-//        debug {
+        debug {
 //            minifyEnabled true
 //            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-//            signingConfig signingConfigs.release
-//        }
+            signingConfig signingConfigs.release
+        }
     }
 
 }
