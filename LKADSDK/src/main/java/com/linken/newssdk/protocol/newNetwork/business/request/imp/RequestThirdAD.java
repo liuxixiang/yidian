@@ -16,7 +16,7 @@ public class RequestThirdAD extends RequestAdReport{
     }
 
     @Override
-    protected String getPath() {
+    public String getPath() {
         return null;
     }
 

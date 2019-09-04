@@ -11,13 +11,16 @@ import com.linken.newssdk.utils.NetUtil;
 import com.linken.newssdk.utils.SystemUtil;
 import com.linken.newssdk.utils.TimeUtil;
 
+import java.util.Map;
+
 
 /**
  * Created by chenyichang on 2018/5/19.
  */
-public abstract class RequestBase {
+public abstract class RequestBase implements IRequest {
 
-    protected String getHost(){
+    @Override
+    public String getHost() {
         if (!TextUtils.isEmpty(SDKContants.URL_HOST) && !TextUtils.equals("/", SDKContants.URL_HOST)) {
             return SDKContants.URL_HOST;
         } else {
@@ -26,7 +29,8 @@ public abstract class RequestBase {
         }
     }
 
-    protected abstract String getPath();
+    @Override
+    public abstract String getPath();
 
     /*appid=mCTffjSnTKhm9ONZn-DL4g2x
     &nonce=qbcJbQbO
@@ -39,6 +43,7 @@ public abstract class RequestBase {
     &history_count=0'
 */
     //加一些公共参数
+    @Override
     public String getURI() {
 
         StringBuilder builder = new StringBuilder();
@@ -80,8 +85,13 @@ public abstract class RequestBase {
   }
 }
 */
+    @Override
     public String getBody() {
         return null;
     }
 
+    @Override
+    public Map<String, String> getHeaders() {
+        return null;
+    }
 }

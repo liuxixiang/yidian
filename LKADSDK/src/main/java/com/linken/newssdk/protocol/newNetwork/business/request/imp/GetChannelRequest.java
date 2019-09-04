@@ -10,7 +10,7 @@ public class GetChannelRequest extends RequestBase {
 
 
     @Override
-    protected String getPath() {
+    public String getPath() {
         return "get_channel_list";
     }
 

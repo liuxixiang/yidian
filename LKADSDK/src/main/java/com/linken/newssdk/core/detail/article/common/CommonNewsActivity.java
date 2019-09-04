@@ -123,6 +123,27 @@ public abstract class CommonNewsActivity<P extends CommonNewsPresenter> extends 
         }
         handleStyleAndUrl();
         mUri = generateUri();
+
+        if (mCard != null) {
+            SDKContants.channel = mCard.channel;
+            if (Card.CTYPE_VIDEO_LIVE_CARD.equals(mCard.cType) || Card.CTYPE_VIDEO_CARD.equals(mCard.cType)) {
+                mType = INewsInfoCallback.TYPE_VIDEO;
+            } else if (Card.CTYPE_ADVERTISEMENT.equals(mCard.cType)) {
+                mType = INewsInfoCallback.TYPE_AD;
+            } else {
+                mType = INewsInfoCallback.TYPE_ARTICLE;
+            }
+        }
+        if (!TextUtils.isEmpty(mUri)) {
+            Uri uri = Uri.parse(mUri);
+            docid = uri.getQueryParameter("docid");
+            if (STYLE_HBRID_VIDEO == articleType) {
+                mType = INewsInfoCallback.TYPE_VIDEO;
+            } else {
+                mType = INewsInfoCallback.TYPE_ARTICLE;
+            }
+        }
+
     }
 
     private void handleStyleAndUrl() {

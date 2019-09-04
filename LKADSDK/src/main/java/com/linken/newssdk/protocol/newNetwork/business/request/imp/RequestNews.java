@@ -42,7 +42,7 @@ public class RequestNews extends RequestBase {
     }
 
     @Override
-    protected String getPath() {
+    public String getPath() {
         return "recommend_channel";
     }
 

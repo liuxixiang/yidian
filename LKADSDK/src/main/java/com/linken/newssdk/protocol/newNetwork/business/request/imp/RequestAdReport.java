@@ -47,7 +47,7 @@ public class RequestAdReport extends RequestBase {
     }
 
     @Override
-    protected String getPath() {
+    public String getPath() {
         return "ads_log";
     }
 

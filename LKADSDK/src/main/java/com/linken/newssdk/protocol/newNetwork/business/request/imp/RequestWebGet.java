@@ -20,7 +20,7 @@ public class RequestWebGet extends RequestBase {
     }
 
     @Override
-    protected String getPath() {
+    public String getPath() {
         return null;
     }
 

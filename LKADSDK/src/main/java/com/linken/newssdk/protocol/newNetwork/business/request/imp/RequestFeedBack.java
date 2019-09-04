@@ -24,7 +24,7 @@ public class RequestFeedBack extends RequestBase {
     }
 
     @Override
-    protected String getPath() {
+    public String getPath() {
         return "dislike_news";
     }
 

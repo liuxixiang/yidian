@@ -17,12 +17,12 @@ public class RequestOpParams extends RequestBase {
     }
 
     @Override
-    protected String getPath() {
+    public String getPath() {
         return "get_root_path";
     }
 
     @Override
-    protected String getHost() {
+    public String getHost() {
         return SDKContants.URL_GET_OP;
     }
 

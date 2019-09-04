@@ -18,7 +18,7 @@ public class Request3rdInfo extends RequestBase{
 
 
     @Override
-    protected String getPath() {
+    public String getPath() {
         return null;
     }
 

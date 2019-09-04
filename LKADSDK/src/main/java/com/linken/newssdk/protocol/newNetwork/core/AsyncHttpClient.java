@@ -1,6 +1,6 @@
 package com.linken.newssdk.protocol.newNetwork.core;
 
-import com.linken.newssdk.protocol.newNetwork.business.request.RequestBase;
+import com.linken.newssdk.protocol.newNetwork.business.request.IRequest;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -24,12 +24,14 @@ public class AsyncHttpClient extends SyncHttpClient {
     }
 
     @Override
-    public void post(RequestBase requestBase, final ResponseHandler handler) {
+    public void post(IRequest requestBase, final ResponseHandler handler) {
+        addHeaders(requestBase.getHeaders());
         post(requestBase.getURI(), requestBase.getBody(), handler);
     }
 
     @Override
-    public void get(final RequestBase requestBase, final ResponseHandler handler) {
+    public void get(final IRequest requestBase, final ResponseHandler handler) {
+        addHeaders(requestBase.getHeaders());
         get(requestBase.getURI(), handler);
     }
 

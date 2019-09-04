@@ -1,6 +1,6 @@
 package com.linken.newssdk.protocol.newNetwork.core;
 
-import com.linken.newssdk.protocol.newNetwork.business.request.RequestBase;
+import com.linken.newssdk.protocol.newNetwork.business.request.IRequest;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -103,11 +103,11 @@ public class SyncHttpClient {
     }
 
 
-    public void post(RequestBase requestBase, final ResponseHandler handler) {
+    public void post(IRequest requestBase, final ResponseHandler handler) {
         request(requestBase.getURI(), Method.POST, requestBase.getBody(), handler);
     }
 
-    public void get(final RequestBase requestBase, final ResponseHandler handler) {
+    public void get(final IRequest requestBase, final ResponseHandler handler) {
         request(requestBase.getURI(), Method.GET, null, handler);
     }
 
@@ -151,6 +151,12 @@ public class SyncHttpClient {
             }
             // Request finished
             handler.sendFinishMessage();
+        }
+    }
+
+    public void addHeaders(Map<String, String> headers) {
+        if(headers != null && headers.size() > 0) {
+            this.headers.putAll(headers);
         }
     }
 }

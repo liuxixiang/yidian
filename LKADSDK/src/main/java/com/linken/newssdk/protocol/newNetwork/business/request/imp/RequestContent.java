@@ -18,12 +18,12 @@ public class RequestContent extends RequestBase {
     }
 
     @Override
-    protected String getHost() {
+    public String getHost() {
         return SDKContants.API_SERVER;
     }
 
     @Override
-    protected String getPath() {
+    public String getPath() {
         return "contents/content";
     }
 

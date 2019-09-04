@@ -13,6 +13,10 @@ import com.linken.newssdk.libraries.ydvd.YdVideoPlayer;
 import com.linken.newssdk.protocol.newNetwork.business.helper.Get3rdInfoHelper;
 import com.linken.newssdk.protocol.newNetwork.business.helper.OpenPlatformHelper;
 import com.linken.newssdk.protocol.newNetwork.business.report.ReportProxy;
+import com.linken.newssdk.protocol.newNetwork.business.request.IRequest;
+import com.linken.newssdk.protocol.newNetwork.business.request.imp.RequestConfigPost;
+import com.linken.newssdk.protocol.newNetwork.core.AsyncHttpClient;
+import com.linken.newssdk.protocol.newNetwork.core.JsonObjectResponseHandler;
 import com.linken.newssdk.toutiao.TTAdManagerHolder;
 import com.linken.newssdk.utils.ContextUtils;
 import com.linken.newssdk.utils.CustomizedToastUtil;
@@ -22,6 +26,8 @@ import com.linken.newssdk.utils.LogUtils;
 import com.linken.newssdk.utils.SPUtils;
 import com.linken.newssdk.utils.support.ImageDownloaderConfig;
 import com.linken.newssdk.utils.support.NetworkHelper;
+
+import org.json.JSONObject;
 
 /**
  * Created by chenyichang on 2018/5/18.
@@ -62,6 +68,7 @@ public class NewsFeedsSDK {
         OpenPlatformHelper.getOp(mAppId);
         Get3rdInfoHelper.request3rdInfo(mAppId);
         initToutiao();
+        initConfig();
     }
 
     /**
@@ -69,6 +76,22 @@ public class NewsFeedsSDK {
      */
     private void initToutiao() {
         TTAdManagerHolder.init(mContext);
+    }
+
+    /**
+     * 初始化云控
+     */
+    private void initConfig() {
+        IRequest requestBase = new RequestConfigPost("600000");
+        new AsyncHttpClient().post(requestBase, new JsonObjectResponseHandler() {
+            @Override
+            public void onSuccess(JSONObject response) {
+            }
+
+            @Override
+            public void onFailure(Throwable e) {
+            }
+        });
     }
 
     public static NewsFeedsSDK getInstance() {
