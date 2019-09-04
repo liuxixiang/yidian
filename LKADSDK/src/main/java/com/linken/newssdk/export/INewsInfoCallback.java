@@ -89,6 +89,7 @@ public interface INewsInfoCallback {
         private int totalRewardNum;
         private boolean isShowCountDown = true;
         private AfferentInfo[] afferentInfos;
+        private String userId;
 
         public int getTotalRewardNum() {
             return totalRewardNum;
@@ -112,6 +113,14 @@ public interface INewsInfoCallback {
 
         public void setShowCountDown(boolean showCountDown) {
             isShowCountDown = showCountDown;
+        }
+
+        public String getUserId() {
+            return userId;
+        }
+
+        public void setUserId(String userId) {
+            this.userId = userId;
         }
     }
 }

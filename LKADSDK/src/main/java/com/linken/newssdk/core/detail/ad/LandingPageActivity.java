@@ -122,7 +122,7 @@ public class LandingPageActivity extends FragmentActivity implements View.OnClic
                 } else {
                     mType = INewsInfoCallback.TYPE_ARTICLE;
                 }
-                docid = adCard.getAid() +"";
+                docid = adCard.getAid() + "";
             }
         }
     }
@@ -313,19 +313,22 @@ public class LandingPageActivity extends FragmentActivity implements View.OnClic
             return;
         }
 
-        if(!NewsFeedsSDK.getInstance().getConfig().isShowCountDown()) {
+        if (!NewsFeedsSDK.getInstance().getConfig().isShowCountDown()) {
             return;
         }
 
-        if (SPUtils.contains(INewsInfoCallback.REWARD_TIME_KEY)) {
-            long rewardTime = SPUtils.getLong(getApplication(), INewsInfoCallback.REWARD_TIME_KEY, 0L);
+        final String userId = NewsFeedsSDK.getInstance().getConfig().getUserId() + "";
+        final String rewardTime_key = userId + INewsInfoCallback.REWARD_TIME_KEY;
+        final String reward_key = userId + INewsInfoCallback.REWARD_KEY;
+        if (SPUtils.contains(rewardTime_key)) {
+            long rewardTime = SPUtils.getLong(getApplication(), rewardTime_key, 0L);
             if (!TimeUtil.isToday(rewardTime)) {
                 putRewardCache(0, System.currentTimeMillis());
             }
         }
 
-        if (SPUtils.contains(INewsInfoCallback.REWARD_KEY)) {
-            int reward = SPUtils.getInt(getApplication(), INewsInfoCallback.REWARD_KEY, 0);
+        if (SPUtils.contains(reward_key)) {
+            int reward = SPUtils.getInt(getApplication(), reward_key, 0);
             //今天得到的奖励大于
             if (reward >= NewsFeedsSDK.getInstance().getConfig().getTotalRewardNum()) {
                 return;
@@ -360,10 +363,10 @@ public class LandingPageActivity extends FragmentActivity implements View.OnClic
             public void onFinish() {
                 mCustomCountLayout.setReward(rewardNum);
                 int reward = 0;
-                if (SPUtils.contains(INewsInfoCallback.REWARD_KEY)) {
-                    reward = SPUtils.getInt(getApplication(), INewsInfoCallback.REWARD_KEY, 0);
+                if (SPUtils.contains(reward_key)) {
+                    reward = SPUtils.getInt(getApplication(), reward_key, 0);
                 }
-                putRewardCache(rewardNum + reward,System.currentTimeMillis());
+                putRewardCache(rewardNum + reward, System.currentTimeMillis());
 
                 newsInfoCallback(INewsInfoCallback.TYPE_EVENT_H5_COUNT_DOWN, rewardNum, countDown, countDown);
                 RewardCard rewardCardBean = new RewardCard(null, docid, mType);
@@ -376,7 +379,8 @@ public class LandingPageActivity extends FragmentActivity implements View.OnClic
     }
 
     private void putRewardCache(int rewardNum, long rewardTime) {
-        SPUtils.put(INewsInfoCallback.REWARD_KEY, rewardNum);
-        SPUtils.put(INewsInfoCallback.REWARD_TIME_KEY, rewardTime);
+        String userId = NewsFeedsSDK.getInstance().getConfig().getUserId() + "";
+        SPUtils.put(userId + INewsInfoCallback.REWARD_KEY, rewardNum);
+        SPUtils.put(userId + INewsInfoCallback.REWARD_TIME_KEY, rewardTime);
     }
 }
