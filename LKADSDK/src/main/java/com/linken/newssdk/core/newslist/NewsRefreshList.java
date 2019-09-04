@@ -102,7 +102,7 @@ public class NewsRefreshList implements IRefreshList<Card> {
             }
         }
         mNewsSourceList.addAll(filteList);
-        mContactView.handleAllNews(false, mNewsSourceList);
+        mContactView.handleAllNews(false, filteList);
     }
 
     /**
@@ -214,7 +214,7 @@ public class NewsRefreshList implements IRefreshList<Card> {
             } else {
                 mNewsSourceList.clear();
                 mNewsSourceList.addAll(cardList);
-                mContactView.handleAllNews(false, mNewsSourceList);
+                mContactView.handleAllNews(false, cardList);
             }
         } else {
             if (mNewsSourceList.size() == 0) {
@@ -236,7 +236,7 @@ public class NewsRefreshList implements IRefreshList<Card> {
         } else {
             bottomArticleTimestamp = TimeUtil.Date2s(temp.get(temp.size() - 1).date);
             mNewsSourceList.addAll(temp);
-            mContactView.handleAllNews(true, mNewsSourceList);
+            mContactView.handleAllNews(true, temp);
         }
     }
 

@@ -12,5 +12,7 @@ public interface NewsConfig {
 
     // 首页布局
     String CODE_ID_FEED = "920123593";
+    String CODE_600000 = "600000";
+    String CODE_699999 = "699999";
 
 }

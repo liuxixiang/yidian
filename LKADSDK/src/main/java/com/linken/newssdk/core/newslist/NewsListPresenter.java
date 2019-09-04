@@ -2,14 +2,27 @@ package com.linken.newssdk.core.newslist;
 
 import android.content.Context;
 
+import com.linken.newssdk.NewsConfig;
 import com.linken.newssdk.base.constract.BaseFragmentPresenter;
 import com.linken.newssdk.data.card.base.Card;
+import com.linken.newssdk.data.card.news.News;
 import com.linken.newssdk.data.channel.YdChannel;
+import com.linken.newssdk.protocol.newNetwork.business.request.imp.RequestConfigPost;
+import com.linken.newssdk.protocol.newNetwork.core.AsyncHttpClient;
+import com.linken.newssdk.protocol.newNetwork.core.JsonObjectResponseHandler;
 import com.linken.newssdk.toutiao.TTADRefreshList;
 import com.linken.newssdk.toutiao.TTAdManagerHolder;
+import com.linken.newssdk.utils.JsonUtil;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import static com.linken.newssdk.data.card.base.Card.CTYPE_NORMAL_NEWS;
 
 /**
  * @author zhangzhun
@@ -47,6 +60,72 @@ public class NewsListPresenter extends BaseFragmentPresenter<NewsListContractVie
         mIRefreshLists = new ArrayList<>();
         mIRefreshLists.add(new TTADRefreshList(mContactView));
         mIRefreshLists.add(new NewsRefreshList(mContactView, mChannel, refreshCount));
+        getTopList();
+    }
+
+    /**
+     * 获取置顶的列表
+     */
+    private void getTopList() {
+        final RequestConfigPost requestBase = new RequestConfigPost(NewsConfig.CODE_699999);
+        new AsyncHttpClient().post(requestBase, new JsonObjectResponseHandler() {
+            @Override
+            public void onSuccess(JSONObject response) {
+                try {
+                    if (response != null && response.has("data")) {
+                        JSONObject data = response.getJSONObject("data");
+                        List<String> codes = requestBase.getCodes();
+                        if (data != null) {
+                            for (String code : codes) {
+                                if (data.has(code)) {
+                                    JSONObject jsonObject = data.getJSONObject(code);
+                                    if (jsonObject != null) {
+                                        JSONArray paramValues = jsonObject.getJSONArray("paramValue");
+                                        List<Card> topList = new ArrayList<>();
+                                        if (paramValues != null && paramValues.length() > 0) {
+                                            for (int i = 0; i < paramValues.length(); i++) {
+                                                if (paramValues.get(i) instanceof JSONObject) {
+                                                    JSONObject jsonParam = (JSONObject) paramValues.get(i);
+                                                    if (jsonParam != null) {
+                                                        News card = new News();
+                                                        JsonUtil.readStringFromJson(jsonParam, "id");
+                                                        card.id = JsonUtil.readStringFromJson(jsonParam, "id");
+                                                        card.title = JsonUtil.readStringFromJson(jsonParam, "title");
+                                                        card.channel = JsonUtil.readStringFromJson(jsonParam, "channel");
+                                                        card.tag_name = JsonUtil.readStringFromJson(jsonParam, "tag");
+                                                        card.url = JsonUtil.readStringFromJson(jsonParam, "url");
+                                                        card.source = JsonUtil.readStringFromJson(jsonParam, "author");
+                                                        long time = JsonUtil.readLongFromJson(jsonParam, "createTime", 0);
+                                                        card.date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(time);
+                                                        JSONArray jsonCoverImgUrl = jsonParam.getJSONArray("coverImgUrl");
+                                                        if(jsonCoverImgUrl != null) {
+                                                            String[] coverimgUrl = JsonUtil.parseJSONString(jsonCoverImgUrl);
+                                                            if (coverimgUrl != null) {
+                                                                card.imageUrls = Arrays.asList(coverimgUrl);
+                                                            }
+                                                        }
+                                                        card.cType = CTYPE_NORMAL_NEWS;
+                                                        topList.add(card);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        mSourceList.addAll(0,topList);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable e) {
+                e.printStackTrace();
+            }
+        });
     }
 
 

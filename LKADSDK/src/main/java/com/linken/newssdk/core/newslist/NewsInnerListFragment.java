@@ -31,6 +31,7 @@ import com.linken.newssdk.widget.WrapperSwipeRefreshLayout;
 import com.linken.newssdk.widget.pullRefresh.PullRefreshLayout;
 import com.linken.newssdk.widget.views.ToastTabView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -426,11 +427,15 @@ public class NewsInnerListFragment extends LazyLoadPresenterFragment<NewsListPre
     @Override
     public void handleAllNews(boolean isLoadMore, List newsResult) {
 //        mSwipeRefreshLayout.setRefreshing(false);
+        ArrayList<Card> adapterAllItems = mPresenter.getTAdapterItems();
         if (isLoadMore) {
-            handleNewsLoadMore(newsResult);
+            adapterAllItems.addAll(newsResult);
+            handleNewsLoadMore(adapterAllItems);
         } else {
             insertAdPosition = 0;
-            handleNewsResultRefresh(newsResult);
+            adapterAllItems.clear();
+            adapterAllItems.addAll(newsResult);
+            handleNewsResultRefresh(adapterAllItems);
         }
         if (multipleItemAdapter.getData().size() == 0) {
             onShowEmpty();
@@ -454,16 +459,16 @@ public class NewsInnerListFragment extends LazyLoadPresenterFragment<NewsListPre
     }
 
     private void insertADCard(List<Card> adCards) {
-        //隔三插一条
-        if (multipleItemAdapter.getItemCount() - insertAdPosition > 3) {
-            if (adCards != null && adCards.size() > 0) {
-                for (Card card : adCards) {
-                    insertAdPosition = insertAdPosition + 4;
-                    multipleItemAdapter.getData().add(insertAdPosition -1, card);
-                }
-                multipleItemAdapter.notifyDataSetChanged();
-            }
-        }
+//        //隔三插一条
+//        if (multipleItemAdapter.getItemCount() - insertAdPosition > 3) {
+//            if (adCards != null && adCards.size() > 0) {
+//                for (Card card : adCards) {
+//                    insertAdPosition = insertAdPosition + 4;
+//                    multipleItemAdapter.getData().add(insertAdPosition -1, card);
+//                }
+//                multipleItemAdapter.notifyDataSetChanged();
+//            }
+//        }
     }
 
 

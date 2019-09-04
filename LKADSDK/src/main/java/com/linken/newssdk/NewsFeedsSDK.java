@@ -91,7 +91,7 @@ public class NewsFeedsSDK {
      * 初始化云控
      */
     private void initConfig() {
-        final RequestConfigPost requestBase = new RequestConfigPost("600000");
+        final RequestConfigPost requestBase = new RequestConfigPost(NewsConfig.CODE_600000);
         new AsyncHttpClient().post(requestBase, new JsonObjectResponseHandler() {
             @Override
             public void onSuccess(JSONObject response) {
