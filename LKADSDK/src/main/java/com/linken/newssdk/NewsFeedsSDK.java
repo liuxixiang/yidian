@@ -132,6 +132,7 @@ public class NewsFeedsSDK {
 
             @Override
             public void onFailure(Throwable e) {
+                e.printStackTrace();
             }
         });
     }

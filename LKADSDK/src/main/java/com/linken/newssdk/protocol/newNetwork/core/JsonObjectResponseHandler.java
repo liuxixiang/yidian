@@ -11,11 +11,20 @@ public abstract class JsonObjectResponseHandler extends TextResponseHandler {
             JSONObject json = new JSONObject(response);
             int code = json.optInt("code", -1);
             String reson = json.optString("reason");
-            if (code == 0) {
+            int errCode = json.optInt("errCode", -2);
+            String errMsg = json.optString("errMsg");
+            if (code == 0 || errCode == 0) {
                 onSuccess(json);
             } else {
-                Exception exception = new ApiException(code, reson);
-                onFailure(exception);
+                if(errCode == -2) {
+                    Exception exception = new ApiException(code, reson);
+                    onFailure(exception);
+                }else {
+                    //linken
+                    Exception exception = new ApiException(errCode, errMsg);
+                    onFailure(exception);
+                }
+
             }
         } catch (JSONException e) {
             onFailure(e);
