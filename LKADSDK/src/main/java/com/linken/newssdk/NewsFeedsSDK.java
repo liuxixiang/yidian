@@ -29,8 +29,9 @@ import com.linken.newssdk.utils.support.NetworkHelper;
 
 import org.json.JSONObject;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by chenyichang on 2018/5/18.
@@ -44,7 +45,7 @@ public class NewsFeedsSDK {
     private String mAppKey;
     private String mAppId;
     private boolean debug;
-    private List<String> mFilterRegex;
+    private Set<String> mFilterRegex;
     private Builder mBuilder;
 
     private IShareInterface iShareInterface;
@@ -74,7 +75,7 @@ public class NewsFeedsSDK {
         Get3rdInfoHelper.request3rdInfo(mAppId);
         initToutiao();
 
-        mBuilder.setFilter(new String[]{"男", "亦步", "走路", "赚钱", "非法"});
+        mBuilder.setFilter(new String[]{"趣步", "亦步", "走路", "赚钱", "非法"});
         initConfig();
 
     }
@@ -158,7 +159,7 @@ public class NewsFeedsSDK {
         return mAppKey;
     }
 
-    public List<String> getFilterRegex() {
+    public Set<String> getFilterRegex() {
         return mFilterRegex;
     }
 
@@ -207,7 +208,7 @@ public class NewsFeedsSDK {
         private String mAppKey = "SzDT5xJF8NNJSZVs7izeE7TDTY916yZa";
         private String mAppId = "mVv7l58rwJlrUUcoOvj_JAtc";
         private boolean debug;
-        private List<String> mFilterRegex = new ArrayList<>();
+        private Set<String> mFilterRegex = new HashSet<>();
 
 
         public Builder() {
