@@ -9,25 +9,26 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 1
-        versionName "1.0"
-
+//        versionCode VERSION
+        versionName VERSION
     }
 
     buildTypes {
         debug {
             buildConfigField 'String', 'OPEN_ROOT_PATH', '"http://o.go2yd.com/open-api/open-platform/"'
+            buildConfigField 'String', 'BASE_URL', '"http://api-qa.beekuaibao.com"'
 //            minifyEnabled true
 //            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         release {
             buildConfigField 'String', 'OPEN_ROOT_PATH', '"http://o.go2yd.com/open-api/open-platform/"'
+            buildConfigField 'String', 'BASE_URL', '"http://api-qa.beekuaibao.com"'
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 
-    greendao{
+    greendao {
 
         //指定数据库schema版本号，迁移等操作会用到;
         schemaVersion 2
