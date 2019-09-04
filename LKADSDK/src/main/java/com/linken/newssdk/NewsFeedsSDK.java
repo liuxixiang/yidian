@@ -1,6 +1,7 @@
 package com.linken.newssdk;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.linken.newssdk.core.ad.AdvertisementModule;
@@ -13,7 +14,6 @@ import com.linken.newssdk.libraries.ydvd.YdVideoPlayer;
 import com.linken.newssdk.protocol.newNetwork.business.helper.Get3rdInfoHelper;
 import com.linken.newssdk.protocol.newNetwork.business.helper.OpenPlatformHelper;
 import com.linken.newssdk.protocol.newNetwork.business.report.ReportProxy;
-import com.linken.newssdk.protocol.newNetwork.business.request.IRequest;
 import com.linken.newssdk.protocol.newNetwork.business.request.imp.RequestConfigPost;
 import com.linken.newssdk.protocol.newNetwork.core.AsyncHttpClient;
 import com.linken.newssdk.protocol.newNetwork.core.JsonObjectResponseHandler;
@@ -29,6 +29,9 @@ import com.linken.newssdk.utils.support.NetworkHelper;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by chenyichang on 2018/5/18.
  */
@@ -41,7 +44,8 @@ public class NewsFeedsSDK {
     private String mAppKey;
     private String mAppId;
     private boolean debug;
-    private String mFilterRegex;
+    private List<String> mFilterRegex;
+    private Builder mBuilder;
 
     private IShareInterface iShareInterface;
     private INewsInfoCallback mNewsInfoCallback;
@@ -49,6 +53,7 @@ public class NewsFeedsSDK {
     private INewsInfoCallback.Config mConfig;
 
     private NewsFeedsSDK(Builder builder) {
+        this.mBuilder = builder;
         this.mContext = builder.mContext;
         this.mAppKey = builder.mAppKey;
         this.mAppId = builder.mAppId;
@@ -68,7 +73,10 @@ public class NewsFeedsSDK {
         OpenPlatformHelper.getOp(mAppId);
         Get3rdInfoHelper.request3rdInfo(mAppId);
         initToutiao();
+
+        mBuilder.setFilter(new String[]{"男", "亦步", "走路", "赚钱", "非法"});
         initConfig();
+
     }
 
     /**
@@ -82,10 +90,44 @@ public class NewsFeedsSDK {
      * 初始化云控
      */
     private void initConfig() {
-        IRequest requestBase = new RequestConfigPost("600000");
+        final RequestConfigPost requestBase = new RequestConfigPost("600000");
         new AsyncHttpClient().post(requestBase, new JsonObjectResponseHandler() {
             @Override
             public void onSuccess(JSONObject response) {
+                try {
+                    if (response != null && response.has("data")) {
+                        JSONObject data = response.getJSONObject("data");
+                        List<String> codes = requestBase.getCodes();
+                        if (data != null) {
+                            for (String code : codes) {
+                                if (data.has(code)) {
+                                    JSONObject jsonObject = data.getJSONObject(code);
+                                    if (jsonObject != null) {
+                                        JSONObject paramValue = jsonObject.getJSONObject("paramValue");
+                                        if (paramValue != null) {
+                                            switch (code) {
+                                                case "600000":
+                                                    String keywords = paramValue.getString("keywords");
+                                                    if (!TextUtils.isEmpty(keywords)) {
+                                                        String[] filter = keywords.split(",");
+                                                        mBuilder.setFilter(filter);
+                                                    }
+
+                                                    break;
+
+                                                case "600002":
+                                                    break;
+                                            }
+                                        }
+
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -115,7 +157,7 @@ public class NewsFeedsSDK {
         return mAppKey;
     }
 
-    public String getFilterRegex() {
+    public List<String> getFilterRegex() {
         return mFilterRegex;
     }
 
@@ -164,7 +206,7 @@ public class NewsFeedsSDK {
         private String mAppKey = "SzDT5xJF8NNJSZVs7izeE7TDTY916yZa";
         private String mAppId = "mVv7l58rwJlrUUcoOvj_JAtc";
         private boolean debug;
-        private String mFilterRegex;
+        private List<String> mFilterRegex = new ArrayList<>();
 
 
         public Builder() {
@@ -200,7 +242,7 @@ public class NewsFeedsSDK {
         }
 
         public Builder setFilterRegex(String filterRegex) {
-            this.mFilterRegex = filterRegex;
+            this.mFilterRegex.add(filterRegex);
             return this;
         }
 
@@ -211,7 +253,7 @@ public class NewsFeedsSDK {
          * @return
          */
         public Builder setFilter(String filter) {
-            this.mFilterRegex = ".*(" + filter + ").*";
+            this.mFilterRegex.add(".*(" + filter + ").*");
             return this;
         }
 

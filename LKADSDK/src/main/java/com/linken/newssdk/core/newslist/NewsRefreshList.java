@@ -13,6 +13,7 @@ import com.linken.newssdk.core.clean.feeds.domain.usecase.RefreshUseCase;
 import com.linken.newssdk.core.newslist.helper.RefreshErrorCodeHelper;
 import com.linken.newssdk.data.card.base.Card;
 import com.linken.newssdk.data.channel.YdChannel;
+import com.linken.newssdk.utils.FilterUtils;
 import com.linken.newssdk.utils.RefreshControlUtils;
 import com.linken.newssdk.utils.TimeUtil;
 
@@ -93,7 +94,14 @@ public class NewsRefreshList implements IRefreshList<Card> {
             return;
         }
         mNewsSourceList.clear();
-        mNewsSourceList.addAll(newsList);
+        ArrayList<Card> filteList = new ArrayList<>();
+        for (Card card : newsList) {
+            //过滤
+            if (!FilterUtils.filterRegex(card.title)) {
+                filteList.add(card);
+            }
+        }
+        mNewsSourceList.addAll(filteList);
         mContactView.handleAllNews(false, mNewsSourceList);
     }
 
@@ -110,7 +118,7 @@ public class NewsRefreshList implements IRefreshList<Card> {
         refreshUseCase.execute(pull2RefreshRequest, new UseCase.Callback<FeedsResponse>() {
             @Override
             public void onSuccess(FeedsResponse response) {
-                handleNewsResult(response); 
+                handleNewsResult(response);
             }
 
             @Override
