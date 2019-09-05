@@ -86,6 +86,11 @@ public class NewsInnerEmbedFragment extends BaseFragment<NewsListPresenter> impl
         handleFetchComplete(allResult);
     }
 
+    @Override
+    public void handleTopResultList(List cards) {
+
+    }
+
 
     @Override
     public void showRefreshTip(String refreshErrorTip) {

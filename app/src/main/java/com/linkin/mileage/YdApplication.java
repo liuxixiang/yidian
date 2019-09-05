@@ -49,7 +49,6 @@ public class YdApplication extends Application {
                 .setDebugEnabled(BuildConfig.DEBUG)
                 .build();
 
-
         NewsFeedsSDK.getInstance().setNewsInfoCallback(new INewsInfoCallback() {
 
             @Override
@@ -63,6 +62,7 @@ public class YdApplication extends Application {
 
                         config.setTotalRewardNum(50);
                         config.setShowCountDown(true);
+                        config.setUserId("liuxihui");
                         config.setAfferentInfos(afferentinfo_article, afferentinfo_video, afferentinfo_ad);
                     }
                 },5000);

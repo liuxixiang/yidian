@@ -29,6 +29,8 @@ public interface NewsListContractView extends BaseContractView {
 
     void handleAllNews(boolean isLoadMore, List allResult);
 
+    void handleTopResultList(List cards);
+
     void showRefreshTip(String refreshErrorTip);
 
     boolean isVisableToUser();

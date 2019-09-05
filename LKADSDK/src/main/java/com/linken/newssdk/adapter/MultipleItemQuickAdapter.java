@@ -22,6 +22,8 @@ import com.linken.newssdk.widget.cardview.adcard.AdCard03;
 import com.linken.newssdk.widget.cardview.adcard.AdCard04;
 import com.linken.newssdk.widget.cardview.adcard.AdCard15;
 import com.linken.newssdk.widget.cardview.adcard.AdCard40;
+import com.linken.newssdk.widget.cardview.linken.LKMultiImageCardViewHolder;
+import com.linken.newssdk.widget.cardview.linken.LKSmallImageCardViewHolder;
 import com.linken.newssdk.widget.cardview.newscard.BigImageCardViewHolder;
 import com.linken.newssdk.widget.cardview.newscard.MultiImageCardViewHolder;
 import com.linken.newssdk.widget.cardview.PictureGalleryCardViewHolder;
@@ -70,6 +72,9 @@ public class MultipleItemQuickAdapter<T extends MultiItemEntity> extends BaseMul
         addItemType(Card.AD_TOUTIAO_TYPE_VERTICAL_PIC_204, R.layout.listitem_ad_vertical_pic);
         addItemType(Card.AD_TOUTIAO_TYPE_FULL_VIDEO_205, R.layout.listitem_ad_full_video);
 
+        addItemType(Card.Lk_DISPLAY_TYPE_ONE_IMAGE, R.layout.ydsdk_card_lk_news_item_ns);
+        addItemType(Card.Lk_DISPLAY_TYPE_MULTI_IMAGE, R.layout.ydsdk_card_lk_news_item_imgline_ns);
+
 
 //        addItemType(-1, R.layout.ydsdk_cardview_empty);
     }
@@ -113,7 +118,12 @@ public class MultipleItemQuickAdapter<T extends MultiItemEntity> extends BaseMul
             viewHolder = new ToutiaoAdFullVideoViewHolder(getItemView(layoutResId, parent));
         }
 
-        else {
+        //林肯
+        else if (layoutResId == R.layout.ydsdk_card_lk_news_item_ns) {
+            viewHolder = new LKSmallImageCardViewHolder(mContext, this, getItemView(layoutResId, parent));
+        } else if (layoutResId == R.layout.ydsdk_card_lk_news_item_imgline_ns) {
+            viewHolder = new LKMultiImageCardViewHolder(this, getItemView(layoutResId, parent));
+        } else {
             viewHolder = new NoMoreViewHolder(getItemView(R.layout.ydsdk_cardview_empty, parent));
         }
         return viewHolder;
@@ -158,6 +168,12 @@ public class MultipleItemQuickAdapter<T extends MultiItemEntity> extends BaseMul
             ((ToutiaoAdFullVideoViewHolder) helper).onBind((AdvertisementCard) item, ((AdvertisementCard) item).id);
         }
 
+        //林肯
+        else if (helper instanceof LKSmallImageCardViewHolder) {
+            ((LKSmallImageCardViewHolder) helper).onBind((Card) item, this);
+        } else if (helper instanceof LKMultiImageCardViewHolder) {
+            ((LKMultiImageCardViewHolder) helper).onBind((Card) item, this);
+        }
 
         else {
             ((NoMoreViewHolder) helper).onBind();

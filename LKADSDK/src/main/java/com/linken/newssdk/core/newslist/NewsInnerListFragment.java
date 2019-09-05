@@ -32,6 +32,7 @@ import com.linken.newssdk.widget.pullRefresh.PullRefreshLayout;
 import com.linken.newssdk.widget.views.ToastTabView;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -52,6 +53,7 @@ public class NewsInnerListFragment extends LazyLoadPresenterFragment<NewsListPre
     private ToastTabView mToastTabView;
     private int insertAdPosition = 0;
     private boolean isLoadNews;
+    private boolean isLoadTopNews;
     private List<Card> mAdCard;
 
     public static NewsInnerListFragment newInstance(int position, YdChannel channelInfo) {
@@ -433,7 +435,14 @@ public class NewsInnerListFragment extends LazyLoadPresenterFragment<NewsListPre
             handleNewsLoadMore(adapterAllItems);
         } else {
             insertAdPosition = 0;
-            adapterAllItems.clear();
+
+            for(Iterator<Card> it = adapterAllItems.iterator(); it.hasNext();){
+                Card card = it.next();
+                if(!"top".equals(card.dtype)) {
+                    it.remove();
+                }
+            }
+//            adapterAllItems.clear();
             adapterAllItems.addAll(newsResult);
             handleNewsResultRefresh(adapterAllItems);
         }
@@ -441,21 +450,29 @@ public class NewsInnerListFragment extends LazyLoadPresenterFragment<NewsListPre
             onShowEmpty();
             return;
         }
-        if (mAdCard == null) {
-            isLoadNews = true;
-        }
-        insertADCard(mAdCard);
+//        if (mAdCard == null) {
+//            isLoadNews = true;
+//        }
+//        insertADCard(mAdCard);
+    }
+
+    @Override
+    public void handleTopResultList(List cards) {
+        isLoadTopNews = true;
+        ArrayList<Card> adapterAllItems = mPresenter.getTAdapterItems();
+        adapterAllItems.addAll(0,cards);
+        multipleItemAdapter.notifyDataSetChanged();
     }
 
 
     @Override
     public void handleNewsAdResult(int adTypeTt, List<Card> cards) {
-        mAdCard = cards;
-        if (isLoadNews) {
-            insertADCard(mAdCard);
-            mAdCard = null;
-            isLoadNews = false;
-        }
+//        mAdCard = cards;
+//        if (isLoadNews) {
+//            insertADCard(mAdCard);
+//            mAdCard = null;
+//            isLoadNews = false;
+//        }
     }
 
     private void insertADCard(List<Card> adCards) {

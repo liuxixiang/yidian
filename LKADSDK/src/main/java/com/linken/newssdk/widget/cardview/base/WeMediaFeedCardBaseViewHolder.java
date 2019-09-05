@@ -69,8 +69,9 @@ public abstract class WeMediaFeedCardBaseViewHolder extends WeMediaBaseRecylerHo
     private int mMaxBottomPanelHeight;
 
     protected int mLeftPadding = 0;
-    private int mTxtAndPicMarginInDp = 0; //文字和单图的距离
+    private int mTxtAndPicMarginInDp = 0; //文字和单图的show距离
     protected int mScreenWidth = 0;
+    protected boolean mShowFbButton = true;
 
     private ViewTreeObserver.OnGlobalLayoutListener mListener = new ViewTreeObserver.OnGlobalLayoutListener() {
         @Override
@@ -310,7 +311,7 @@ public abstract class WeMediaFeedCardBaseViewHolder extends WeMediaBaseRecylerHo
                 public void onClickCard() {
 
                 }
-            }, true);
+            }, mShowFbButton);
         }
     }
 
