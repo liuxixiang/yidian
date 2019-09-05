@@ -289,7 +289,6 @@ public class NewsInnerListFragment extends LazyLoadPresenterFragment<NewsListPre
     }
 
 
-
     @Override
     public void handleNewsResultRefresh(List newsResult) {
         multipleItemAdapter.setNewData(newsResult);
@@ -436,12 +435,7 @@ public class NewsInnerListFragment extends LazyLoadPresenterFragment<NewsListPre
         } else {
             insertAdPosition = 0;
 
-            for(Iterator<Card> it = adapterAllItems.iterator(); it.hasNext();){
-                Card card = it.next();
-                if(!"top".equals(card.dtype)) {
-                    it.remove();
-                }
-            }
+            removeItems(false, adapterAllItems);
 //            adapterAllItems.clear();
             adapterAllItems.addAll(newsResult);
             handleNewsResultRefresh(adapterAllItems);
@@ -460,8 +454,25 @@ public class NewsInnerListFragment extends LazyLoadPresenterFragment<NewsListPre
     public void handleTopResultList(List cards) {
         isLoadTopNews = true;
         ArrayList<Card> adapterAllItems = mPresenter.getTAdapterItems();
-        adapterAllItems.addAll(0,cards);
+        removeItems(true,adapterAllItems);
+        adapterAllItems.addAll(0, cards);
         multipleItemAdapter.notifyDataSetChanged();
+    }
+
+    private void removeItems(boolean isTop, ArrayList<Card> adapterAllItems) {
+        for (Iterator<Card> it = adapterAllItems.iterator(); it.hasNext(); ) {
+            Card card = it.next();
+            if(isTop) {
+                if ("top".equals(card.dtype)) {
+                    it.remove();
+                }
+            }else {
+                if (!"top".equals(card.dtype)) {
+                    it.remove();
+                }
+            }
+
+        }
     }
 
 

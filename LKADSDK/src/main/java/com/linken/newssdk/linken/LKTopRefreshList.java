@@ -14,6 +14,7 @@ import com.linken.newssdk.protocol.newNetwork.core.JsonObjectResponseHandler;
 import com.linken.newssdk.utils.JsonUtil;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
@@ -28,7 +29,7 @@ import static com.linken.newssdk.data.card.base.Card.Lk_DISPLAY_TYPE_ONE_IMAGE;
 
 public class LKTopRefreshList implements IRefreshList<Card> {
 
-    private List<Card> mCards = new ArrayList<>();
+    private List<Card> mAllCards = new ArrayList<>();
     private NewsListContractView mContactView;
     private String mChannel;
 
@@ -57,7 +58,7 @@ public class LKTopRefreshList implements IRefreshList<Card> {
 
     @Override
     public List<Card> getTAdapterItems() {
-        return mCards;
+        return mAllCards;
     }
 
     /**
@@ -76,54 +77,16 @@ public class LKTopRefreshList implements IRefreshList<Card> {
                             for (String code : codes) {
                                 if (data.has(code)) {
                                     JSONArray jsonArray = data.getJSONArray(code);
-                                    if (jsonArray != null && jsonArray.length() > 0 ) {
+                                    if (jsonArray != null && jsonArray.length() > 0) {
                                         JSONObject jsonObject = jsonArray.getJSONObject(0);
-                                        if(jsonObject == null) {
+                                        if (jsonObject == null) {
                                             return;
                                         }
                                         JSONArray paramValues = jsonObject.getJSONArray("paramValue");
-                                        if (paramValues != null && paramValues.length() > 0) {
-                                            for (int i = 0; i < paramValues.length(); i++) {
-                                                if (paramValues.get(i) instanceof JSONObject) {
-                                                    JSONObject jsonParam = (JSONObject) paramValues.get(i);
-                                                    if (jsonParam != null) {
-                                                        News card = new News();
-                                                        card.id = jsonParam.has("id") ? JsonUtil.readStringFromJson(jsonParam, "id") : "";
-                                                        card.title = jsonParam.has("title") ? JsonUtil.readStringFromJson(jsonParam, "title") : "";
-                                                        card.channel = jsonParam.has("channel") ? JsonUtil.readStringFromJson(jsonParam, "channel") : "";
-                                                        card.tag_name = jsonParam.has("tag") ? JsonUtil.readStringFromJson(jsonParam, "tag") : "";
-                                                        card.url = jsonParam.has("url") ? JsonUtil.readStringFromJson(jsonParam, "url") : "";
-                                                        card.source = jsonParam.has("author") ? JsonUtil.readStringFromJson(jsonParam, "author") : "";
-                                                        long time = jsonParam.has("createTime") ? JsonUtil.readLongFromJson(jsonParam, "createTime", 0) : 0;
-                                                        card.date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(time);
-                                                        card.displayType = Lk_DISPLAY_TYPE_ONE_IMAGE;
-                                                        Object jsonCoverImgUrl = jsonParam.get("coverImgUrl");
-                                                        if(jsonCoverImgUrl != null && jsonCoverImgUrl instanceof JSONArray) {
-                                                            if (jsonCoverImgUrl != null) {
-                                                                String[] coverimgUrl = JsonUtil.parseJSONString((JSONArray) jsonCoverImgUrl);
-                                                                if (coverimgUrl != null) {
-                                                                    card.coverImages = Arrays.asList(coverimgUrl);
-                                                                    if (card.coverImages != null && card.coverImages.size() > 0) {
-                                                                        if (TextUtils.isEmpty(card.image)) {
-                                                                            card.image = card.coverImages.get(0);
-                                                                        }
-                                                                        if (card.coverImages.size() >= 3) {
-                                                                            card.displayType = Lk_DISPLAY_TYPE_MULTI_IMAGE;
-                                                                        }
-                                                                    }
-                                                                }
-                                                            }
 
-                                                        }
-
-                                                        card.cType = CTYPE_NORMAL_NEWS;
-                                                        card.dtype = "top";
-                                                        mCards.add(card);
-                                                    }
-                                                }
-                                            }
-                                        }
-                                        mContactView.handleTopResultList(mCards);
+                                        mAllCards.clear();
+                                        mAllCards.addAll(getResponseCards(paramValues));
+                                        mContactView.handleTopResultList(mAllCards);
                                     }
                                 }
                             }
@@ -139,5 +102,51 @@ public class LKTopRefreshList implements IRefreshList<Card> {
                 e.printStackTrace();
             }
         });
+    }
+
+    private List<Card> getResponseCards(JSONArray paramValues) throws Exception {
+        List<Card> responseCards = new ArrayList<>();
+        if (paramValues != null && paramValues.length() > 0) {
+            for (int i = 0; i < paramValues.length(); i++) {
+                if (paramValues.get(i) instanceof JSONObject) {
+                    JSONObject jsonParam = (JSONObject) paramValues.get(i);
+                    if (jsonParam != null) {
+                        News card = new News();
+                        card.id = jsonParam.has("id") ? JsonUtil.readStringFromJson(jsonParam, "id") : "";
+                        card.title = jsonParam.has("title") ? JsonUtil.readStringFromJson(jsonParam, "title") : "";
+                        card.channel = jsonParam.has("channel") ? JsonUtil.readStringFromJson(jsonParam, "channel") : "";
+                        card.tag_name = jsonParam.has("tag") ? JsonUtil.readStringFromJson(jsonParam, "tag") : "";
+                        card.url = jsonParam.has("url") ? JsonUtil.readStringFromJson(jsonParam, "url") : "";
+                        card.source = jsonParam.has("author") ? JsonUtil.readStringFromJson(jsonParam, "author") : "";
+                        long time = jsonParam.has("createTime") ? JsonUtil.readLongFromJson(jsonParam, "createTime", 0) : 0;
+                        card.date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(time);
+                        card.displayType = Lk_DISPLAY_TYPE_ONE_IMAGE;
+                        Object jsonCoverImgUrl = jsonParam.get("coverImgUrl");
+                        if (jsonCoverImgUrl != null && jsonCoverImgUrl instanceof JSONArray) {
+                            if (jsonCoverImgUrl != null) {
+                                String[] coverimgUrl = JsonUtil.parseJSONString((JSONArray) jsonCoverImgUrl);
+                                if (coverimgUrl != null) {
+                                    card.coverImages = Arrays.asList(coverimgUrl);
+                                    if (card.coverImages != null && card.coverImages.size() > 0) {
+                                        if (TextUtils.isEmpty(card.image)) {
+                                            card.image = card.coverImages.get(0);
+                                        }
+                                        if (card.coverImages.size() >= 3) {
+                                            card.displayType = Lk_DISPLAY_TYPE_MULTI_IMAGE;
+                                        }
+                                    }
+                                }
+                            }
+
+                        }
+
+                        card.cType = CTYPE_NORMAL_NEWS;
+                        card.dtype = "top";
+                        responseCards.add(card);
+                    }
+                }
+            }
+        }
+        return responseCards;
     }
 }
