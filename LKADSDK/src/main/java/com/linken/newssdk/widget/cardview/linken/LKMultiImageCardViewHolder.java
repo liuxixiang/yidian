@@ -1,11 +1,15 @@
 package com.linken.newssdk.widget.cardview.linken;
 
+import android.graphics.Color;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.linken.newssdk.R;
 import com.linken.newssdk.adapter.MultipleItemQuickAdapter;
 import com.linken.newssdk.data.card.base.Card;
+import com.linken.newssdk.theme.ThemeManager;
 import com.linken.newssdk.utils.ImageSize;
 import com.linken.newssdk.widget.cardview.base.WeMediaFeedCardBaseViewHolder;
 
@@ -22,6 +26,7 @@ public class LKMultiImageCardViewHolder extends WeMediaFeedCardBaseViewHolder {
     private ImageView img3;
     private View imgLine;
     private View mChannelNewsItem;
+    private TextView tagName;
 
     public LKMultiImageCardViewHolder(MultipleItemQuickAdapter multipleItemQuickAdapter, View itemView) {
         super(itemView);
@@ -33,6 +38,7 @@ public class LKMultiImageCardViewHolder extends WeMediaFeedCardBaseViewHolder {
         imgLine = findView(R.id.imgLine);
         findView(R.id.picture_number).setVisibility(GONE);
         mChannelNewsItem = findView(R.id.channel_news_normal_item);
+        tagName = findView(R.id.tag_name);
         mChannelNewsItem.setOnClickListener(this);
     }
 
@@ -50,6 +56,12 @@ public class LKMultiImageCardViewHolder extends WeMediaFeedCardBaseViewHolder {
 
     @Override
     public void _onBind() {
+        if (!TextUtils.isEmpty(mCard.tag_name) && !"null".equals(mCard.tag_name)) {
+            tagName.setVisibility(VISIBLE);
+            tagName.setText(mCard.tag_name);
+            int color = ThemeManager.getColor(itemView.getContext(), ThemeManager.getTheme(), R.styleable.NewsSDKTheme_newssdk_sliding_tab_checked_txt_color, R.color.ydsdk_list_item_other_text);
+            tagName.setTextColor(color);
+        }
         if (mCard.coverImages == null || mCard.coverImages.size() < 3) {
             imgLine.setVisibility(GONE);
         } else {

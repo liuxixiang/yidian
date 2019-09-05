@@ -9,7 +9,6 @@
     android:paddingRight="@dimen/ydsdk_news_list_padding_right_ns">
 
 
-
     <LinearLayout
         android:id="@+id/content_panel"
         android:layout_width="match_parent"
@@ -37,10 +36,26 @@
                 android:textStyle="normal"
                 tools:text="djfldsajfj jdfs jf fd杀伐决断撒解放大街上就发大水 打扫房间的设计费收到了范德萨sad" />
 
-            <include
-                layout="@layout/ydsdk_card_button_panel"
-                android:layout_width="match_parent"
-                android:layout_height="30dp" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_marginRight="8dp"
+                    android:layout_gravity="center_vertical"
+                    android:visibility="gone"
+                    android:textSize="@dimen/ydsdk_news_list_card_label_ns"
+                    android:id="@+id/tag_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <include
+                    layout="@layout/ydsdk_card_button_panel"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp" />
+            </LinearLayout>
+
         </LinearLayout>
 
         <!-- small image -->
@@ -48,8 +63,8 @@
             android:id="@+id/news_image_frame"
             android:layout_width="@dimen/ydsdk_news_list_small_img_width_ns"
             android:layout_height="@dimen/ydsdk_news_list_small_img_height_ns"
-            android:layout_marginBottom="@dimen/ydsdk_news_list_single_pic_padding_vertical_ns"
-            android:layout_marginTop="@dimen/ydsdk_news_list_single_pic_padding_vertical_ns">
+            android:layout_marginTop="@dimen/ydsdk_news_list_single_pic_padding_vertical_ns"
+            android:layout_marginBottom="@dimen/ydsdk_news_list_single_pic_padding_vertical_ns">
 
             <ImageView
                 android:id="@+id/news_image"

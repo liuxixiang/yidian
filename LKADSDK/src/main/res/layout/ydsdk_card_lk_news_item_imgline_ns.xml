@@ -52,11 +52,25 @@
             tools:text="00:90" />
     </RelativeLayout>
 
-    <include
-        layout="@layout/ydsdk_card_button_panel"
-        android:layout_width="match_parent"
-        android:layout_height="30dp" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
+        <TextView
+            android:layout_marginRight="8dp"
+            android:layout_gravity="center_vertical"
+            android:visibility="gone"
+            android:textSize="@dimen/ydsdk_news_list_card_label_ns"
+            android:id="@+id/tag_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <include
+            layout="@layout/ydsdk_card_button_panel"
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+    </LinearLayout>
 
     <View
         android:id="@+id/middleDivider"
