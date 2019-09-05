@@ -14,7 +14,7 @@ import com.linken.newssdk.libraries.ydvd.YdVideoPlayer;
 import com.linken.newssdk.protocol.newNetwork.business.helper.Get3rdInfoHelper;
 import com.linken.newssdk.protocol.newNetwork.business.helper.OpenPlatformHelper;
 import com.linken.newssdk.protocol.newNetwork.business.report.ReportProxy;
-import com.linken.newssdk.protocol.newNetwork.business.request.imp.RequestConfigPost;
+import com.linken.newssdk.protocol.newNetwork.business.request.imp.RequestConfig;
 import com.linken.newssdk.protocol.newNetwork.core.AsyncHttpClient;
 import com.linken.newssdk.protocol.newNetwork.core.JsonObjectResponseHandler;
 import com.linken.newssdk.toutiao.TTAdManagerHolder;
@@ -91,8 +91,8 @@ public class NewsFeedsSDK {
      * 初始化云控
      */
     private void initConfig() {
-        final RequestConfigPost requestBase = new RequestConfigPost(NewsConfig.CODE_600000);
-        new AsyncHttpClient().post(requestBase, new JsonObjectResponseHandler() {
+        final RequestConfig requestBase = new RequestConfig(NewsConfig.CODE_600000);
+        new AsyncHttpClient().get(requestBase, new JsonObjectResponseHandler() {
             @Override
             public void onSuccess(JSONObject response) {
                 try {

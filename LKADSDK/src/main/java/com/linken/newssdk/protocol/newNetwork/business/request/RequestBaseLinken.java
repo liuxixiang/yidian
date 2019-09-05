@@ -3,7 +3,6 @@ package com.linken.newssdk.protocol.newNetwork.business.request;
 import com.linken.newssdk.BuildConfig;
 import com.linken.newssdk.SDKContants;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -26,6 +25,9 @@ public abstract class RequestBaseLinken implements IRequest {
         StringBuilder builder = new StringBuilder();
         builder.append(getHost());
         builder.append(getPath());
+        builder.append("?appId=" + SDKContants.LK_APPID);
+        builder.append("&osType=" + "android");
+        builder.append("&appVersion=" + BuildConfig.VERSION_NAME);
         return builder.toString();
     }
 
@@ -36,10 +38,6 @@ public abstract class RequestBaseLinken implements IRequest {
 
     @Override
     public Map<String, String> getHeaders() {
-        Map<String, String> headers = new HashMap<>();
-        headers.put("appId", SDKContants.LK_APPID);
-        headers.put("osType", "android");
-        headers.put("appVersion", BuildConfig.VERSION_NAME);
-        return headers;
+        return null;
     }
 }

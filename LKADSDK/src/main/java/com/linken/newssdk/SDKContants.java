@@ -25,7 +25,7 @@ public class SDKContants {
     public final static String STATIC_IMAGE_SERVER = "http://s.go2yd.com/c/"; //一点的静态图片服务器
 
     public static final String URL_3RD_INFO = "http://api-small-3rd.go2yd.com/Website/user/get3rd-info";
-    public static final String PATH_CONFIG = "/config/common/getConfigs";//云控
+    public static final String PATH_CONFIG = "/config/qb/getConfigs/cache";//云控
 
 
 
