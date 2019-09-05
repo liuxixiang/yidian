@@ -434,7 +434,7 @@ public class NewsInnerListFragment extends LazyLoadPresenterFragment<NewsListPre
             handleNewsLoadMore(adapterAllItems);
         } else {
             insertAdPosition = 0;
-
+            //清除非置顶数据
             removeItems(false, adapterAllItems);
 //            adapterAllItems.clear();
             adapterAllItems.addAll(newsResult);
@@ -454,6 +454,7 @@ public class NewsInnerListFragment extends LazyLoadPresenterFragment<NewsListPre
     public void handleTopResultList(List cards) {
         isLoadTopNews = true;
         ArrayList<Card> adapterAllItems = mPresenter.getTAdapterItems();
+        //先清除置顶数据
         removeItems(true,adapterAllItems);
         adapterAllItems.addAll(0, cards);
         multipleItemAdapter.notifyDataSetChanged();
