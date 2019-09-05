@@ -1,0 +1,72 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/channel_news_normal_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/ydsdk_selector_card"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/ydsdk_news_list_padding_left_ns"
+    android:paddingRight="@dimen/ydsdk_news_list_padding_right_ns">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/news_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:ellipsize="end"
+            android:includeFontPadding="false"
+            android:lineSpacingExtra="3dp"
+            android:maxLines="2"
+            android:paddingBottom="8dp"
+            android:paddingTop="11dp"
+            android:textColor="@color/ydsdk_title_text"
+            android:textSize="@dimen/ydsdk_news_list_title"
+            android:textStyle="normal"
+            tools:text="news" />
+
+        <include
+            android:id="@+id/imgLine"
+            layout="@layout/ydsdk_card_image_line_ns"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/news_title" />
+
+
+        <TextView
+            android:id="@+id/picture_number"
+            android:layout_width="wrap_content"
+            android:layout_height="18dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/ydsdk_pic_number_bg_ns"
+            android:gravity="center"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:textColor="#ffffff"
+            android:textSize="10sp"
+            tools:text="00:90" />
+    </RelativeLayout>
+
+    <include
+        layout="@layout/ydsdk_card_button_panel"
+        android:layout_width="match_parent"
+        android:layout_height="30dp" />
+
+
+    <View
+        android:id="@+id/middleDivider"
+        style="@style/ydsdk_divider_style" />
+
+    <!--<include-->
+        <!--layout="@layout/card_shenping"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginBottom="11dp"-->
+        <!--android:layout_marginTop="8dp"-->
+        <!--android:visibility="gone" />-->
+</LinearLayout>

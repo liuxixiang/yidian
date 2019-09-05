@@ -27,6 +27,7 @@ import com.linken.newssdk.utils.SPUtils;
 import com.linken.newssdk.utils.support.ImageDownloaderConfig;
 import com.linken.newssdk.utils.support.NetworkHelper;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.HashSet;
@@ -102,26 +103,35 @@ public class NewsFeedsSDK {
                         if (data != null) {
                             for (String code : codes) {
                                 if (data.has(code)) {
-                                    JSONObject jsonObject = data.getJSONObject(code);
-                                    if (jsonObject != null) {
-                                        JSONObject paramValue = jsonObject.getJSONObject("paramValue");
-                                        if (paramValue != null) {
-                                            switch (code) {
-                                                case "600000":
-                                                    String keywords = paramValue.getString("keywords");
-                                                    if (!TextUtils.isEmpty(keywords)) {
-                                                        String[] filter = keywords.split(",");
-                                                        mBuilder.setFilter(filter);
+                                    JSONArray jsonArray = data.getJSONArray(code);
+                                    if (jsonArray != null && jsonArray.length() > 0 ) {
+                                        for (int i = 0; i < jsonArray.length(); i++) {
+                                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                            if (jsonObject != null) {
+                                                JSONObject paramValue = jsonObject.getJSONObject("paramValue");
+                                                if (paramValue != null) {
+                                                    switch (code) {
+                                                        case "600000":
+                                                            String keywords = paramValue.getString("keywords");
+                                                            if (!TextUtils.isEmpty(keywords)) {
+                                                                String[] filter = keywords.split(",");
+                                                                mBuilder.setFilter(filter);
+                                                            }
+
+                                                            break;
+
+                                                        case "600002":
+                                                            break;
                                                     }
+                                                }
 
-                                                    break;
-
-                                                case "600002":
-                                                    break;
                                             }
                                         }
 
                                     }
+
+
+
                                 }
                             }
                         }
